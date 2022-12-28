@@ -1,0 +1,13 @@
+{
+  "miniprogramRoot": "./",
+  "projectname": "TsinghuaServiceMobx",
+  "description": "",
+  "appid": "cli_a3215e3a7abed013",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "miniprogram"
+}
