@@ -1,41 +1,32 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 16:00:04
- * @LastEditTime: 2022-12-28 17:33:16
+ * @LastEditTime: 2022-12-29 16:30:28
  * @Msg: Nothing
  */
 
 import { View } from "@tarojs/components"
-import Taro from "@tarojs/taro"
 import { useLoad } from "@tarojs/taro"
 import { FC } from "react"
+import { useUserReduce } from "@/src/utils/user-provider"
 
 const Home: FC = () => {
 
+  const { state: userInfo, dispatch } = useUserReduce()
+
   useLoad(() => {
-    console.log(123123)
-    setTimeout(() => {
-
-      // Taro.showToast({
-      //   title: '成功',
-      //   icon: 'success',
-      //   duration: 2000
-      // })
-
-      tt.enterChat({
-        openChatId: 'oc_1965ed81fc91d3b73d68c4ca4cfc110a',
-        success(res) {
-          console.log(JSON.stringify(res));
-        },
-        fail(res) {
-          console.log(`enterChat fail:${JSON.stringify(res)}`);
-        }
-      });
-
-    }, 2000);
+    dispatch({
+      type: 'FLUSH',
+      payload: {
+        username: 'summxu',
+        userid: 123,
+        avatar: '123',
+      }
+    })
+    console.log(userInfo)
   })
 
-  return <View>哈哈哈哈</View>
+  return <View>{userInfo.username}</View>
 }
 
 export default Home

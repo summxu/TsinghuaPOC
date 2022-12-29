@@ -1,29 +1,18 @@
-import { Component, PropsWithChildren } from 'react'
-import { Provider } from 'mobx-react'
-
-import counterStore from './store/counter'
-
+/*
+ * @Author: Chenxu
+ * @Date: 2022-12-28 13:26:25
+ * @LastEditTime: 2022-12-29 16:04:06
+ * @Msg: Nothing
+ */
+import { FC, PropsWithChildren } from 'react'
 import './app.scss'
+import { UserProvider } from './utils/user-provider'
 
-const store = {
-  counterStore
-}
+const App: FC<PropsWithChildren> = (props) => {
 
-class App extends Component<PropsWithChildren> {
-  componentDidMount () {}
-
-  componentDidShow () {}
-
-  componentDidHide () {}
-
-  // this.props.children 就是要渲染的页面
-  render () {
-    return (
-      <Provider store={store}>
-        {this.props.children}
-      </Provider>
-    )
-  }
+  return <UserProvider>
+    {props.children}
+  </UserProvider>
 }
 
 export default App

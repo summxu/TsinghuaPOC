@@ -1,3 +1,4 @@
+const path = require('path')
 const config = {
   projectName: 'TsinghuaServiceMobx',
   date: '2022-12-28',
@@ -12,6 +13,12 @@ const config = {
   plugins: ['@tarojs/plugin-platform-lark'],
   defineConstants: {
   },
+  alias: {
+    '@/components': path.resolve(__dirname, '..', 'src/components'),
+    '@/utils': path.resolve(__dirname, '..', 'src/utils'),
+    '@/apis': path.resolve(__dirname, '..', 'src/apis'),
+    '@/src': path.resolve(__dirname, '..', 'src'),
+  },
   copy: {
     patterns: [
     ],
@@ -21,7 +28,7 @@ const config = {
   framework: 'react',
   compiler: 'webpack5',
   cache: {
-    enable: true // Webpack 持久化缓存配置，建议开启。默认配置请参考：https://docs.taro.zone/docs/config-detail#cache
+    enable: false // Webpack 持久化缓存配置，建议开启。默认配置请参考：https://docs.taro.zone/docs/config-detail#cache
   },
   mini: {
     postcss: {
