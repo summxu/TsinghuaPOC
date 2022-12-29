@@ -1,14 +1,14 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 16:00:04
- * @LastEditTime: 2022-12-29 16:30:28
+ * @LastEditTime: 2022-12-29 16:45:43
  * @Msg: Nothing
  */
 
+import { useUserReduce } from "@/src/provider/user-provider"
 import { View } from "@tarojs/components"
 import { useLoad } from "@tarojs/taro"
 import { FC } from "react"
-import { useUserReduce } from "@/src/utils/user-provider"
 
 const Home: FC = () => {
 
