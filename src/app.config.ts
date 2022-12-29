@@ -1,18 +1,46 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2022-12-28 16:02:37
+ * @LastEditTime: 2022-12-29 17:41:12
  * @Msg: Nothing
  */
 export default defineAppConfig({
   pages: [
-    'pages/home/home',
-    'pages/index/index'
+    'pages/index/index',
+    'pages/office/index',
+    'pages/my/index'
   ],
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',
-    navigationBarTitleText: 'WeChat',
-    navigationBarTextStyle: 'black'
-  }
+    backgroundColor: '#E8E8E8',
+    navigationBarTitleText: '清华POC',
+    navigationBarTextStyle: 'black',
+    enablePullDownRefresh: false
+  },
+  tabBar: {
+    backgroundColor: '#ffffff',
+    selectedColor: '#418CFF',
+    color: '#666666',
+    list: [
+      {
+        pagePath: 'pages/index/index',
+        text: '首页',
+        iconPath: './static/index.png',
+        selectedIconPath: './static/index-selected.png'
+      },
+      {
+        pagePath: 'pages/office/index',
+        text: '办事',
+        iconPath: './static/office.png',
+        selectedIconPath: './static/office-selected.png'
+      },
+      {
+        pagePath: 'pages/my/index',
+        text: '我的',
+        iconPath: './static/my.png',
+        selectedIconPath: './static/my-selected.png'
+      }]
+
+  },
 })
