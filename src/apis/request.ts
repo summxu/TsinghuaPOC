@@ -1,74 +1,39 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 10:42:33
- * @LastEditTime: 2022-12-29 16:16:41
+ * @LastEditTime: 2022-12-30 10:08:31
  * @Msg: Nothing
  */
-import Taro, { RequestTask } from '@tarojs/taro';
+import Taro, { Option, RequestTask } from '@tarojs/taro';
+import { createDashApi } from './flora-api-dash/flora-api-dash';
 import interceptors, { ResponseData } from './interceptors';
 
-const BASE_URL = '/api';
+const envVersion = Taro.getAccountInfoSync().miniProgram.envVersion;
+const baseApiUrl = {
+  develop: 'http://localhost:8080',
+  // develop: 'https://portal-miniapp-dev-test.nx1.applysquare.net',
+  trial: 'https://portal-miniapp-dev-test.nx1.applysquare.net',
+  release: ''
+}
 
 // 拦截器
 interceptors.forEach(interceptorItem => Taro.addInterceptor(interceptorItem))
 
-/** HTTP 请求方法 */
-interface Method {
-  /** HTTP 请求 OPTIONS */
-  OPTIONS
-  /** HTTP 请求 GET */
-  GET
-  /** HTTP 请求 HEAD */
-  HEAD
-  /** HTTP 请求 POST */
-  POST
-  /** HTTP 请求 PUT */
-  PUT
-  /** HTTP 请求 DELETE */
-  DELETE
-  /** HTTP 请求 TRACE */
-  TRACE
-  /** HTTP 请求 CONNECT */
-  CONNECT
+// 自定义接口
+export const request = (params: Option): RequestTask<unknown> | ResponseData<unknown> => {
+  let { url, data } = params;
+  const option = {
+    url: baseApiUrl[envVersion] + url,
+    data: data,
+    method: params.method || 'GET',
+    header: {
+      'Content-Type': 'application/json',
+      ...params.header,
+      'Authorization': Taro.getStorageSync('Authorization')
+    }
+  };
+  return Taro.request(option);
 }
 
-class httpRequest {
-
-  baseOptions(params, method: keyof Method | undefined = 'GET'): RequestTask<any> | ResponseData<unknown> {
-    let { url, data } = params;
-    const option = {
-      url: BASE_URL + url,
-      data: data,
-      method: method,
-      header: {
-        'Content-Type': 'application/json',
-        ...params,
-        'Authorization': Taro.getStorageSync('Authorization')
-      }
-    };
-    return Taro.request(option);
-  }
-
-  get(url, data = "") {
-    let option = { url, data };
-    return this.baseOptions(option);
-  }
-
-  post(url, data = {}, contentType?) {
-    let params = { url, data, contentType };
-    return this.baseOptions(params, "POST");
-  }
-
-  put(url, data = "") {
-    let option = { url, data };
-    return this.baseOptions(option, "PUT");
-  }
-
-  delete(url, data = "") {
-    let option = { url, data };
-    return this.baseOptions(option, "DELETE");
-  }
-
-}
-
-export default new httpRequest()
+// 通用接口Flora-GraphQL
+export const dashApi = createDashApi(request)
