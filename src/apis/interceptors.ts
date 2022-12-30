@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 10:43:58
- * @LastEditTime: 2022-12-30 14:02:16
+ * @LastEditTime: 2022-12-30 17:39:08
  * @Msg: Nothing
  */
 import Taro, { Chain } from "@tarojs/taro"
@@ -34,48 +34,30 @@ const customInterceptor = (chain: Chain) => {
     .then((res: SuccessCallbackResult) => {
       // 只要请求成功，不管返回什么状态码，都走这个回调
       if (res.statusCode === HTTP_STATUS.NOT_FOUND) {
-        const msg = '请求资源不存在'
-        Taro.showToast({
-          title: msg,
-          icon: 'none'
-        })
-        return Promise.reject(msg)
+        return Promise.reject('请求资源不存在')
 
       } else if (res.statusCode === HTTP_STATUS.BAD_GATEWAY) {
-        const msg = '服务端出现了问题'
-        Taro.showToast({
-          title: msg,
-          icon: 'none'
-        })
-        return Promise.reject(msg)
+        return Promise.reject('服务端出现了问题')
+
       } else if (res.statusCode === HTTP_STATUS.FORBIDDEN) {
         // TODO 根据自身业务修改
         Taro.setStorageSync("Authorization", "")
         // pageToLogin()
-        const msg = '没有权限访问'
-        Taro.showToast({
-          title: msg,
-          icon: 'none'
-        })
-        return Promise.reject(msg);
+        return Promise.reject('没有权限访问');
+
       } else if (res.statusCode === HTTP_STATUS.AUTHENTICATE) {
         Taro.setStorageSync("Authorization", "")
         // pageToLogin()
-        const msg = '需要鉴权'
-        Taro.showToast({
-          title: msg,
-          icon: 'none'
-        })
-        return Promise.reject(msg)
+        return Promise.reject('需要鉴权')
+
       } else if (res.statusCode === HTTP_STATUS.SUCCESS) {
         // 成功后
         return res.data
       }
     })
     .catch(error => {
-      const msg = '网络链接失败/(ㄒoㄒ)/~~'
       Taro.showToast({
-        title: msg,
+        title: error,
         icon: 'none'
       })
       return Promise.reject(error)

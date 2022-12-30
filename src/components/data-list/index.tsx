@@ -1,19 +1,19 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-30 10:24:55
- * @LastEditTime: 2022-12-30 17:01:17
+ * @LastEditTime: 2022-12-30 17:58:18
  * @Msg: Nothing
  */
 import { ResponseData } from "@/apis/interceptors";
+import { OKResult } from "@/apis/utils/gql";
 import { Divider, Empty, Loading } from "@taroify/core";
 import { View } from "@tarojs/components";
-import Taro, { usePageScroll, usePullDownRefresh, useReachBottom } from "@tarojs/taro";
+import Taro, { usePullDownRefresh, useReachBottom } from "@tarojs/taro";
 import { Dispatch, FC, PropsWithChildren, useEffect, useReducer, useState } from "react";
 import "./index.scss";
 
-
 interface useDataListProps {
-  request: (params: Object) => Promise<ResponseData<any>>
+  request: (params: Object) => Promise<ResponseData<any>> | Promise<OKResult<{ raw: unknown; }>>;
   params?: Object | undefined
 }
 
@@ -61,12 +61,13 @@ export const useDataList = ({ request, params = {} }: useDataListProps) => {
       case 'FLUSH':
         return {
           ...state,
+          offset: 0,
           flush: Math.random()
         }
       case 'NEXT':
         // 判断有没有更多
         if (status === 'NOMORE') {
-          break
+          return state
         }
         return {
           ...state,
@@ -87,13 +88,13 @@ export const useDataList = ({ request, params = {} }: useDataListProps) => {
   useEffect(() => {
     setStatus('LOADING')
     request({
-      offset: pageParam!.offset,
-      limit: pageParam!.limit,
+      offset: pageParam.offset,
+      limit: pageParam.limit,
       ...params
     })
-      .then(({ data }) => {
+      .then(({ data }: ResponseData<any> & OKResult<{ raw: unknown; }>) => {
         // 判断是否第一页
-        if (pageParam!.offset) {
+        if (pageParam.offset) {
           setDataList([
             ...dataList,
             ...data.list
@@ -104,7 +105,7 @@ export const useDataList = ({ request, params = {} }: useDataListProps) => {
         // 判断有没有更多
         if (!dataList.length) {
           setStatus('EMPTY')
-        } else if (data.list < pageParam?.limit!) {
+        } else if (data.list.length < pageParam?.limit!) {
           setStatus('NOMORE')
         } else {
           setStatus('NORMAL')
@@ -116,7 +117,7 @@ export const useDataList = ({ request, params = {} }: useDataListProps) => {
         Taro.stopPullDownRefresh()
         console.log(error)
       })
-  }, [pageParam!.offset, pageParam!.flush])
+  }, [pageParam.offset, pageParam.flush])
 
   return { dispatch, dataList, status }
 }

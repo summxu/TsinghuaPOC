@@ -1,10 +1,10 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 10:42:33
- * @LastEditTime: 2022-12-30 14:49:34
+ * @LastEditTime: 2022-12-30 17:42:33
  * @Msg: Nothing
  */
-import Taro, { Option } from '@tarojs/taro';
+import Taro from '@tarojs/taro';
 import { createDashApi } from './flora-api-dash/flora-api-dash';
 import interceptors, { ResponseData } from './interceptors';
 

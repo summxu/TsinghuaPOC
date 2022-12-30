@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2022-12-30 14:58:23
+ * @LastEditTime: 2022-12-30 17:39:30
  * @Msg: Nothing
  */
 import { testPage } from '@/apis/index'
@@ -14,7 +14,6 @@ import './index.scss'
 const Index: FC<PropsWithChildren> = () => {
 
   const { status, dataList, dispatch } = useDataList({ request: testPage, params: { hahah: 1, heiheih: 2 } })
-  console.log(dataList)
 
   return (
     <View>
