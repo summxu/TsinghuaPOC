@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-30 10:24:55
- * @LastEditTime: 2022-12-30 17:58:18
+ * @LastEditTime: 2022-12-30 18:14:25
  * @Msg: Nothing
  */
 import { ResponseData } from "@/apis/interceptors";
@@ -95,10 +95,7 @@ export const useDataList = ({ request, params = {} }: useDataListProps) => {
       .then(({ data }: ResponseData<any> & OKResult<{ raw: unknown; }>) => {
         // 判断是否第一页
         if (pageParam.offset) {
-          setDataList([
-            ...dataList,
-            ...data.list
-          ])
+          setDataList([...dataList, ...data.list])
         } else {
           setDataList(data.list)
         }
