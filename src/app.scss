@@ -464,6 +464,10 @@ $at-ellipsis-text-font-size: $font-size-base;
 ** 否则页面将无法正常显示                                  **
 ************************************************************/
 
+.page-bottom{
+  padding-bottom: 25px;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;

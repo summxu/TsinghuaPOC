@@ -1,16 +1,16 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 10:42:33
- * @LastEditTime: 2022-12-30 10:08:31
+ * @LastEditTime: 2022-12-30 14:49:34
  * @Msg: Nothing
  */
-import Taro, { Option, RequestTask } from '@tarojs/taro';
+import Taro, { Option } from '@tarojs/taro';
 import { createDashApi } from './flora-api-dash/flora-api-dash';
 import interceptors, { ResponseData } from './interceptors';
 
-const envVersion = Taro.getAccountInfoSync().miniProgram.envVersion;
+const envVersion = 'develop'
 const baseApiUrl = {
-  develop: 'http://localhost:8080',
+  develop: 'https://mock.presstime.cn/mock/63ae6a030a20cd00b248136c',
   // develop: 'https://portal-miniapp-dev-test.nx1.applysquare.net',
   trial: 'https://portal-miniapp-dev-test.nx1.applysquare.net',
   release: ''
@@ -20,7 +20,7 @@ const baseApiUrl = {
 interceptors.forEach(interceptorItem => Taro.addInterceptor(interceptorItem))
 
 // 自定义接口
-export const request = (params: Option): RequestTask<unknown> | ResponseData<unknown> => {
+export const request = (params: Option): Promise<ResponseData<any>> => {
   let { url, data } = params;
   const option = {
     url: baseApiUrl[envVersion] + url,
@@ -32,7 +32,7 @@ export const request = (params: Option): RequestTask<unknown> | ResponseData<unk
       'Authorization': Taro.getStorageSync('Authorization')
     }
   };
-  return Taro.request(option);
+  return Taro.request(option) as unknown as Promise<ResponseData<any>>;
 }
 
 // 通用接口Flora-GraphQL

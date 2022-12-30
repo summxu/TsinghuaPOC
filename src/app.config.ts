@@ -1,14 +1,14 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2022-12-29 17:41:12
+ * @LastEditTime: 2022-12-30 10:21:52
  * @Msg: Nothing
  */
 export default defineAppConfig({
   pages: [
     'pages/index/index',
     'pages/office/index',
-    'pages/my/index'
+    'pages/mine/index'
   ],
   window: {
     backgroundTextStyle: 'light',
@@ -36,7 +36,7 @@ export default defineAppConfig({
         selectedIconPath: './static/office-selected.png'
       },
       {
-        pagePath: 'pages/my/index',
+        pagePath: 'pages/mine/index',
         text: '我的',
         iconPath: './static/my.png',
         selectedIconPath: './static/my-selected.png'
