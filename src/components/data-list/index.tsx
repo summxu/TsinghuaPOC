@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-30 10:24:55
- * @LastEditTime: 2022-12-30 18:14:25
+ * @LastEditTime: 2023-01-03 09:30:53
  * @Msg: Nothing
  */
 import { ResponseData } from "@/apis/interceptors";
@@ -9,7 +9,7 @@ import { OKResult } from "@/apis/utils/gql";
 import { Divider, Empty, Loading } from "@taroify/core";
 import { View } from "@tarojs/components";
 import Taro, { usePullDownRefresh, useReachBottom } from "@tarojs/taro";
-import { Dispatch, FC, PropsWithChildren, useEffect, useReducer, useState } from "react";
+import { Dispatch, FC, PropsWithChildren, useEffect, useReducer, useRef, useState } from "react";
 import "./index.scss";
 
 interface useDataListProps {
@@ -85,6 +85,8 @@ export const useDataList = ({ request, params = {} }: useDataListProps) => {
   };
   const [pageParam, dispatch] = useReducer(pageReducer, pageParamInit);
 
+  const dataListRef = useRef<any[]>([])
+
   useEffect(() => {
     setStatus('LOADING')
     request({
@@ -96,11 +98,13 @@ export const useDataList = ({ request, params = {} }: useDataListProps) => {
         // 判断是否第一页
         if (pageParam.offset) {
           setDataList([...dataList, ...data.list])
+          dataListRef.current = [...dataList, ...data.list]
         } else {
           setDataList(data.list)
+          dataListRef.current = data.list
         }
         // 判断有没有更多
-        if (!dataList.length) {
+        if (!dataListRef.current.length) {
           setStatus('EMPTY')
         } else if (data.list.length < pageParam?.limit!) {
           setStatus('NOMORE')

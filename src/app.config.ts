@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2022-12-30 10:21:52
+ * @LastEditTime: 2023-01-03 09:18:43
  * @Msg: Nothing
  */
 export default defineAppConfig({
@@ -11,7 +11,7 @@ export default defineAppConfig({
     'pages/mine/index'
   ],
   window: {
-    backgroundTextStyle: 'light',
+    backgroundTextStyle: 'dark',
     navigationBarBackgroundColor: '#fff',
     backgroundColor: '#E8E8E8',
     navigationBarTitleText: '清华POC',
