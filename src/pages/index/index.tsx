@@ -1,19 +1,24 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-06 10:03:53
+ * @LastEditTime: 2023-01-06 18:00:08
  * @Msg: Nothing
  */
-import { getAllYX } from '@/apis/index'
+import { getAllYanXi, login } from '@/apis/index'
 import { DataList, useDataList } from '@/components/data-list'
 import { View } from '@tarojs/components'
+import { useLoad } from '@tarojs/taro'
 import { FC, PropsWithChildren } from 'react'
 
 import './index.scss'
 
 const Index: FC<PropsWithChildren> = () => {
 
-  const { status, dataList, dispatch } = useDataList({ request: getAllYX, params: { hahah: 1, heiheih: 2 } })
+  const { status, dataList, dispatch } = useDataList({ request: getAllYanXi, params: { hahah: 1, heiheih: 2 } })
+
+  // useLoad(async () => {
+  //   const { token } = await login({ account: 'root@flora.local', password: 'flora#23456' })
+  // })
 
   return (
     <View>

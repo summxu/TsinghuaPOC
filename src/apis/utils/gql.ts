@@ -1,3 +1,9 @@
+/*
+ * @Author: Chenxu
+ * @Date: 2023-01-06 17:06:07
+ * @LastEditTime: 2023-01-06 17:15:30
+ * @Msg: Nothing
+ */
 import * as graphqlify from 'typed-graphqlify';
 import * as DataLoader from 'dataloader';
 import { RequestOptions, RequestResult } from './interface';
@@ -64,7 +70,7 @@ export function defineQuery<Q0, Q, V, V1>(def: QueryDef<Q0, V>, t?: (r: Q0) => Q
       client: args.client,
       v: ttv(args.v),
       query: queryStr,
-      cacheMode: args.cacheMode || 'use-cache',
+      cacheMode: args.cacheMode || 'no-cache',
       operationName: def.name,
     }).then(r => r.data);
     return tt(r) as Q;
@@ -93,7 +99,7 @@ export function defineMutation<Q0, Q, V, V1>(def: QueryDef<Q0, V>, t?: (r: Q0) =
       client: args.client,
       v: ttv(args.v),
       query: queryStr,
-      cacheMode: args.cacheMode || 'use-cache',
+      cacheMode: args.cacheMode || 'no-cache',
       operationName: def.name,
     }).then(r => r.data);
     return tt(r) as Q;
@@ -147,7 +153,7 @@ function postGQLEndpoint<R>(args: {
 
 export function gqlPromise<V, R>(args: GqlPromiseArgs<V>): Promise<R> {
   const { client } = args;
-  const cacheMode = args.cacheMode || 'use-cache';
+  const cacheMode = args.cacheMode || 'no-cache'; // 默认不缓存
 
   const endpoint = args.client.isDev ? args.client.endpointPath + `?_=${args.operationName}` : args.client.endpointPath;
 
@@ -159,11 +165,13 @@ export function gqlPromise<V, R>(args: GqlPromiseArgs<V>): Promise<R> {
   switch (cacheMode) {
     case 'invalidate':
       client.gqlLoader?.clear(q);
+    case 'no-cache': // 不缓存的时候也从新创建请求对象
+      client.gqlLoader?.clearAll();
     case 'invalidate-all':
       client.gqlLoader?.clearAll();
   }
 
-  if (!client.isServer && !client.isDev && client.gqlLoader && cacheMode !== 'no-cache') {
+  if (!client.isServer && !client.isDev && client.gqlLoader) {
     return mapErrors(client.gqlLoader.getData({
       query: args.query,
       variables: args.v,
@@ -171,13 +179,6 @@ export function gqlPromise<V, R>(args: GqlPromiseArgs<V>): Promise<R> {
     }))
   }
 
-  return mapErrors(postGQLEndpoint({
-    client,
-    endpoint,
-    query: q.query,
-    variables: q.variables,
-    operationName: q.operationName,
-  }));
 }
 
 export function mapErrors<T extends { errors?: any }>(p: Promise<T>): Promise<T> {

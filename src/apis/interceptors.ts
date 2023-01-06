@@ -1,21 +1,29 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 10:43:58
- * @LastEditTime: 2023-01-06 10:06:11
+ * @LastEditTime: 2023-01-06 17:49:48
  * @Msg: Nothing
  */
 import Taro, { Chain } from "@tarojs/taro"
 import { HTTP_STATUS } from './config'
 
+// GQL返回的数据格式
 export interface ResponseData<T = unknown> extends Promise<T> {
   compressed: boolean
   result: T
   version: string
 }
 
+export interface CommonResponseData extends Promise<T> {
+  status: 'ok' | 'error'
+  errorKind: string
+  errorMsg: string
+  errorSubKind: string
+}
+
 interface SuccessCallbackResult<T extends string | TaroGeneral.IAnyObject | ArrayBuffer = any | any> extends TaroGeneral.CallbackResult {
   /** 开发者服务器返回的数据 */
-  data: ResponseData<T>
+  data: ResponseData<T> & CommonResponseData
   /** 开发者服务器返回的 HTTP Response Header */
   header: TaroGeneral.IAnyObject
   /** 开发者服务器返回的 HTTP 状态码 */
@@ -51,6 +59,9 @@ const customInterceptor = (chain: Chain) => {
         return Promise.reject('需要鉴权')
 
       } else if (res.statusCode === HTTP_STATUS.SUCCESS) {
+        if (res.data.status === 'error') {
+          return Promise.reject(res.data.errorMsg)
+        }
         // 成功后
         return res.data
       }

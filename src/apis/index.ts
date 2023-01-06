@@ -1,19 +1,24 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-01-06 09:26:43
+ * @LastEditTime: 2023-01-06 17:59:51
  * @Msg: Nothing
  */
-import { buildSimpleSearchCondition } from "./flora-api-dash/data-api"
-import { request, dashApi } from "./request"
+import { dashApi, request } from "./request";
 
-export const getResultData_servers = (data) => {
-  return request({
-    url: '/api/white-screen/search',
-    method: 'GET',
-    data
-  })
-}
+// 登录(自定义接口)
+export const login = (data: { account: string, password: string }) => {
+  return request<{ token: string }>({
+    url: '/api/auth/v1/request-login-token',
+    method: 'POST',
+    data,
+    header: {
+      // 暂不携带access token.
+      Authorization: '',
+    }
+  });
+};
+
 
 // 测试通用接口
 export const testGraphQL = () => {
@@ -26,25 +31,13 @@ export const testGraphQL = () => {
 }
 
 // 测试取出所有院系
-export const getAllYX = () => {
+export const getAllYanXi = ({ offset, limit }) => {
   return dashApi.search({
     vars: {
       model: 'yuanxi',
-      fields: ['id', 'yxdm', 'name'],
-      // condition: { // 搜索的条件
-      //   logic_operator: "|",
-      //   children: [ // 这里可以往数组里写多个条件
-      //     {
-      //       leaf: {
-      //         field: "name",
-      //         comparator: "like",
-      //         value: "计算",
-      //       },
-      //     },
-      //   ]
-      // },
-      limit: 10,
-      offset: 0
+      fields: ['id', 'yxdm'],
+      limit,
+      offset
     }
   })
 }
