@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 10:42:33
- * @LastEditTime: 2022-12-30 17:42:33
+ * @LastEditTime: 2023-01-05 22:37:32
  * @Msg: Nothing
  */
 import Taro from '@tarojs/taro';
@@ -10,9 +10,8 @@ import interceptors, { ResponseData } from './interceptors';
 
 const envVersion = 'develop'
 const baseApiUrl = {
-  develop: 'https://mock.presstime.cn/mock/63ae6a030a20cd00b248136c',
-  // develop: 'https://portal-miniapp-dev-test.nx1.applysquare.net',
-  trial: 'https://portal-miniapp-dev-test.nx1.applysquare.net',
+  develop: 'http://192.168.196.1:9901',
+  trial: 'https://mock.presstime.cn/mock/63ae6a030a20cd00b248136c',
   release: ''
 }
 

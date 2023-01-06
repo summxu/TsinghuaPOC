@@ -1,16 +1,16 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 10:43:58
- * @LastEditTime: 2022-12-30 17:39:08
+ * @LastEditTime: 2023-01-06 10:06:11
  * @Msg: Nothing
  */
 import Taro, { Chain } from "@tarojs/taro"
 import { HTTP_STATUS } from './config'
 
 export interface ResponseData<T = unknown> extends Promise<T> {
-  code: number
-  data: T
-  msg: string
+  compressed: boolean
+  result: T
+  version: string
 }
 
 interface SuccessCallbackResult<T extends string | TaroGeneral.IAnyObject | ArrayBuffer = any | any> extends TaroGeneral.CallbackResult {
@@ -67,7 +67,7 @@ const customInterceptor = (chain: Chain) => {
 // Taro 提供了两个内置拦截器
 // logInterceptor - 用于打印请求的相关信息
 // timeoutInterceptor - 在请求超时时抛出错误。
-// const interceptors = [customInterceptor, Taro.interceptors.logInterceptor]
-const interceptors = [customInterceptor]
+const interceptors = [customInterceptor, Taro.interceptors.logInterceptor]
+// const interceptors = [customInterceptor]
 
 export default interceptors

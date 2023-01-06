@@ -1,11 +1,11 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-30 10:24:55
- * @LastEditTime: 2023-01-03 09:30:53
+ * @LastEditTime: 2023-01-06 12:44:19
  * @Msg: Nothing
  */
+import { GenericSearchResult } from "@/apis/flora-api-dash/query-defs";
 import { ResponseData } from "@/apis/interceptors";
-import { OKResult } from "@/apis/utils/gql";
 import { Divider, Empty, Loading } from "@taroify/core";
 import { View } from "@tarojs/components";
 import Taro, { usePullDownRefresh, useReachBottom } from "@tarojs/taro";
@@ -13,7 +13,7 @@ import { Dispatch, FC, PropsWithChildren, useEffect, useReducer, useRef, useStat
 import "./index.scss";
 
 interface useDataListProps {
-  request: (params: Object) => Promise<ResponseData<any>> | Promise<OKResult<{ raw: unknown; }>>;
+  request: (params: Object) => Promise<any>;
   params?: Object | undefined
 }
 
@@ -94,19 +94,19 @@ export const useDataList = ({ request, params = {} }: useDataListProps) => {
       limit: pageParam.limit,
       ...params
     })
-      .then(({ data }: ResponseData<any> & OKResult<{ raw: unknown; }>) => {
+      .then(({ result }: ResponseData<GenericSearchResult<any>>) => {
         // 判断是否第一页
         if (pageParam.offset) {
-          setDataList([...dataList, ...data.list])
-          dataListRef.current = [...dataList, ...data.list]
+          setDataList([...dataList, ...result.items])
+          dataListRef.current = [...dataList, ...result.items]
         } else {
-          setDataList(data.list)
-          dataListRef.current = data.list
+          setDataList(result.items)
+          dataListRef.current = result.items
         }
         // 判断有没有更多
         if (!dataListRef.current.length) {
           setStatus('EMPTY')
-        } else if (data.list.length < pageParam?.limit!) {
+        } else if (result.items.length < pageParam?.limit!) {
           setStatus('NOMORE')
         } else {
           setStatus('NORMAL')

@@ -138,10 +138,10 @@ function postGQLEndpoint<R>(args: {
       operationName: args.operationName,
     },
   }).then((r) => {
-    if ('data' in r) {
-      return r.data;
+    if ('result' in r) {
+      return r.result;
     }
-    throw new Error('request gql failed: ' + r.errorMsg);
+    throw new Error('request gql failed: ' + r);
   });
 }
 
@@ -284,8 +284,9 @@ export class GQLLoader {
         version: version,
       },
     }).then((r) => {
-      if ('data' in r) {
-        const aesResultMap = r.data as any;
+      if ('result' in r) {
+
+        const aesResultMap = r as any;
         let resultMapStr = ''
         switch (aesResultMap?.version) {
           case 'v1': {
@@ -300,7 +301,7 @@ export class GQLLoader {
         const resultMap = JSON.parse(resultMapStr || '{}')
         return querys.map((query) => resultMap[query.key || ""]);
       }
-      throw new Error('request gql failed: ' + r.errorMsg);
+      throw new Error('request gql failed: ' + r);
     });
   };
 }
