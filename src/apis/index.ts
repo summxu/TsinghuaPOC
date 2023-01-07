@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-01-06 17:59:51
+ * @LastEditTime: 2023-01-07 10:18:46
  * @Msg: Nothing
  */
 import { dashApi, request } from "./request";
@@ -34,7 +34,7 @@ export const testGraphQL = () => {
 export const getAllYanXi = ({ offset, limit }) => {
   return dashApi.search({
     vars: {
-      model: 'yuanxi',
+      model: 'yuanxi1',
       fields: ['id', 'yxdm'],
       limit,
       offset

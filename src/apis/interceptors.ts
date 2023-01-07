@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 10:43:58
- * @LastEditTime: 2023-01-06 17:49:48
+ * @LastEditTime: 2023-01-07 09:40:30
  * @Msg: Nothing
  */
 import Taro, { Chain } from "@tarojs/taro"
@@ -14,7 +14,7 @@ export interface ResponseData<T = unknown> extends Promise<T> {
   version: string
 }
 
-export interface CommonResponseData extends Promise<T> {
+export interface CommonErrorResponse extends Promise<T> {
   status: 'ok' | 'error'
   errorKind: string
   errorMsg: string
@@ -23,7 +23,7 @@ export interface CommonResponseData extends Promise<T> {
 
 interface SuccessCallbackResult<T extends string | TaroGeneral.IAnyObject | ArrayBuffer = any | any> extends TaroGeneral.CallbackResult {
   /** 开发者服务器返回的数据 */
-  data: ResponseData<T> & CommonResponseData
+  data: ResponseData<T> & CommonErrorResponse
   /** 开发者服务器返回的 HTTP Response Header */
   header: TaroGeneral.IAnyObject
   /** 开发者服务器返回的 HTTP 状态码 */

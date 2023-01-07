@@ -82,10 +82,7 @@ export class DataAPI {
       }).catch((r) => {
         reject(r);
       })
-    }).catch(e => {
-      console.log(`\n${e}\nStack:${new Error().stack}\n\n`)
-      return e
-    });
+    })
   }
 
   #dataApiMutationWrapper = <Q extends gql.Mutation<any, any> = gql.Mutation<any, any>, V = gql.VariableType<any>>(args: {
