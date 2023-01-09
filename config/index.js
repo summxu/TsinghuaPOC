@@ -13,9 +13,14 @@ const config = {
   plugins: ['@tarojs/plugin-platform-lark'],
   defineConstants: {
   },
+  sass: {
+    resource: ['src/app.scss'],
+    projectDirectory: path.resolve(__dirname, '..')
+  },
   alias: {
     '@/components': path.resolve(__dirname, '..', 'src/components'),
     '@/utils': path.resolve(__dirname, '..', 'src/utils'),
+    '@/static': path.resolve(__dirname, '..', 'src/static'),
     '@/apis': path.resolve(__dirname, '..', 'src/apis'),
     '@/src': path.resolve(__dirname, '..', 'src'),
   },

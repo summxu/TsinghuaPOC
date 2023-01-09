@@ -25,6 +25,7 @@
       "@/components/*": ["./src/components/*"],
       "@/utils/*": ["./src/utils/*"],
       "@/apis/*": ["./src/apis/*"],
+      "@/static/*": ["./src/static/*"],
       "@/src/*": ["./src/*"],
     },
   },
