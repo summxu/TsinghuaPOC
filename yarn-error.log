@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  SyntaxError: D:\Code\Feishu\TsinghuaServiceMobx\package.json: Unexpected token } in JSON at position 1846
+  SyntaxError: D:\Code\Feishu\TsinghuaPOC\package.json: Unexpected token } in JSON at position 1846
       at JSON.parse (<anonymous>)
       at D:\node\node_global\node_modules\yarn\lib\cli.js:1629:59
       at Generator.next (<anonymous>)
@@ -23,7 +23,7 @@ Trace:
 
 npm manifest: 
   {
-    "name": "TsinghuaServiceMobx",
+    "name": "TsinghuaPOC",
     "version": "1.0.0",
     "private": true,
     "description": "",

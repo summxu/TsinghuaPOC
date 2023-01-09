@@ -1,6 +1,6 @@
 const path = require('path')
 const config = {
-  projectName: 'TsinghuaServiceMobx',
+  projectName: 'TsinghuaPOC',
   date: '2022-12-28',
   designWidth: 750,
   deviceRatio: {

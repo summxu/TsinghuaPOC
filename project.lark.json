@@ -1,6 +1,6 @@
 {
   "miniprogramRoot": "./dist",
-  "projectname": "TsinghuaServiceMobx",
+  "projectname": "TsinghuaPOC",
   "description": "",
   "appid": "cli_a3215e3a7abed013",
   "setting": {
