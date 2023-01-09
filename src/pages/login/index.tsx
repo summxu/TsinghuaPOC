@@ -1,9 +1,9 @@
-import { View, Image, Input } from '@tarojs/components'
-import { FC, PropsWithChildren } from 'react'
+import { Image, Input, View } from '@tarojs/components'
+import { FC } from 'react'
 
 import './index.scss'
 
-const Login: FC<PropsWithChildren> = () => {
+const Login: FC = () => {
 
   return (
     <View className='login-page'>

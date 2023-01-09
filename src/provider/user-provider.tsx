@@ -4,7 +4,7 @@
  * @LastEditTime: 2022-12-29 16:29:20
  * @Msg: Nothing
  */
-import { createContext, Dispatch, FC, PropsWithChildren, useContext, useReducer } from "react";
+import { createContext, Dispatch, FC, useContext, useReducer } from "react";
 
 interface UserState {
   username: string
@@ -33,7 +33,7 @@ const userContext = createContext<UserContext>({
   dispatch: () => { },
 });
 
-export const UserProvider: FC<PropsWithChildren> = (props) => {
+export const UserProvider: FC = (props) => {
 
   const reducer = (preState: UserState, action: {
     type: keyof UserDispatch;

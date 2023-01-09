@@ -4,15 +4,12 @@
  * @LastEditTime: 2023-01-06 09:59:39
  * @Msg: Nothing
  */
-import { getAllYX, testGraphQL } from '@/apis/index'
-import { useDataList } from '@/components/data-list'
 import { View } from '@tarojs/components'
-import { useLoad } from '@tarojs/taro'
-import { FC, PropsWithChildren } from 'react'
+import { FC } from 'react'
 
 import './index.scss'
 
-const Office: FC<PropsWithChildren> = () => {
+const Office: FC = () => {
   // const { dataList } = useDataList({ request: getAllYX })
   // const getAllYXHandle = async () => {
   //   const res = await testGraphQL()

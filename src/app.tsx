@@ -4,11 +4,11 @@
  * @LastEditTime: 2022-12-29 16:46:03
  * @Msg: Nothing
  */
-import { FC, PropsWithChildren } from 'react'
+import { FC } from 'react'
 import './app.scss'
 import { UserProvider } from './provider/user-provider'
 
-const App: FC<PropsWithChildren> = (props) => {
+const App: FC = (props) => {
 
   return <UserProvider>
     {props.children}

@@ -5,11 +5,11 @@
  * @Msg: Nothing
  */
 import { View } from '@tarojs/components'
-import { FC, PropsWithChildren } from 'react'
+import { FC } from 'react'
 
 import './index.scss'
 
-const My: FC<PropsWithChildren> = () => {
+const My: FC = () => {
 
   return <View>My</View>
 }
