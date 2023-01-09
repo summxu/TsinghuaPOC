@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 16:36:38
- * @LastEditTime: 2022-12-28 17:33:12
+ * @LastEditTime: 2023-01-09 17:58:33
  * @Msg: Nothing
  */
 /// <reference types="@tarojs/taro" />
@@ -21,8 +21,15 @@ interface enterChat {
   needBadge?: boolean
 }
 
+interface getUserInfo {
+  withCredentials?: boolean //是否需要返回敏感数据
+}
+
 type ttAPI = {
-  enterChat<T = any>(option: enterChat | CommonOption): Promise<T>
+  enterChat(option: enterChat | CommonOption): void
+  login(option?: CommonOption): void
+  checkSession(option?: CommonOption): void
+  getUserInfo(option?: getUserInfo | CommonOption): void
 }
 
 declare const tt: ttAPI

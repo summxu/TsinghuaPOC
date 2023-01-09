@@ -29,6 +29,39 @@
 }
 
 
-.form-box{}
-.form-item-box{}
-.form-item{}
+.form-box {
+  padding: 0 30px;
+}
+
+.form-item-box {
+  margin-top: 60px;
+  border-bottom: 1px solid $color-grey-4;
+}
+
+.form-item-icon {
+  height: 50px;
+  width: 50px;
+}
+
+.form-item {
+  font-size: 32px;
+  font-weight: 400;
+  color: #8F959E;
+  margin: 0 40px 26px;
+  margin-left: 40px;
+  flex: 1;
+}
+
+.login-btn {
+  height: 100px;
+  background: #2039D3;
+  box-shadow: 0px 24px 112px 10px rgba(172, 182, 244, 0.59);
+  border-radius: 21px;
+
+  font-size: 34px;
+  font-family: PingFang;
+  font-weight: bold;
+  color: #FEFEFE;
+
+  margin: 150px 30px 0;
+}
