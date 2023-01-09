@@ -79,7 +79,11 @@ export class DataAPI {
         cacheMode: args.cacheMode
       }).then((r) => {
         resolve(r);
-      }).catch((r) => {
+      }).catch((r: Error) => {
+        // Taro.showToast({
+        //   title: r.message,
+        //   icon: 'none'
+        // })
         reject(r);
       })
     })

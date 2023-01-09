@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-01-07 10:18:46
+ * @LastEditTime: 2023-01-09 09:23:01
  * @Msg: Nothing
  */
 import { dashApi, request } from "./request";
@@ -19,34 +19,14 @@ export const login = (data: { account: string, password: string }) => {
   });
 };
 
-
-// 测试通用接口
-export const testGraphQL = () => {
-  return dashApi.fields({
-    vars: {
-      model: 'PortContent',
-      fields: ['content_sources'],
-    }
-  })
-}
-
 // 测试取出所有院系
 export const getAllYanXi = ({ offset, limit }) => {
   return dashApi.search({
     vars: {
-      model: 'yuanxi1',
+      model: 'yuanxi',
       fields: ['id', 'yxdm'],
       limit,
       offset
     }
-  })
-}
-
-// 测试分页
-export const testPage = (data) => {
-  return request({
-    url: '/datalist',
-    method: 'GET',
-    data
   })
 }
