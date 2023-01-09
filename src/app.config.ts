@@ -1,21 +1,22 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-03 09:18:43
+ * @LastEditTime: 2023-01-09 10:39:21
  * @Msg: Nothing
  */
 export default defineAppConfig({
   pages: [
+    'pages/login/index',
     'pages/index/index',
     'pages/office/index',
     'pages/mine/index'
   ],
   window: {
     backgroundTextStyle: 'dark',
-    navigationBarBackgroundColor: '#fff',
-    backgroundColor: '#E8E8E8',
-    navigationBarTitleText: '清华POC',
-    navigationBarTextStyle: 'black',
+    navigationBarBackgroundColor: '#3723B9',
+    backgroundColor: '#F6F7F9',
+    navigationBarTitleText: '清华SIGS答辩助手',
+    navigationBarTextStyle: 'white',
     enablePullDownRefresh: false
   },
   tabBar: {
