@@ -1,3 +1,4 @@
+/// <reference path="../node_modules/@tarojs/plugin-platform-lark/types/shims-lark.d.ts" />
 /// <reference types="@tarojs/taro" />
 
 declare module '*.png';
