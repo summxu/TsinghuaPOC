@@ -1,19 +1,30 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 13:30:27
- * @LastEditTime: 2022-12-29 16:29:20
+ * @LastEditTime: 2023-01-10 13:53:12
  * @Msg: Nothing
  */
-import { createContext, Dispatch, FC, useContext, useReducer } from "react";
+import { createContext, Dispatch, FC, useContext, useEffect, useReducer } from "react";
+import { userInfo } from "../apis";
 
-interface UserState {
-  username: string
-  userid: number
+export interface UserState {
+  uid: number
+  email: string
+  name: string
+  is_dev: boolean
   avatar: string
+  can_code_examples: boolean
+  default_identity_id: number
+  display_name: string
+  guest: boolean
+  impersonator_uid: number
+  is_impersonating: boolean
+  nickname: string
+  reset_password: { need: boolean, reason: string }
+  user_name: string
 }
 
 interface UserDispatch {
-  FLUSH
   INIT
   CLEAR
 }
@@ -43,11 +54,6 @@ export const UserProvider: FC = (props) => {
     switch (type) {
       default:
         return preState;
-      case 'FLUSH':
-        return {
-          ...preState,
-          ...payload
-        };
       case 'INIT':
         return payload as Partial<UserState> // 断言 init 的情况下一定会传 payload
       case 'CLEAR':
@@ -63,8 +69,18 @@ export const UserProvider: FC = (props) => {
 }
 
 export const useUserReduce = () => {
-  return useContext(userContext)
+
+  const { state, dispatch } = useContext(userContext)
+
+  const flushUserInfo = async () => {
+    try {
+      const { data } = await userInfo()
+      dispatch({ type: 'INIT', payload: data })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(() => { flushUserInfo() }, [])
+
+  return { state, dispatch }
 };
-
-
-export const hahaha = 123

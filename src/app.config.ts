@@ -1,13 +1,13 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-09 10:39:21
+ * @LastEditTime: 2023-01-10 13:46:55
  * @Msg: Nothing
  */
 export default defineAppConfig({
   pages: [
-    'pages/login/index',
     'pages/index/index',
+    'pages/login/index',
     'pages/office/index',
     'pages/mine/index'
   ],

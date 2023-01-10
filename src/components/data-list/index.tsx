@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-30 10:24:55
- * @LastEditTime: 2023-01-06 12:44:19
+ * @LastEditTime: 2023-01-10 10:37:25
  * @Msg: Nothing
  */
 import { GenericSearchResult } from "@/apis/flora-api-dash/query-defs";
@@ -131,7 +131,7 @@ interface DataListProps {
   }>;
 }
 
-export const DataList: FC<PropsWithChildren & DataListProps> = ({ status, dispatch, children }) => {
+export const DataList: FC<PropsWithChildren<unknown> & DataListProps> = ({ status, dispatch, children }) => {
   usePullDownRefresh(() => {
     dispatch({ type: 'FLUSH' })
   })
