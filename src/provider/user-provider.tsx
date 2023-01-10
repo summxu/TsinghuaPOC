@@ -1,9 +1,10 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 13:30:27
- * @LastEditTime: 2023-01-10 13:53:12
+ * @LastEditTime: 2023-01-10 14:31:58
  * @Msg: Nothing
  */
+import Taro from "@tarojs/taro";
 import { createContext, Dispatch, FC, useContext, useEffect, useReducer } from "react";
 import { userInfo } from "../apis";
 
@@ -82,5 +83,11 @@ export const useUserReduce = () => {
   }
   useEffect(() => { flushUserInfo() }, [])
 
-  return { state, dispatch }
+  const logoutHandle = () => {
+    dispatch({ type: 'CLEAR' })
+    Taro.removeStorageSync('Authorization')
+    Taro.redirectTo({ url: '/pages/login/index' })
+  }
+
+  return { state, dispatch, logoutHandle }
 };

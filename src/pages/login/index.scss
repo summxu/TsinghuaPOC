@@ -5,12 +5,15 @@
   background-size: cover;
 }
 
+.top-box {
+  padding-top: 80px;
+}
+
 .login-text {
   font-size: 64px;
   font-family: PingFang;
   font-weight: bold;
   color: $color-brand;
-  margin-top: 120px;
 }
 
 .login-desc {

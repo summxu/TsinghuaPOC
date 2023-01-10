@@ -18,7 +18,7 @@ const Login: FC = () => {
         password: passWord
       })
       Taro.setStorageSync('Authorization', token)
-      Taro.redirectTo({ url: '/pages/index/index' })
+      Taro.switchTab({ url: '/pages/index/index' })
     } catch (error) {
       console.log(error)
     }
