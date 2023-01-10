@@ -11,14 +11,20 @@ const Login: FC = () => {
   const [passWord, setPassWord] = useState<string>('flora#23456')
   const [showPass, setShowPass] = useState<boolean>(true)
 
+  // 统一登录后的操作
+  const loginAfterHandle = async (token: string) => {
+    Taro.setStorageSync('Authorization', token)
+    Taro.switchTab({ url: '/pages/index/index' })
+  }
+
+  // 自定义登录
   const loginHandle = async () => {
     try {
       const { token } = await login({
         account: userName,
         password: passWord
       })
-      Taro.setStorageSync('Authorization', token)
-      Taro.switchTab({ url: '/pages/index/index' })
+      loginAfterHandle(token)
     } catch (error) {
       console.log(error)
     }

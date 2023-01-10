@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-06 09:59:39
+ * @LastEditTime: 2023-01-10 15:40:48
  * @Msg: Nothing
  */
 import { View } from '@tarojs/components'
@@ -9,7 +9,7 @@ import { FC } from 'react'
 
 import './index.scss'
 
-const Office: FC = () => {
+const Progress: FC = () => {
   // const { dataList } = useDataList({ request: getAllYX })
   // const getAllYXHandle = async () => {
   //   const res = await testGraphQL()
@@ -19,7 +19,7 @@ const Office: FC = () => {
   // useLoad(() => {
   //   getAllYXHandle()
   // })
-  return <View>Office</View>
+  return <View>Progress</View>
 }
 
-export default Office
+export default Progress

@@ -1,15 +1,16 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-10 13:46:55
+ * @LastEditTime: 2023-01-10 16:33:07
  * @Msg: Nothing
  */
 export default defineAppConfig({
   pages: [
     'pages/index/index',
-    'pages/login/index',
-    'pages/office/index',
-    'pages/mine/index'
+    'pages/progress/index',
+    'pages/mine/index',
+    'pages/students/index',
+    'pages/login/index'
   ],
   window: {
     backgroundTextStyle: 'dark',
@@ -26,22 +27,28 @@ export default defineAppConfig({
     list: [
       {
         pagePath: 'pages/index/index',
-        text: '首页',
+        text: '答辩',
         iconPath: './static/index.png',
         selectedIconPath: './static/index-selected.png'
       },
       {
-        pagePath: 'pages/office/index',
-        text: '办事',
-        iconPath: './static/office.png',
-        selectedIconPath: './static/office-selected.png'
+        pagePath: 'pages/progress/index',
+        text: '学习进度',
+        iconPath: './static/progress.png',
+        selectedIconPath: './static/progress-selected.png'
+      },
+      {
+        pagePath: 'pages/students/index',
+        text: '我的学生',
+        iconPath: './static/students.png',
+        selectedIconPath: './static/students-selected.png'
       },
       {
         pagePath: 'pages/mine/index',
         text: '我的',
-        iconPath: './static/my.png',
-        selectedIconPath: './static/my-selected.png'
-      }]
-
+        iconPath: './static/mine.png',
+        selectedIconPath: './static/mine-selected.png'
+      }
+    ]
   },
 })

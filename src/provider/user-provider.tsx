@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 13:30:27
- * @LastEditTime: 2023-01-10 14:31:58
+ * @LastEditTime: 2023-01-10 16:09:07
  * @Msg: Nothing
  */
 import Taro from "@tarojs/taro";
@@ -69,7 +69,8 @@ export const UserProvider: FC = (props) => {
   </userContext.Provider>
 }
 
-export const useUserReduce = () => {
+// isRefresh 是否刷新 userInfo 请求
+export const useUserReduce = ({ isRefresh = false }: { isRefresh?: boolean } = {}) => {
 
   const { state, dispatch } = useContext(userContext)
 
@@ -81,7 +82,10 @@ export const useUserReduce = () => {
       console.log(error)
     }
   }
-  useEffect(() => { flushUserInfo() }, [])
+
+  if (isRefresh) {
+    useEffect(() => { flushUserInfo() }, [])
+  }
 
   const logoutHandle = () => {
     dispatch({ type: 'CLEAR' })
