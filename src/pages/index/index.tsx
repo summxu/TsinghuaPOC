@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-11 09:51:55
+ * @LastEditTime: 2023-01-11 13:59:54
  * @Msg: Nothing
  */
 import { getAllYanXi } from '@/apis/index'
@@ -31,16 +31,18 @@ const Index: FC = () => {
 
   const [keyWord, setKeyWord] = useState('')
   const { status, dataList, dispatch } = useDataList({ request: getAllYanXi, params: { keyWord } })
-  console.log(dataList)
   return (
     <View className='index-page'>
       <View className='search-box'>
+        <View className='mask-bottom flex-row justify-between'>
+          <View className='left-horn'></View>
+          <View className='right-horn'></View>
+        </View>
         <Search onConfirm={value => {
           setKeyWord(value)
           dispatch({ type: 'FLUSH' })
         }}></Search>
       </View>
-
       <View className='list-box'>
         <DataList status={status} dispatch={dispatch}>
           {dataList.map(({ data }) => (
