@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-11 13:59:54
+ * @LastEditTime: 2023-01-11 15:40:14
  * @Msg: Nothing
  */
 import { getAllYanXi } from '@/apis/index'
@@ -9,7 +9,7 @@ import { DataList, useDataList } from '@/components/data-list'
 import { Search } from '@/components/search'
 import { useUserReduce } from '@/src/provider/user-provider'
 import { View, Image, Button } from '@tarojs/components'
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 
 import './index.scss'
 
@@ -29,8 +29,10 @@ const Index: FC = () => {
     }
   }, [userInfo])
 
-  const [keyWord, setKeyWord] = useState('')
-  const { status, dataList, dispatch } = useDataList({ request: getAllYanXi, params: { keyWord } })
+  const [search, setSearch] = useState('')
+  const params = useMemo(() => ({ search }), [search])
+  
+  const { status, dataList, dispatch } = useDataList({ request: getAllYanXi, params })
   return (
     <View className='index-page'>
       <View className='search-box'>
@@ -38,10 +40,7 @@ const Index: FC = () => {
           <View className='left-horn'></View>
           <View className='right-horn'></View>
         </View>
-        <Search onConfirm={value => {
-          setKeyWord(value)
-          dispatch({ type: 'FLUSH' })
-        }}></Search>
+        <Search onConfirm={value => setSearch(value)}></Search>
       </View>
       <View className='list-box'>
         <DataList status={status} dispatch={dispatch}>

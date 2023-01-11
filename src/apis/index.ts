@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-01-11 10:10:04
+ * @LastEditTime: 2023-01-11 15:40:31
  * @Msg: Nothing
  */
 import { UserState } from "../provider/user-provider";
@@ -56,8 +56,7 @@ export const feishuOpenIDLogin = (data: { code: string }) => {
 };
 
 // 测试取出所有院系
-export const getAllYanXi = ({ offset, limit, keyWord }) => {
-  console.log(keyWord)
+export const getAllYanXi = ({ offset, limit, search }) => {
   return dashApi.search({
     vars: {
       model: 'student',
@@ -68,7 +67,7 @@ export const getAllYanXi = ({ offset, limit, keyWord }) => {
           leaf: {
             field: 'name',
             comparator: 'like',
-            value: keyWord,
+            value: search,
           }
         }]
       },

@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-30 10:24:55
- * @LastEditTime: 2023-01-11 14:35:03
+ * @LastEditTime: 2023-01-11 15:41:33
  * @Msg: Nothing
  */
 import { GenericSearchResult } from "@/apis/flora-api-dash/query-defs";
@@ -111,7 +111,7 @@ export const useDataList = ({ request, params = {} }: useDataListProps) => {
     }
   }
 
-  useEffect(() => { queryRequest() }, [pageParam])
+  useEffect(() => { queryRequest() }, [pageParam, params])
 
   return { dispatch, dataList, status }
 }

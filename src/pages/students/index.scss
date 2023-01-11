@@ -1,0 +1,27 @@
+.search-box {
+  width: 100%;
+  background-color: $color-brand-bg;
+  padding: 62px 34px calc(62px + 30px);
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 1;
+}
+
+.search-left {
+  flex: 1;
+}
+
+.create-group-btn {
+  width: 147px;
+  height: 56px;
+  border: 2px solid #FFFFFF;
+  border-radius: 28px;
+  line-height: 56px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin-left: 60px;
+  text-align: center;
+}
+
+.create-group-btn-hover {}
