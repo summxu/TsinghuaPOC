@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 10:43:58
- * @LastEditTime: 2023-01-10 14:00:27
+ * @LastEditTime: 2023-01-10 22:06:03
  * @Msg: Nothing
  */
 import Taro, { Chain } from "@tarojs/taro"
@@ -14,7 +14,7 @@ export interface ResponseData<T = unknown> extends Promise<T> {
   version: string
 }
 
-export interface CommonErrorResponse extends Promise<T> {
+export interface CommonErrorResponse<T = unknown> extends Promise<T> {
   status: 'ok' | 'error'
   errorKind: string
   errorMsg: string
@@ -71,6 +71,9 @@ const customInterceptor = (chain: Chain) => {
       }
     })
     .catch(error => {
+      if (error === 'Authorization verification failed') {
+        return Promise.reject(error)
+      }
       Taro.showToast({
         title: error,
         icon: 'none'

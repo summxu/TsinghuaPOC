@@ -1,14 +1,14 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-10 17:23:18
+ * @LastEditTime: 2023-01-11 09:51:55
  * @Msg: Nothing
  */
 import { getAllYanXi } from '@/apis/index'
 import { DataList, useDataList } from '@/components/data-list'
 import { Search } from '@/components/search'
 import { useUserReduce } from '@/src/provider/user-provider'
-import { View, Image } from '@tarojs/components'
+import { View, Image, Button } from '@tarojs/components'
 import { FC, useEffect, useState } from 'react'
 
 import './index.scss'
@@ -30,23 +30,33 @@ const Index: FC = () => {
   }, [userInfo])
 
   const [keyWord, setKeyWord] = useState('')
-  // const { status, dataList, dispatch } = useDataList({ request: getAllYanXi, params: { hahah: 1, heiheih: 2 } })
-
+  const { status, dataList, dispatch } = useDataList({ request: getAllYanXi, params: { keyWord } })
+  console.log(dataList)
   return (
     <View className='index-page'>
       <View className='search-box'>
-        <Search onConfirm={value => setKeyWord(value)}></Search>
+        <Search onConfirm={value => {
+          setKeyWord(value)
+          dispatch({ type: 'FLUSH' })
+        }}></Search>
       </View>
 
-      {/* <DataList status={status} dispatch={dispatch}>
-        {dataList.map(item => (
-          <View className='item-box'>
-            id: {item.id}
-            yxdm: {item.yxdm}
-            name: {item.name}
-          </View>
-        ))}
-      </DataList> */}
+      <View className='list-box'>
+        <DataList status={status} dispatch={dispatch}>
+          {dataList.map(({ data }) => (
+            <View className='item flex-row justify-between items-center'>
+              <View className='item-left flex-row '>
+                <Image className='item-avatar' src={require('@/static/avatar.png')}></Image>
+                <View className="item-center flex-col justify-around">
+                  <View className='item-title'>{data.name}</View>
+                  <View className='item-desc'>{data.code}</View>
+                </View>
+              </View>
+              <Button className='chat-btn' hoverClass='chat-btn-hover' size="mini">联系</Button>
+            </View>
+          ))}
+        </DataList>
+      </View>
     </View >
   )
 }

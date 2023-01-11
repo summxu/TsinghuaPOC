@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-30 10:24:55
- * @LastEditTime: 2023-01-10 10:37:25
+ * @LastEditTime: 2023-01-11 09:43:10
  * @Msg: Nothing
  */
 import { GenericSearchResult } from "@/apis/flora-api-dash/query-defs";

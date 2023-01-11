@@ -1,4 +1,4 @@
-import { login } from '@/apis/index'
+import { feishuOpenIDLogin, login, loginBase } from '@/apis/index'
 import { Button, Image, Input, View } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { FC, useState } from 'react'
@@ -18,13 +18,24 @@ const Login: FC = () => {
   }
 
   // 自定义登录
-  const loginHandle = async () => {
+  const loginHandle = async (code: string) => {
     try {
-      const { token } = await login({
-        account: userName,
-        password: passWord
-      })
+      // const { token } = await login({
+      //   code: '1234',
+      //   name: '张三',
+      //   login_code: code
+      // })
+      const { token } = await loginBase({ account: 'root@flora.local', password: 'flora#23456' })
       loginAfterHandle(token)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  // 飞书登录
+  const feishuLoginHandle = async (code: string) => {
+    try {
+      await feishuOpenIDLogin({ code })
     } catch (error) {
       console.log(error)
     }
@@ -33,10 +44,13 @@ const Login: FC = () => {
   const getUserInfoHandle = () => {
     tt.login({
       success({ code }) {
+        console.log(code)
         tt.getUserInfo({
           withCredentials: true,
-          success({ userInfo }) {
-            console.log(code, userInfo)
+          success(res) {
+            console.log(res)
+            // feishuLoginHandle(code)
+            loginHandle(code)
           },
           fail(res) {
             console.log(`getUserInfo fail: ${JSON.stringify(res)}`);
@@ -73,7 +87,7 @@ const Login: FC = () => {
         </View>
       </View>
 
-      <Button onClick={loginHandle} hoverClass="login-btn-hover" className='login-btn' plain type='primary'>授权登录</Button>
+      <Button onClick={getUserInfoHandle} hoverClass="login-btn-hover" className='login-btn' plain type='primary'>授权登录</Button>
 
     </View>
   )
