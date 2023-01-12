@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-11 17:48:10
+ * @LastEditTime: 2023-01-12 09:45:25
  * @Msg: Nothing
  */
 import { getAllYanXi } from '@/apis/index'
@@ -23,7 +23,6 @@ const Index: FC = () => {
     }
     // 根据角色判断tabBarItems
     if (userInfo.display_name) {
-      console.log(123123)
       tt.removeTabBarItem({ tag: 'pages/progress/index' })
     } else {
       console.log('asdasd')
@@ -31,8 +30,8 @@ const Index: FC = () => {
     }
   }, [userInfo])
 
-  const [search, setSearch] = useState('')
-  const params = useMemo(() => ({ search }), [search])
+  const [searchValue, setSearch] = useState('')
+  const params = useMemo(() => ({ searchValue }), [searchValue])
 
   const { status, dataList, dispatch } = useDataList({ request: getAllYanXi, params })
   return (
