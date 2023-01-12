@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-30 10:24:55
- * @LastEditTime: 2023-01-12 11:11:49
+ * @LastEditTime: 2023-01-12 16:42:41
  * @Msg: Nothing
  */
 import { GenericSearchResult } from "@/apis/flora-api-dash/query-defs";
@@ -155,7 +155,7 @@ export const DataList: FC<PropsWithChildren<unknown> & DataListProps> = ({ statu
           )}
           {status === 'EMPTY' && (
             <Empty style={{ paddingTop: '100px' }}>
-              <Empty.Image />
+              <Empty.Image style={{ width: '177px', height: '120px' }} src={require('@/static/empty.png')} />
               <Empty.Description>内容为空</Empty.Description>
             </Empty>
           )}

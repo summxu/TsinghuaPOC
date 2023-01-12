@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-12 09:45:25
+ * @LastEditTime: 2023-01-12 16:10:59
  * @Msg: Nothing
  */
 import { getAllYanXi } from '@/apis/index'
@@ -9,6 +9,7 @@ import { DataList, useDataList } from '@/components/data-list'
 import { Search } from '@/components/search'
 import { useUserReduce } from '@/src/provider/user-provider'
 import { View, Image, Button } from '@tarojs/components'
+import Taro from '@tarojs/taro'
 import { FC, useEffect, useMemo, useState } from 'react'
 
 import './index.scss'
@@ -46,7 +47,7 @@ const Index: FC = () => {
       <View className='list-box'>
         <DataList status={status} dispatch={dispatch}>
           {dataList.map(({ data }) => (
-            <View className='item flex-row justify-between items-center'>
+            <View onClick={() => Taro.navigateTo({ url: '/pages/index/replay/index' })} className='item flex-row justify-between items-center'>
               <View className='item-left flex-row '>
                 <Image className='item-avatar' src={require('@/static/avatar.png')}></Image>
                 <View className="item-center flex-col justify-around">

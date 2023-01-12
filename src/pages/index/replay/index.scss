@@ -1,0 +1,177 @@
+.replay-top {
+  height: calc(216px + 30px);
+  background-color: $color-brand-bg;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+}
+
+.card-box {
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+  top: 70px;
+}
+
+.top-card {
+  background: #FFFFFF;
+  border-radius: 30px 30px 0px 0px;
+  padding: 230px 30px 30px;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 216px;
+  box-sizing: border-box;
+}
+
+.option-card {
+  border-radius: 10px;
+  padding: 28px;
+  flex: 1;
+}
+
+.option-card1 {
+  background: #E7F9FC;
+  margin-right: 20px;
+}
+
+.option-card2 {
+  background: #F5F4FB;
+  margin-left: 20px;
+}
+
+.option-img {
+  height: 60px;
+  width: 60px;
+}
+
+.option-text {
+  font-size: 28px;
+  font-weight: bold;
+  color: #1E232A;
+  margin-left: 50px;
+}
+
+// tabs样式
+.tabs-custom {
+  .taroify-tabs__wrap {
+    position: fixed;
+    top: calc(216px + 376px);
+    width: 100%;
+    z-index: 1;
+    background-color: #fff;
+  }
+
+  .taroify-tabs__content {
+    padding-top: calc(216px + 376px + 88px);
+  }
+
+  .taroify-tabs__tab {
+    flex: none !important;
+  }
+
+  .taroify-tabs__nav {
+    padding-bottom: 0 !important;
+    padding-left: 20px;
+  }
+
+  .taroify-tabs__line--active {
+    background-color: #3370FF !important;
+  }
+
+  .taroify-tabs__tab--active {
+    .taroify-tabs__tab__content {
+      color: #3370FF !important;
+    }
+  }
+}
+
+// 子组件样式
+.index-detail,
+.index-documents {
+  padding: 50px 32px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333333;
+  margin-bottom: 46px;
+}
+
+.minicard {
+  padding: 30px 22px;
+  background: #FFFFFF;
+  border-radius: 10px;
+  margin-bottom: 46px;
+}
+
+.mini-left {
+  font-size: 28px;
+  color: #2B2F36;
+}
+
+.mini-right {
+  font-size: 28px;
+  font-weight: bold;
+  color: #3370FF;
+}
+
+.mumber-items {
+  background-color: #fff;
+  padding: 40px 22px;
+  border-bottom: 1px solid #F5F6F7;
+}
+
+.item-top {
+  margin-bottom: 18px;
+}
+
+.munber-name {
+  font-size: 32px;
+  font-weight: 500;
+  color: #1F2329;
+}
+
+.mumber-tag {
+  padding: 5px 16px;
+  font-size: 20px;
+  color: #FFFFFF;
+  margin-left: 24px;
+  background: #93B3FF;
+  border-radius: 5px;
+}
+
+.mumber-desc {
+  font-size: 28px;
+  color: #8F959E;
+}
+
+// documents 子组件
+
+.doc-tag {
+  display: inline-block;
+  padding: 7px 26px;
+  background: #CFB78A;
+  border-radius: 10px 0px 10px 0px;
+  font-size: 20px;
+  font-weight: 400;
+  color: #FFFFFF;
+  margin-bottom: 30px;
+  margin-left: -30px;
+}
+
+.doc-name {
+  font-size: 28px;
+  color: #1F2329;
+}
+
+.fab-btn {
+  position: fixed;
+  z-index: 2;
+  height: 94px;
+  width: 94px;
+  bottom: 70px;
+  right: 30px;
+}

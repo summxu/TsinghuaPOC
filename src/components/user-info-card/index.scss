@@ -1,0 +1,56 @@
+.user-info-card {
+  margin: 0 30px;
+  box-sizing: border-box;
+  background: #FFFFFF;
+  box-shadow: 0px 9px 24px 0px rgba(200, 208, 225, 0.5);
+  border-radius: 10px;
+  padding: 40px 66px;
+}
+
+.user-info-top {}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  margin-right: 40px;
+}
+
+.name {
+  font-size: 40px;
+  font-weight: bold;
+  color: #1E232A;
+  margin-right: 40px;
+}
+
+.tag {
+  background: #3370FF;
+  border-radius: 5px;
+  padding: 4px 12px;
+  font-size: 24px;
+  color: #FFFFFF;
+}
+
+.user-info-bottom {
+  margin-top: 35px;
+}
+
+.bottom-item {}
+
+.shu {
+  width: 2px;
+  height: 60px;
+  background: #E8E8E8;
+  border-radius: 1px;
+}
+
+.label {
+  font-size: 24px;
+  color: #8F959F;
+}
+
+.value {
+  font-size: 28px;
+  font-weight: bold;
+  color: #1E232A;
+  margin-top: 20px;
+}

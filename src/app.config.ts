@@ -1,13 +1,14 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-12 09:27:45
+ * @LastEditTime: 2023-01-12 16:50:49
  * @Msg: Nothing
  */
 export default defineAppConfig({
   pages: [
-    'pages/students/index',
+    'pages/index/replay/index',
     'pages/index/index',
+    'pages/students/index',
     'pages/progress/index',
     'pages/mine/index',
     'pages/login/index'
