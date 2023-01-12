@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 10:43:58
- * @LastEditTime: 2023-01-10 22:06:03
+ * @LastEditTime: 2023-01-11 17:12:54
  * @Msg: Nothing
  */
 import Taro, { Chain } from "@tarojs/taro"
@@ -60,10 +60,6 @@ const customInterceptor = (chain: Chain) => {
 
       } else if (res.statusCode === HTTP_STATUS.SUCCESS) {
         if (res.data.status === 'error') {
-          // 判断是否登录或者token过期
-          if (res.data.errorMsg === 'Authorization verification failed') {
-            Taro.redirectTo({ url: '/pages/login/index' })
-          }
           return Promise.reject(res.data.errorMsg)
         }
         // 成功后

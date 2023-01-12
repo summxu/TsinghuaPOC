@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-11 15:40:14
+ * @LastEditTime: 2023-01-11 17:48:10
  * @Msg: Nothing
  */
 import { getAllYanXi } from '@/apis/index'
@@ -16,22 +16,24 @@ import './index.scss'
 const Index: FC = () => {
 
   // 在index里初始化userInfo信息
-  const { state: userInfo } = useUserReduce({ isRefresh: true })
+  const { state: userInfo } = useUserReduce({ initLogin: true })
   useEffect(() => {
     if (JSON.stringify(userInfo) === '{}') {
       return
     }
     // 根据角色判断tabBarItems
     if (userInfo.display_name) {
+      console.log(123123)
       tt.removeTabBarItem({ tag: 'pages/progress/index' })
     } else {
+      console.log('asdasd')
       tt.removeTabBarItem({ tag: 'pages/students/index' })
     }
   }, [userInfo])
 
   const [search, setSearch] = useState('')
   const params = useMemo(() => ({ search }), [search])
-  
+
   const { status, dataList, dispatch } = useDataList({ request: getAllYanXi, params })
   return (
     <View className='index-page'>

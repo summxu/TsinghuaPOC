@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-01-11 15:40:31
+ * @LastEditTime: 2023-01-11 16:33:04
  * @Msg: Nothing
  */
 import { UserState } from "../provider/user-provider";
@@ -10,17 +10,17 @@ import { GuestUserInfo } from "./utils/interface";
 
 // 对象转URLcode
 const json2url = (json) => {
-  let str = '?'
+  let tempArr: string[] = []
   Object.keys(json).forEach(item => {
-    str += `${encodeURIComponent(item)}=${encodeURIComponent(json[item])}` + '&'
+    tempArr.push(`${encodeURIComponent(item)}=${encodeURIComponent(json[item])}`)
   })
-  return str === '?' ? '' : str
+  return tempArr.length ? '?' + tempArr.join('&') : ''
 }
 
 // 登录(自定义接口)
-export const login = (data: { code: string, name: string, login_code: string }) => {
+export const login = (data: { code: string, pwd: string, login_code: string }) => {
   return request<{ token: string }>({
-    url: '/feishu_api/student_login',
+    url: '/feishu_api/user_login',
     method: 'POST',
     data,
     header: { Authorization: '' }

@@ -1,12 +1,12 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 13:30:27
- * @LastEditTime: 2023-01-10 16:09:07
+ * @LastEditTime: 2023-01-11 17:45:35
  * @Msg: Nothing
  */
 import Taro from "@tarojs/taro";
 import { createContext, Dispatch, FC, useContext, useEffect, useReducer } from "react";
-import { userInfo } from "../apis";
+import { feishuOpenIDLogin, userInfo } from "../apis";
 
 export interface UserState {
   uid: number
@@ -36,6 +36,11 @@ interface UserContext {
     type: keyof UserDispatch;
     payload?: Partial<UserState>;
   }>;
+}
+
+interface UserReduce {
+  isRefresh?: boolean
+  initLogin?: boolean
 }
 
 const userState: Partial<UserState> = {}
@@ -70,7 +75,7 @@ export const UserProvider: FC = (props) => {
 }
 
 // isRefresh 是否刷新 userInfo 请求
-export const useUserReduce = ({ isRefresh = false }: { isRefresh?: boolean } = {}) => {
+export const useUserReduce = ({ isRefresh = false, initLogin = false }: UserReduce = {}) => {
 
   const { state, dispatch } = useContext(userContext)
 
@@ -78,13 +83,36 @@ export const useUserReduce = ({ isRefresh = false }: { isRefresh?: boolean } = {
     try {
       const { data } = await userInfo()
       dispatch({ type: 'INIT', payload: data })
+      return data
     } catch (error) {
       console.log(error)
     }
   }
 
-  if (isRefresh) {
-    useEffect(() => { flushUserInfo() }, [])
+  // 统一登录后的操作
+  const loginInitHandle = async (token: string) => {
+    Taro.setStorageSync('Authorization', token)
+    Taro.redirectTo({ url: '/pages/index/index' })
+  }
+
+  const loginHandle = () => {
+    if (Taro.getStorageSync('Authorization')) {
+      flushUserInfo()
+      return
+    }
+    tt.login({
+      async success({ code }) {
+        try {
+          const { token } = await feishuOpenIDLogin({ code })
+          loginInitHandle(token)
+        } catch (error) {
+          Taro.redirectTo({ url: '/pages/login/index' })
+        }
+      },
+      fail(res) {
+        console.log(`login fail: ${JSON.stringify(res)}`);
+      }
+    });
   }
 
   const logoutHandle = () => {
@@ -93,5 +121,13 @@ export const useUserReduce = ({ isRefresh = false }: { isRefresh?: boolean } = {
     Taro.redirectTo({ url: '/pages/login/index' })
   }
 
-  return { state, dispatch, logoutHandle }
+  if (isRefresh) {
+    useEffect(() => { flushUserInfo() }, [])
+  }
+
+  if (initLogin) {
+    useEffect(() => { loginHandle() }, [])
+  }
+
+  return { state, dispatch, logoutHandle, loginHandle, loginInitHandle }
 };
