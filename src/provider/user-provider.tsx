@@ -1,12 +1,12 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 13:30:27
- * @LastEditTime: 2023-01-11 17:45:35
+ * @LastEditTime: 2023-01-13 15:50:25
  * @Msg: Nothing
  */
 import Taro from "@tarojs/taro";
 import { createContext, Dispatch, FC, useContext, useEffect, useReducer } from "react";
-import { feishuOpenIDLogin, userInfo } from "../apis";
+import { feishuOpenIDLogin, userInfo, userInfoDetail } from "../apis";
 
 export interface UserState {
   uid: number
@@ -82,6 +82,8 @@ export const useUserReduce = ({ isRefresh = false, initLogin = false }: UserRedu
   const flushUserInfo = async () => {
     try {
       const { data } = await userInfo()
+      const { result } = await userInfoDetail(data.uid)
+      console.log(result.data)
       dispatch({ type: 'INIT', payload: data })
       return data
     } catch (error) {

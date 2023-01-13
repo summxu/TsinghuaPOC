@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-01-12 11:16:48
+ * @LastEditTime: 2023-01-13 15:51:54
  * @Msg: Nothing
  */
 import { UserState } from "../provider/user-provider";
@@ -17,17 +17,7 @@ const json2url = (json) => {
   return tempArr.length ? '?' + tempArr.join('&') : ''
 }
 
-// 登录(自定义接口)
-export const login = (data: { code: string, pwd: string, login_code: string }) => {
-  return request<{ token: string }>({
-    url: '/feishu_api/user_login',
-    method: 'POST',
-    data,
-    header: { Authorization: '' }
-  });
-};
-
-// 登录(自定义接口)
+// 框架内基础登录(自定义接口，没用到)
 export const loginBase = (data: { account: string, password: string }) => {
   return request<{ token: string }>({
     url: '/api/auth/v1/request-login-token',
@@ -37,11 +27,13 @@ export const loginBase = (data: { account: string, password: string }) => {
   });
 };
 
-// 获取当前用户信息，这也是一个简单的调用自定义接口的例子。
-export const userInfo = () => {
-  return request<GuestUserInfo & { data: UserState }>({
-    url: '/user/info',
-    method: 'POST'
+// 账号密码登录/绑定(自定义接口)
+export const login = (data: { code: string, pwd: string, login_code: string }) => {
+  return request<{ token: string }>({
+    url: '/feishu_api/user_login',
+    method: 'POST',
+    data,
+    header: { Authorization: '' }
   });
 };
 
@@ -53,6 +45,26 @@ export const feishuOpenIDLogin = (data: { code: string }) => {
     data,
     header: { Authorization: '' }
   });
+};
+
+// 获取当前用户信息
+export const userInfo = () => {
+  return request<GuestUserInfo & { data: UserState }>({
+    url: '/user/info',
+    method: 'POST'
+  });
+};
+
+// 获取当前用户详细信息表
+export const userInfoDetail = (uid: number) => {
+  return dashApi.getByRawID({
+    vars: {
+      model: 'User',
+      fields: ['student_id', 'teacher_id'],
+      id: uid,
+      match_record_tags: []
+    }
+  })
 };
 
 // 测试取出所有院系
