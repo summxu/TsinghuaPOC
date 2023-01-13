@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-30 10:24:55
- * @LastEditTime: 2023-01-12 16:42:41
+ * @LastEditTime: 2023-01-13 11:17:14
  * @Msg: Nothing
  */
 import { GenericSearchResult } from "@/apis/flora-api-dash/query-defs";
@@ -46,6 +46,7 @@ export const useDataList = ({ request, params = {} }: useDataListProps) => {
 
   const [dataList, setDataList] = useState<{ data: any }[]>([])
   const [status, setStatus] = useState<keyof statusType>('NORMAL')
+  const [total, setTotal] = useState(0)
 
   const pageReducer = (state: pageParamType, action: {
     type: keyof pageDispatch;
@@ -97,6 +98,7 @@ export const useDataList = ({ request, params = {} }: useDataListProps) => {
         setDataList(result.items)
         dataListRef.current = result.items
       }
+      setTotal(result.page_info.total_count)
       // 判断有没有更多
       if (!dataListRef.current.length) {
         setStatus('EMPTY')
@@ -113,7 +115,7 @@ export const useDataList = ({ request, params = {} }: useDataListProps) => {
 
   useEffect(() => { queryRequest() }, [pageParam, params])
 
-  return { dispatch, dataList, status }
+  return { dispatch, dataList, status, total }
 }
 
 interface DataListProps {

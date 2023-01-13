@@ -13,8 +13,8 @@
   z-index: 1;
 }
 
-.search-left {
-  flex: 1;
+.search {
+  width: 100%;
 }
 
 .create-group-btn {
@@ -114,7 +114,7 @@
 
 // item-pane组件样式
 .datalist-box {
-  margin-top: calc(216px + 88px);
+  padding-top: calc(216px + 88px);
 }
 
 .timeline-box {

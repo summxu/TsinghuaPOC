@@ -1,0 +1,126 @@
+.search-box {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: $color-brand-bg;
+  padding: 62px 34px calc(62px + 30px);
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+
+// tabs样式
+.tabs-custom {
+  .taroify-tabs__wrap {
+    position: fixed;
+    border-radius: 30px 30px 0px 0px;
+    top: 216px;
+    width: 100%;
+    z-index: 1;
+    border-bottom: 1px solid #EFF0F1;
+    background-color: #fff;
+  }
+
+  .taroify-tabs__tab {
+    flex: none !important;
+  }
+
+  .taroify-tabs__nav {
+    padding-bottom: 0 !important;
+  }
+
+  .taroify-tabs__line--active {
+    background-color: #3370FF !important;
+  }
+
+  .taroify-tabs__tab--active {
+    .taroify-tabs__tab__content {
+      color: #3370FF !important;
+    }
+  }
+}
+
+// item-pane组件样式
+.datalist-box {
+  padding-top: calc(216px + 88px);
+  padding-bottom: 100px;
+  // padding: 35px;
+}
+
+
+.item {
+  border-bottom: 1px solid #F5F6F7;
+  padding: 24px 48px 24px 24px;
+  background-color: #fff;
+}
+
+.item-left {
+  font-size: 32px;
+  font-weight: 500;
+  color: #1F2329;
+}
+
+.item-center {
+  flex: 1;
+  margin-left: 24px;
+}
+
+.item-tag {
+  background: #93B3FF;
+  border-radius: 5px;
+  padding: 5px 19px;
+  display: inline-block;
+  font-size: 20px;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+  align-self: flex-start;
+}
+
+.item-desc {
+  font-size: 28px;
+  color: #8F959E;
+}
+
+.item-right {
+  align-self: center;
+  height: 30px;
+  width: 30px;
+  transform: scale(0.8);
+}
+
+
+.bottom-info {
+  padding: 32px 32px 32px;
+  box-shadow: 0px -5px 12px 1px rgba(200, 208, 225, 0.1);
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.bottom-left {
+  flex: 1;
+}
+
+.bottom-text {
+  font-size: 28px;
+  color: #2B2F36;
+  margin-right: 26px;
+  margin-top: -8px;
+}
+
+.bottom-right {
+  background: #3370FF;
+  border-radius: 5px;
+  font-size: 28px;
+  color: #FFFFFF;
+  width: 120px;
+  height: 50px;
+  padding: 0;
+  line-height: 50px;
+}
+
+.bottom-right-hover {
+  background-color: $color-brand-dark;
+}
