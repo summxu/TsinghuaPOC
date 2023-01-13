@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-10 15:41:54
- * @LastEditTime: 2023-01-13 11:03:09
+ * @LastEditTime: 2023-01-13 13:39:22
  * @Msg: Nothing
  */
 import { Search } from '@/components/search'
@@ -17,7 +17,10 @@ import { TimeLine } from '@/components/time-line'
 import './index.scss'
 
 interface ListTabPanePorps {
-  params?: Object
+  params: {
+    searchValue: string
+    tabsType?: number
+  }
 }
 
 const TimeLineData = [{
@@ -37,14 +40,18 @@ const TimeLineData = [{
 }]
 
 
-const ListTabPane: FC<ListTabPanePorps> = ({ params = {} }) => {
+const ListTabPane: FC<ListTabPanePorps> = ({ params }) => {
   const { status, dataList, dispatch } = useDataList({ request: getAllYanXi, params })
-
+  const goToPage = () => {
+    if (params.tabsType === 1) {
+      Taro.navigateTo({ url: '/pages/progress/entrance/index' })
+    }
+  }
   return (
     <View className="datalist-box">
       <DataList status={status} dispatch={dispatch}>
         {dataList.map(({ data }) => (
-          <View className="item">
+          <View onClick={goToPage} className="item">
             <View className='flex-row justify-between items-center'>
               <View className='item-left flex-row '>
                 <Image className='item-avatar' src={require('@/static/avatar.png')}></Image>

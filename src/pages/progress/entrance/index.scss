@@ -1,0 +1,109 @@
+page {
+  background-color: #fff;
+}
+
+.entrance-top {
+  height: calc(216px + 30px);
+  background-color: $color-brand-bg;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+}
+
+.card-box {
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+  top: 70px;
+}
+
+.top-card {
+  background: #FFFFFF;
+  border-radius: 30px 30px 0px 0px;
+  padding: 230px 30px 30px;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 216px;
+  box-sizing: border-box;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #333333;
+}
+
+.heng {
+  position: fixed;
+  top: calc(216px + 436px) ;
+  width: 100%;
+  height: 24px;
+  background: #F5F6F7;
+}
+
+.container {
+  padding: calc(216px + 436px + 24px + 20px) 34px 50px;
+  background-color: #fff;
+}
+
+.timeline-left {
+  flex: none !important;
+  padding-left: 0px !important;
+  display: flex;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+}
+
+.timeline-right {
+  flex: 1;
+  padding-right: 0px !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+}
+
+.timeline-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333333;
+}
+
+.date {
+  font-size: 24px;
+  color: #51565D;
+  margin-bottom: 20px;
+}
+
+.year {
+  background: #EFF0F1;
+  border-radius: 10px;
+  padding: 4px 12px;
+
+  font-size: 20px;
+  color: #8F959F;
+}
+
+.more {
+  font-size: 24px;
+  color: #8F959F;
+}
+
+.top-info {
+  margin-top: 60px;
+  padding: 0 25px;
+}
+
+.info-top {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333333;
+}
+
+.info-bottom {
+  font-size: 24px;
+  font-weight: 400;
+  color: #8F959F;
+}

@@ -1,46 +1,58 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-13 13:48:54
+ * @LastEditTime: 2023-01-13 13:57:49
  * @Msg: Nothing
  */
 import { UserInfoCard } from '@/components/user-info-card'
 import { Timeline } from '@taroify/core'
 import { Text, View } from '@tarojs/components'
-import Taro from '@tarojs/taro'
 import { FC } from 'react'
 import './index.scss'
 const TimeLineData = [{
-  text: '入学'
+  text: '发放一卡通'
 }, {
-  text: '培养计划制定'
+  text: '学生缴费'
 }, {
-  text: '培养计划完成'
+  text: '档案收缴登记'
 }, {
-  text: '开题'
+  text: '领取体检表'
 }, {
-  text: '中期'
+  text: '缴纳教材费'
 }, {
-  text: '学术活动'
+  text: '教务管理系统登记'
 }, {
   text: '答辩'
 }]
 
-const Progress: FC = () => {
-  const goToPage = (index: number) => {
-    if (index === 0) {
-      Taro.navigateTo({ url: '/pages/progress/entrance/index' })
-    }
-  }
+const Entrance: FC = () => {
+
   return (
-    <View className='replay-page'>
-      <View className='replay-top'>
+    <View className='entrance-page'>
+      <View className='entrance-top'>
         <View className='card-box'>
           <UserInfoCard />
         </View>
         <View className='top-card'>
-          <Text className="title">我的培养</Text>
+          <Text className="title">入学详情</Text>
+          <View className='top-info flex-row justify-between'>
+            <View className='top-item flex-col items-center'>
+              <Text className='info-top'>202315467</Text>
+              <Text className='info-bottom'>学号</Text>
+            </View>
+            <View className='shu'></View>
+            <View className='top-item flex-col items-center'>
+              <Text className='info-top'>厚朴502</Text>
+              <Text className='info-bottom'>宿舍号</Text>
+            </View>
+            <View className='shu'></View>
+            <View className='top-item flex-col items-center'>
+              <Text className='info-top'>日语2班</Text>
+              <Text className='info-bottom'>班级</Text>
+            </View>
+          </View>
         </View>
+        <View className='heng'></View>
       </View>
 
       <View className='container'>
@@ -55,7 +67,7 @@ const Progress: FC = () => {
               </Timeline.Content>
               <Timeline.Content className='timeline-right' direction="column" align="start">
                 <View className="timeline-title">{item.text}</View>
-                <Text onClick={() => goToPage(index)} className='more'>更多</Text>
+                <Text className='more'>更多</Text>
               </Timeline.Content>
               <Timeline.Separator>
                 <Timeline.Dot color="danger"></Timeline.Dot>
@@ -72,4 +84,4 @@ const Progress: FC = () => {
   )
 }
 
-export default Progress
+export default Entrance
