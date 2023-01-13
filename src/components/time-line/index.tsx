@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 13:24:44
- * @LastEditTime: 2023-01-12 15:28:43
+ * @LastEditTime: 2023-01-13 09:26:33
  * @Msg: Nothing
  */
 
@@ -10,7 +10,10 @@ import { CSSProperties, FC, useState } from "react";
 import "./index.scss";
 
 interface TimeLineProps {
-  data: { text: string }[]
+  data: {
+    text: string
+    time?: string
+  }[]
   active: number
 }
 

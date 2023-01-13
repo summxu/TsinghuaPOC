@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-12 16:10:59
+ * @LastEditTime: 2023-01-12 17:46:25
  * @Msg: Nothing
  */
 import { getAllYanXi } from '@/apis/index'
@@ -23,12 +23,12 @@ const Index: FC = () => {
       return
     }
     // 根据角色判断tabBarItems
-    if (userInfo.display_name) {
-      tt.removeTabBarItem({ tag: 'pages/progress/index' })
-    } else {
-      console.log('asdasd')
-      tt.removeTabBarItem({ tag: 'pages/students/index' })
-    }
+    // if (userInfo.display_name) {
+    //   tt.removeTabBarItem({ tag: 'pages/progress/index' })
+    // } else {
+    //   console.log('asdasd')
+    //   tt.removeTabBarItem({ tag: 'pages/students/index' })
+    // }
   }, [userInfo])
 
   const [searchValue, setSearch] = useState('')
