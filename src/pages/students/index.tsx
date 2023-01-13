@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-10 15:41:54
- * @LastEditTime: 2023-01-13 13:39:22
+ * @LastEditTime: 2023-01-13 15:21:05
  * @Msg: Nothing
  */
 import { Search } from '@/components/search'
@@ -45,6 +45,12 @@ const ListTabPane: FC<ListTabPanePorps> = ({ params }) => {
   const goToPage = () => {
     if (params.tabsType === 1) {
       Taro.navigateTo({ url: '/pages/progress/entrance/index' })
+    }
+    if (params.tabsType === 2) {
+      Taro.navigateTo({ url: '/pages/progress/plan/index' })
+    }
+    if (params.tabsType === 3) {
+      Taro.navigateTo({ url: '/pages/progress/planover/index' })
     }
   }
   return (
