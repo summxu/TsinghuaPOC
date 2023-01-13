@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-13 13:48:54
+ * @LastEditTime: 2023-01-13 14:39:53
  * @Msg: Nothing
  */
 import { UserInfoCard } from '@/components/user-info-card'
@@ -30,6 +30,9 @@ const Progress: FC = () => {
   const goToPage = (index: number) => {
     if (index === 0) {
       Taro.navigateTo({ url: '/pages/progress/entrance/index' })
+    }
+    if (index === 1) {
+      Taro.navigateTo({ url: '/pages/progress/plan/index' })
     }
   }
   return (

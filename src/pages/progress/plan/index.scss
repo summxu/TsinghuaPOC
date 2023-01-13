@@ -1,8 +1,4 @@
-page {
-  background-color: #fff;
-}
-
-.entrance-top {
+.plan-top {
   height: calc(216px + 30px);
   background-color: $color-brand-bg;
   width: 100%;
@@ -35,17 +31,12 @@ page {
   color: #333333;
 }
 
-.heng {
-  position: fixed;
-  top: calc(216px + 436px) ;
-  width: 100%;
-  height: 24px;
-  background: #F5F6F7;
+.title1 {
+  margin-bottom: 32px;
 }
 
 .container {
-  padding: calc(216px + 436px + 24px + 20px) 34px 50px;
-  background-color: #fff;
+  padding: calc(216px + 624px + 20px) 34px 50px;
 }
 
 .timeline-left {
@@ -71,19 +62,53 @@ page {
   color: #333333;
 }
 
-.top-info {
-  margin-top: 60px;
-  padding: 0 25px;
-}
-
-.info-top {
-  font-size: 28px;
-  font-weight: bold;
-  color: #333333;
-}
-
-.info-bottom {
+.more {
   font-size: 24px;
-  font-weight: 400;
   color: #8F959F;
+}
+
+.timeline-box {
+  margin: 48px -40px 10px;
+}
+
+.item {
+  padding: 32px 25px;
+  background: #FFFFFF;
+  border-radius: 10px;
+  margin-bottom: 24px;
+}
+
+.item-title {
+  display: block;
+  font-size: 30px;
+  font-weight: 500;
+  color: #1F2329;
+  margin-bottom: 26px;
+}
+
+.tag-box {
+  margin-bottom: 26px;
+  overflow-x: scroll;
+}
+
+.tag {
+  background: #F5F6F7;
+  border-radius: 10px;
+  padding: 15px 17px;
+  font-size: 28px;
+  color: #363C44;
+  margin-right: 22px;
+}
+
+.item-bottom {}
+
+.item-bottom-text {
+  font-size: 28px;
+  color: #8E959F;
+}
+
+.item-bottom-sorc {
+  font-size: 28px;
+  font-weight: 400;
+  color: #3370FF;
 }

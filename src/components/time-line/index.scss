@@ -1,6 +1,4 @@
-.timeline {
-  
-}
+.timeline {}
 
 .timeline-item {
   flex: 1;
@@ -14,11 +12,11 @@
   position: relative;
 }
 
-.timeline-item:first-of-type .dot-box{
+.timeline-item:first-of-type .dot-box {
   background-image: linear-gradient(to right, #fff 50%, #DCDEE0 0);
 }
 
-.timeline-item:last-of-type .dot-box{
+.timeline-item:last-of-type .dot-box {
   background-image: linear-gradient(to right, #DCDEE0 50%, #fff 0);
 }
 
@@ -38,4 +36,27 @@
   color: #646A73;
   text-align: center;
   max-width: 80px;
+}
+
+.text-plus {
+  font-size: 28px;
+  color: #363C44;
+}
+
+.top-text {
+  min-height: 76px;
+  max-width: 120px;
+  font-size: 28px;
+  font-weight: 400;
+  text-align: center;
+  color: #363C44;
+  margin-bottom: 23px;
+}
+
+.time {
+  max-width: 145px;
+  font-size: 24px;
+  color: #8E959F;
+  text-align: center;
+  margin-top: 19px;
 }

@@ -1,18 +1,19 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 13:24:44
- * @LastEditTime: 2023-01-13 09:26:33
+ * @LastEditTime: 2023-01-13 14:58:30
  * @Msg: Nothing
  */
 
 import { View } from "@tarojs/components";
-import { CSSProperties, FC, useState } from "react";
+import { CSSProperties, FC } from "react";
 import "./index.scss";
 
 interface TimeLineProps {
   data: {
     text: string
     time?: string
+    topText?: string
   }[]
   active: number
 }
@@ -40,10 +41,12 @@ export const TimeLine: FC<TimeLineProps> = ({ data, active }) => {
     <View className="timeline flex-row justify-between">
       {data.map((item, index) => (
         <View className="timeline-item flex-col items-center">
+          {item.topText && <View className="top-text">{item.topText}</View>}
           <View style={colorHandle(index, false)} className="dot-box flex-col items-center">
             <View style={colorHandle(index, true)} className="dot"></View>
           </View>
-          <View className="text">{item.text}</View>
+          <View className={item.topText ? 'text-plus' : 'text'}>{item.text}</View>
+          {item.time && <View className="time">{item.time}</View>}
         </View>
       ))}
     </View>
