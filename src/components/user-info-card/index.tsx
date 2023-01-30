@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 15:36:09
- * @LastEditTime: 2023-01-30 14:14:43
+ * @LastEditTime: 2023-01-30 16:04:56
  * @Msg: Nothing
  */
 import { stdentInfo } from "@/apis/index";
@@ -13,13 +13,13 @@ import "./index.scss";
 export const UserInfoCard: FC = () => {
 
   const { state: userInfo } = useUserReduce({ isRefresh: true })
-  const [studentInfo, setStudentInfo] = useState({})
+  const [studentInfo, setStudentInfo] = useState<any>({})
 
   const getStdentInfo = async () => {
     try {
       if (userInfo.stuid) {
         const { result } = await stdentInfo(userInfo.stuid)
-        setStudentInfo(result)
+        setStudentInfo(result.data)
       }
     } catch (error) {
       console.log(error)
@@ -40,12 +40,12 @@ export const UserInfoCard: FC = () => {
       <View className="user-info-bottom flex-row items-center justify-between">
         <View className="bottom-item flex-col">
           <Text className="label">学院</Text>
-          <Text className="value">生物医药研究中心</Text>
+          <Text className="value">{studentInfo['yuanxi_id.name']}</Text>
         </View>
         <View className="shu"></View>
         <View className="bottom-item flex-col items-end">
           <Text className="label">导师</Text>
-          <Text className="value">王博</Text>
+          <Text className="value">{studentInfo['dsxx_id.name']}</Text>
         </View>
       </View>
     </View>

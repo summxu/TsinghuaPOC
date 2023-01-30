@@ -1,13 +1,13 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-30 14:40:19
+ * @LastEditTime: 2023-01-30 16:11:39
  * @Msg: Nothing
  */
 export default defineAppConfig({
   pages: [
-    'pages/index/index',
     'pages/login/index',
+    'pages/index/index',
     'pages/progress/planover/index',
     'pages/students/index',
     'pages/progress/plan/index',
@@ -32,6 +32,12 @@ export default defineAppConfig({
     list: [
       {
         pagePath: 'pages/index/index',
+        text: '答辩',
+        iconPath: './static/index.png',
+        selectedIconPath: './static/index-selected.png'
+      },
+      {
+        pagePath: 'pages/index/replay/index',
         text: '答辩',
         iconPath: './static/index.png',
         selectedIconPath: './static/index-selected.png'

@@ -79,7 +79,7 @@ export const _genericGet = defineQuery({
 }, (t) => {
   const raw = t?.dash?.generic?.get?.raw;
   return {
-    data: raw && JSON.parse(raw) as Record<string, string> || undefined,
+    data: raw && JSON.parse(raw) as Record<any, any> || undefined,
     relations: t?.dash?.generic?.get?.relations,
     allow_record_tags: t?.dash?.generic?.get?.allow_record_tags,
   };

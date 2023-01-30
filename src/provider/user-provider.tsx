@@ -1,10 +1,10 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 13:30:27
- * @LastEditTime: 2023-01-30 15:06:42
+ * @LastEditTime: 2023-01-30 16:14:50
  * @Msg: Nothing
  */
-import { pageToIndex, pageToLogin } from "@/utils/pages";
+import { pageToIndex, pageToLogin, pageToReplay } from "@/utils/pages";
 import Taro, { useRouter } from "@tarojs/taro";
 import { createContext, Dispatch, FC, PropsWithChildren, useContext, useEffect, useReducer } from "react";
 import { feishuOpenIDLogin, userInfo, userInfoDetail } from "../apis";
@@ -108,12 +108,14 @@ export const useUserReduce = ({ isRefresh = false }: UserReduce = {}) => {
   // 统一登录后的操作
   const loginInitHandle = async (token: string) => {
     Taro.setStorageSync('Authorization', token)
-    pageToIndex()
     tt.showTabBar()
     if (state.role === 'teacher') {
+      pageToIndex()
       tt.removeTabBarItem({ tag: 'pages/progress/index' })
     } else {
+      pageToReplay()
       tt.removeTabBarItem({ tag: 'pages/students/index' })
+      tt.removeTabBarItem({ tag: 'pages/index/index' })
     }
   }
 
