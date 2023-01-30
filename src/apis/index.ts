@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-01-30 10:57:20
+ * @LastEditTime: 2023-01-30 13:13:11
  * @Msg: Nothing
  */
 import { UserState } from "../provider/user-provider";
@@ -60,7 +60,7 @@ export const userInfoDetail = (uid: number) => {
   return dashApi.getByRawID({
     vars: {
       model: 'User',
-      fields: ['nickname', 'teacher_id.id','student_id.id'],
+      fields: ['nickname', 'email', 'student_id.sfzh', 'student_id.pycc', 'teacher_id.id', 'student_id.id'],
       id: uid,
       match_record_tags: []
     }

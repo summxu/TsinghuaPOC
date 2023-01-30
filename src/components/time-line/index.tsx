@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 13:24:44
- * @LastEditTime: 2023-01-13 14:58:30
+ * @LastEditTime: 2023-01-30 11:32:01
  * @Msg: Nothing
  */
 
@@ -41,7 +41,7 @@ export const TimeLine: FC<TimeLineProps> = ({ data, active }) => {
     <View className="timeline flex-row justify-between">
       {data.map((item, index) => (
         <View className="timeline-item flex-col items-center">
-          {item.topText && <View className="top-text">{item.topText}</View>}
+          {item.topText && <View className="top-text-timeline">{item.topText}</View>}
           <View style={colorHandle(index, false)} className="dot-box flex-col items-center">
             <View style={colorHandle(index, true)} className="dot"></View>
           </View>

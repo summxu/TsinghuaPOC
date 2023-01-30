@@ -31,6 +31,8 @@ type ttAPI = {
   checkSession(option?: CommonInput): void
   getUserInfo(option?: getUserInfo): void
   removeTabBarItem(option?: { tag: string } | CommonInput): void
+  showTabBar(option?: { animation: boolean } | CommonInput): void
+  hideTabBar(option?: { animation: boolean } | CommonInput): void
 }
 
 declare const tt: ttAPI

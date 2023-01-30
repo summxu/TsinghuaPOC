@@ -1,11 +1,12 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-13 15:46:16
+ * @LastEditTime: 2023-01-30 13:07:39
  * @Msg: Nothing
  */
 export default defineAppConfig({
   pages: [
+    'pages/login/index',
     'pages/index/index',
     'pages/progress/planover/index',
     'pages/students/index',
@@ -14,8 +15,7 @@ export default defineAppConfig({
     'pages/students/group/index',
     'pages/progress/index',
     'pages/index/replay/index',
-    'pages/mine/index',
-    'pages/login/index'
+    'pages/mine/index'
   ],
   window: {
     backgroundTextStyle: 'dark',

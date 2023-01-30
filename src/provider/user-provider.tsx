@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 13:30:27
- * @LastEditTime: 2023-01-30 10:16:45
+ * @LastEditTime: 2023-01-30 13:17:11
  * @Msg: Nothing
  */
 import Taro from "@tarojs/taro";
@@ -23,6 +23,9 @@ export interface UserState {
   nickname: string
   reset_password: { need: boolean, reason: string }
   user_name: string
+  role: 'student' | 'teacher'
+  sfzh: string
+  pycc: '01' | '02'
 }
 
 interface UserDispatch {
@@ -83,8 +86,15 @@ export const useUserReduce = ({ isRefresh = false, initLogin = false }: UserRedu
     try {
       const { data } = await userInfo()
       const { result } = await userInfoDetail(data.uid)
-      console.log(result.data)
-      dispatch({ type: 'INIT', payload: data })
+      dispatch({
+        type: 'INIT', payload: {
+          ...data,
+          email: result.data!.email,
+          role: result.data!['teacher_id.id'] ? 'teacher' : 'student',
+          sfzh: result.data!['student_id.sfzh'],
+          pycc: result.data!['student_id.pycc'] as '01' | '02',
+        }
+      })
       return data
     } catch (error) {
       console.log(error)
@@ -95,11 +105,19 @@ export const useUserReduce = ({ isRefresh = false, initLogin = false }: UserRedu
   const loginInitHandle = async (token: string) => {
     Taro.setStorageSync('Authorization', token)
     Taro.redirectTo({ url: '/pages/index/index' })
+    tt.showTabBar()
+    if (state.role === 'teacher') {
+      tt.removeTabBarItem({ tag: 'pages/progress/index' })
+    } else {
+      tt.removeTabBarItem({ tag: 'pages/students/index' })
+    }
   }
 
   const loginHandle = () => {
-    if (Taro.getStorageSync('Authorization')) {
+    const localToken = Taro.getStorageSync('Authorization')
+    if (localToken) {
       flushUserInfo()
+      loginInitHandle(localToken)
       return
     }
     tt.login({
@@ -108,7 +126,7 @@ export const useUserReduce = ({ isRefresh = false, initLogin = false }: UserRedu
           const { token } = await feishuOpenIDLogin({ code })
           loginInitHandle(token)
         } catch (error) {
-          Taro.redirectTo({ url: '/pages/login/index' })
+          logoutHandle()
         }
       },
       fail(res) {
@@ -118,6 +136,7 @@ export const useUserReduce = ({ isRefresh = false, initLogin = false }: UserRedu
   }
 
   const logoutHandle = () => {
+    tt.hideTabBar()
     dispatch({ type: 'CLEAR' })
     Taro.removeStorageSync('Authorization')
     Taro.redirectTo({ url: '/pages/login/index' })

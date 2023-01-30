@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-30 10:33:55
+ * @LastEditTime: 2023-01-30 13:10:54
  * @Msg: Nothing
  */
 import { getAllYanXi } from '@/apis/index'
@@ -18,7 +18,7 @@ const Index: FC = () => {
   const [searchValue, setSearch] = useState('')
   const params = useMemo(() => ({ searchValue }), [searchValue])
 
-  const { status, dataList, dispatch } = useDataList({ request: getAllYanXi, params, isInit: false })
+  const { status, dataList, dispatch } = useDataList({ request: getAllYanXi, params, isInit: true })
   return (
     <View className='index-page'>
       <View className='search-box'>
