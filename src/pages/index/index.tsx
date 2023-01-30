@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-12 17:46:25
+ * @LastEditTime: 2023-01-30 09:31:51
  * @Msg: Nothing
  */
 import { getAllYanXi } from '@/apis/index'
@@ -17,19 +17,19 @@ import './index.scss'
 const Index: FC = () => {
 
   // 在index里初始化userInfo信息
-  const { state: userInfo } = useUserReduce({ initLogin: true })
-  useEffect(() => {
-    if (JSON.stringify(userInfo) === '{}') {
-      return
-    }
-    // 根据角色判断tabBarItems
-    // if (userInfo.display_name) {
-    //   tt.removeTabBarItem({ tag: 'pages/progress/index' })
-    // } else {
-    //   console.log('asdasd')
-    //   tt.removeTabBarItem({ tag: 'pages/students/index' })
-    // }
-  }, [userInfo])
+  // const { state: userInfo } = useUserReduce({ initLogin: true })
+  // useEffect(() => {
+  //   if (JSON.stringify(userInfo) === '{}') {
+  //     return
+  //   }
+  //   // 根据角色判断tabBarItems
+  //   // if (userInfo.display_name) {
+  //   //   tt.removeTabBarItem({ tag: 'pages/progress/index' })
+  //   // } else {
+  //   //   console.log('asdasd')
+  //   //   tt.removeTabBarItem({ tag: 'pages/students/index' })
+  //   // }
+  // }, [userInfo])
 
   const [searchValue, setSearch] = useState('')
   const params = useMemo(() => ({ searchValue }), [searchValue])
