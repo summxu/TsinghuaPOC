@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 10:43:58
- * @LastEditTime: 2023-01-11 17:12:54
+ * @LastEditTime: 2023-01-30 10:26:04
  * @Msg: Nothing
  */
 import Taro, { Chain } from "@tarojs/taro"
@@ -81,7 +81,7 @@ const customInterceptor = (chain: Chain) => {
 // Taro 提供了两个内置拦截器
 // logInterceptor - 用于打印请求的相关信息
 // timeoutInterceptor - 在请求超时时抛出错误。
-const interceptors = [customInterceptor, Taro.interceptors.logInterceptor]
-// const interceptors = [customInterceptor]
+// const interceptors = [customInterceptor, Taro.interceptors.logInterceptor]
+const interceptors = [customInterceptor]
 
 export default interceptors

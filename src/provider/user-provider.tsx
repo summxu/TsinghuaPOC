@@ -1,11 +1,11 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 13:30:27
- * @LastEditTime: 2023-01-13 15:50:25
+ * @LastEditTime: 2023-01-30 10:16:45
  * @Msg: Nothing
  */
 import Taro from "@tarojs/taro";
-import { createContext, Dispatch, FC, useContext, useEffect, useReducer } from "react";
+import { createContext, Dispatch, FC, PropsWithChildren, useContext, useEffect, useReducer } from "react";
 import { feishuOpenIDLogin, userInfo, userInfoDetail } from "../apis";
 
 export interface UserState {
@@ -50,7 +50,7 @@ const userContext = createContext<UserContext>({
   dispatch: () => { },
 });
 
-export const UserProvider: FC = (props) => {
+export const UserProvider: FC<PropsWithChildren> = (props) => {
 
   const reducer = (preState: UserState, action: {
     type: keyof UserDispatch;

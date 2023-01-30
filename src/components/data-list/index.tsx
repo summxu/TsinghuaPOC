@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-30 10:24:55
- * @LastEditTime: 2023-01-13 11:17:14
+ * @LastEditTime: 2023-01-30 10:32:24
  * @Msg: Nothing
  */
 import { GenericSearchResult } from "@/apis/flora-api-dash/query-defs";
@@ -15,6 +15,7 @@ import "./index.scss";
 interface useDataListProps {
   request: (params: Object) => Promise<any>;
   params?: Object | undefined
+  isInit?: Boolean
 }
 
 interface pageParamType {
@@ -37,7 +38,7 @@ interface statusType {
   ERROR
 }
 
-export const useDataList = ({ request, params = {} }: useDataListProps) => {
+export const useDataList = ({ request, isInit = true, params = {} }: useDataListProps) => {
   const pageParamInit: pageParamType = {
     offset: 0,
     limit: 20,
@@ -113,7 +114,9 @@ export const useDataList = ({ request, params = {} }: useDataListProps) => {
     }
   }
 
-  useEffect(() => { queryRequest() }, [pageParam, params])
+  if (isInit) {
+    useEffect(() => { queryRequest() }, [pageParam, params])
+  }
 
   return { dispatch, dataList, status, total }
 }
