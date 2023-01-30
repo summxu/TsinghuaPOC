@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-01-30 13:13:11
+ * @LastEditTime: 2023-01-30 15:04:30
  * @Msg: Nothing
  */
 import { UserState } from "../provider/user-provider";
@@ -62,6 +62,18 @@ export const userInfoDetail = (uid: number) => {
       model: 'User',
       fields: ['nickname', 'email', 'student_id.sfzh', 'student_id.pycc', 'teacher_id.id', 'student_id.id'],
       id: uid,
+      match_record_tags: []
+    }
+  })
+};
+
+// 获取学生表的数据
+export const stdentInfo = (stuid: number) => {
+  return dashApi.getByRawID({
+    vars: {
+      model: 'Student',
+      fields: ['id', 'yuanxi_id.name','dsxx_id.name'],
+      id: stuid,
       match_record_tags: []
     }
   })

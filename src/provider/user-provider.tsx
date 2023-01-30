@@ -1,15 +1,18 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 13:30:27
- * @LastEditTime: 2023-01-30 13:17:11
+ * @LastEditTime: 2023-01-30 15:06:42
  * @Msg: Nothing
  */
-import Taro from "@tarojs/taro";
+import { pageToIndex, pageToLogin } from "@/utils/pages";
+import Taro, { useRouter } from "@tarojs/taro";
 import { createContext, Dispatch, FC, PropsWithChildren, useContext, useEffect, useReducer } from "react";
 import { feishuOpenIDLogin, userInfo, userInfoDetail } from "../apis";
 
 export interface UserState {
-  uid: number
+  uid: number | undefined
+  stuid: number | undefined
+  tecid: number | undefined
   email: string
   name: string
   is_dev: boolean
@@ -43,7 +46,6 @@ interface UserContext {
 
 interface UserReduce {
   isRefresh?: boolean
-  initLogin?: boolean
 }
 
 const userState: Partial<UserState> = {}
@@ -78,18 +80,20 @@ export const UserProvider: FC<PropsWithChildren> = (props) => {
 }
 
 // isRefresh 是否刷新 userInfo 请求
-export const useUserReduce = ({ isRefresh = false, initLogin = false }: UserReduce = {}) => {
+export const useUserReduce = ({ isRefresh = false }: UserReduce = {}) => {
 
   const { state, dispatch } = useContext(userContext)
 
   const flushUserInfo = async () => {
     try {
       const { data } = await userInfo()
-      const { result } = await userInfoDetail(data.uid)
+      const { result } = await userInfoDetail(data.uid!)
       dispatch({
         type: 'INIT', payload: {
           ...data,
           email: result.data!.email,
+          stuid: result.data!['student_id.id'] as unknown as number | undefined,
+          tecid: result.data!['teacher_id.id'] as unknown as number | undefined,
           role: result.data!['teacher_id.id'] ? 'teacher' : 'student',
           sfzh: result.data!['student_id.sfzh'],
           pycc: result.data!['student_id.pycc'] as '01' | '02',
@@ -104,7 +108,7 @@ export const useUserReduce = ({ isRefresh = false, initLogin = false }: UserRedu
   // 统一登录后的操作
   const loginInitHandle = async (token: string) => {
     Taro.setStorageSync('Authorization', token)
-    Taro.redirectTo({ url: '/pages/index/index' })
+    pageToIndex()
     tt.showTabBar()
     if (state.role === 'teacher') {
       tt.removeTabBarItem({ tag: 'pages/progress/index' })
@@ -113,7 +117,7 @@ export const useUserReduce = ({ isRefresh = false, initLogin = false }: UserRedu
     }
   }
 
-  const loginHandle = () => {
+  const InitLogin = () => {
     const localToken = Taro.getStorageSync('Authorization')
     if (localToken) {
       flushUserInfo()
@@ -139,16 +143,12 @@ export const useUserReduce = ({ isRefresh = false, initLogin = false }: UserRedu
     tt.hideTabBar()
     dispatch({ type: 'CLEAR' })
     Taro.removeStorageSync('Authorization')
-    Taro.redirectTo({ url: '/pages/login/index' })
+    pageToLogin()
   }
 
   if (isRefresh) {
     useEffect(() => { flushUserInfo() }, [])
   }
 
-  if (initLogin) {
-    useEffect(() => { loginHandle() }, [])
-  }
-
-  return { state, dispatch, logoutHandle, loginHandle, loginInitHandle }
+  return { state, dispatch, logoutHandle, InitLogin, loginInitHandle }
 };

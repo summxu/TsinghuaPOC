@@ -1,17 +1,34 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 15:36:09
- * @LastEditTime: 2023-01-30 13:20:27
+ * @LastEditTime: 2023-01-30 14:14:43
  * @Msg: Nothing
  */
+import { stdentInfo } from "@/apis/index";
 import { useUserReduce } from "@/src/provider/user-provider";
 import { View, Image, Text } from "@tarojs/components";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import "./index.scss";
 
 export const UserInfoCard: FC = () => {
 
   const { state: userInfo } = useUserReduce({ isRefresh: true })
+  const [studentInfo, setStudentInfo] = useState({})
+
+  const getStdentInfo = async () => {
+    try {
+      if (userInfo.stuid) {
+        const { result } = await stdentInfo(userInfo.stuid)
+        setStudentInfo(result)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getStdentInfo()
+  }, [userInfo])
 
   return (
     <View className="user-info-card">
