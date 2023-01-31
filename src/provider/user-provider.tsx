@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 13:30:27
- * @LastEditTime: 2023-01-30 16:14:50
+ * @LastEditTime: 2023-01-31 17:01:27
  * @Msg: Nothing
  */
 import { pageToIndex, pageToLogin, pageToReplay } from "@/utils/pages";
@@ -29,6 +29,8 @@ export interface UserState {
   role: 'student' | 'teacher'
   sfzh: string
   pycc: '01' | '02'
+  fsopen_id: string
+  code: number
 }
 
 interface UserDispatch {
@@ -96,7 +98,9 @@ export const useUserReduce = ({ isRefresh = false }: UserReduce = {}) => {
           tecid: result.data!['teacher_id.id'] as unknown as number | undefined,
           role: result.data!['teacher_id.id'] ? 'teacher' : 'student',
           sfzh: result.data!['student_id.sfzh'],
+          code: result.data!['student_id.code'],
           pycc: result.data!['student_id.pycc'] as '01' | '02',
+          fsopen_id: result.data!.fsopen_id,
         }
       })
       return data

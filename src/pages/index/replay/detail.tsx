@@ -1,14 +1,16 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 16:24:10
- * @LastEditTime: 2023-01-31 10:22:14
+ * @LastEditTime: 2023-01-31 17:10:15
  * @Msg: Nothing
  */
 
-import { getStudentInfo, getWyhcyList } from "@/apis/index";
+import { booking, getStudentInfo, getWyhcyList, setYYY } from "@/apis/index";
 import { useUserReduce } from "@/src/provider/user-provider";
-import { Empty } from "@taroify/core";
+import { Calendar, Empty, Popup } from "@taroify/core";
 import { View, Text } from "@tarojs/components";
+import Taro from "@tarojs/taro";
+import moment from "moment";
 import { FC, useEffect, useState } from "react";
 import "./index.scss";
 
@@ -26,6 +28,9 @@ export const IndexDetail: FC = () => {
     data: any;
     allow_record_tags: string[];
   }[]>([])
+
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState<Date[]>([])
 
   const getReplayInfo = async () => {
     try {
@@ -54,14 +59,49 @@ export const IndexDetail: FC = () => {
     getWyhcyListHandle()
   }, [userInfo])
 
+  const bookingHandle = async (timeRange) => {
+    try {
+      await booking({
+        topic: `预约会议${moment(timeRange[0]).format('MM-DD')}-${moment(timeRange[1]).format('MM-DD')}`,
+        startTime: moment(timeRange[0]).format('YYYY-MM-DD HH:mm:ss'),
+        endTime: moment(timeRange[1]).format('YYYY-MM-DD HH:mm:ss'),
+        open_id: userInfo.fsopen_id,
+        xh: String(userInfo.code)
+      })
+      Taro.showToast({ icon: 'success', title: '预约成功' })
+      // await setYYY(userInfo.stuid!)
+      getReplayInfo()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <View className="index-detail">
+
+      <Popup style={{ height: "80%" }} open={open} rounded placement="bottom" onClose={setOpen}>
+        <Calendar
+          style={{ "--calendar-active-color": "#2039D4" }}
+          type="range"
+          value={value}
+          onChange={setValue}
+          onConfirm={(newValue) => {
+            bookingHandle(newValue)
+            setOpen(false)
+          }}
+        >
+          <Calendar.Footer>
+            <Calendar.Button type="confirm">确定</Calendar.Button>
+          </Calendar.Footer>
+        </Calendar>
+      </Popup>
+
       <View className="title">答辩时间</View>
       <View className="minicard flex-row justify-between items-center">
         <Text className="mini-left">答辩时间：{studentInfo.dbsj}</Text>
         {
           studentInfo.sfyyhy === '0' ?
-            <Text className="mini-right">预约会议</Text> :
+            <Text onClick={() => setOpen(true)} className="mini-right">预约会议</Text> :
             <Text className="mini-right mini-right-over">已预约</Text>
         }
       </View>

@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-01-31 15:46:30
+ * @LastEditTime: 2023-01-31 17:07:32
  * @Msg: Nothing
  */
 import { UserState } from "../provider/user-provider";
@@ -60,7 +60,7 @@ export const userInfoDetail = (uid: number) => {
   return dashApi.getByRawID({
     vars: {
       model: 'User',
-      fields: ['nickname', 'email', 'student_id.sfzh', 'student_id.pycc', 'teacher_id.id', 'student_id.id'],
+      fields: ['nickname', 'email', 'student_id.sfzh', 'student_id.pycc', 'teacher_id.id', 'student_id.id', 'student_id.code', 'fsopen_id'],
       id: uid,
       match_record_tags: []
     }
@@ -75,6 +75,20 @@ export const getStudentInfo = (stuid: number) => {
       fields: ['id', 'yuanxi_id.name', 'dsxx_id.name', 'dbsj', 'dbwy_id', 'gyxxjd', 'sfyyhy'],
       id: stuid,
       match_record_tags: []
+    }
+  })
+};
+
+// 修改学生表的预约为1
+// 获取学生表的数据
+export const setYYY = (stuid: number) => {
+  return dashApi.save({
+    vars: {
+      model: 'Student',
+      values: {
+        id: stuid,
+        sfyyhy: '1'
+      }
     }
   })
 };
@@ -126,6 +140,16 @@ export const saveDocument = (values: {
     }
   })
 }
+
+// 预约会议
+export const booking = (data: any) => {
+  return request({
+    url: '/feishu/create_meeting',
+    method: 'POST',
+    data
+  });
+};
+
 
 // 获取答辩文档
 export const getDocs = (lx: '1' | '2') => {

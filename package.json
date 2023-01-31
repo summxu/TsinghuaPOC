@@ -42,16 +42,17 @@
     "@tarojs/helper": "3.5.10",
     "@tarojs/plugin-framework-react": "3.5.10",
     "@tarojs/plugin-platform-lark": "^1.1.0",
-    "dataloader": "^2.1.0",
-"typed-graphqlify": "^3.1.6",
     "@tarojs/react": "3.5.10",
     "@tarojs/router": "3.5.10",
     "@tarojs/runtime": "3.5.10",
     "@tarojs/shared": "3.5.10",
     "@tarojs/taro": "3.5.10",
     "@tarojs/taro-h5": "3.5.10",
+    "dataloader": "^2.1.0",
+    "moment": "^2.29.4",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "typed-graphqlify": "^3.1.6"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",
