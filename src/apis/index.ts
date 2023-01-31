@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-01-30 15:41:45
+ * @LastEditTime: 2023-01-31 15:46:30
  * @Msg: Nothing
  */
 import { UserState } from "../provider/user-provider";
@@ -68,16 +68,96 @@ export const userInfoDetail = (uid: number) => {
 };
 
 // 获取学生表的数据
-export const stdentInfo = (stuid: number) => {
+export const getStudentInfo = (stuid: number) => {
   return dashApi.getByRawID({
     vars: {
       model: 'Student',
-      fields: ['id', 'yuanxi_id.name','dsxx_id.name'],
+      fields: ['id', 'yuanxi_id.name', 'dsxx_id.name', 'dbsj', 'dbwy_id', 'gyxxjd', 'sfyyhy'],
       id: stuid,
       match_record_tags: []
     }
   })
 };
+
+// 获取教师表的数据
+export const getTeacherInfo = (tecid: number) => {
+  return dashApi.getByRawID({
+    vars: {
+      model: 'Teacher',
+      fields: ['id', 'yuanxi_id.name'],
+      id: tecid,
+      match_record_tags: []
+    }
+  })
+};
+
+// 取学生下的委员会成员
+export const getWyhcyList = (stuid: number) => {
+  return dashApi.search({
+    vars: {
+      model: 'Dbwy',
+      fields: ['sf', 'teacher_id.name', 'teacher_id.yuanxi_id.name', 'teacher_id.zhicheng'],
+      condition: {
+        logic_operator: "&",
+        children: [{
+          leaf: {
+            field: 'Student',
+            comparator: '=',
+            value: stuid,
+          }
+        }]
+      },
+      limit: 999,
+      offset: 0
+    }
+  })
+}
+
+// 新增答辩表文档
+export const saveDocument = (values: {
+  student_id: number
+  lx: '1' | '2',
+  uploaded_file_ids: number[]
+}) => {
+  return dashApi.save({
+    vars: {
+      model: 'Dbfj',
+      values
+    }
+  })
+}
+
+// 获取答辩文档
+export const getDocs = (lx: '1' | '2') => {
+  return dashApi.search({
+    vars: {
+      model: 'Dbfj',
+      fields: ['id', 'uploaded_file_ids.origin_filename', 'uploaded_file_ids.download_url'],
+      condition: {
+        logic_operator: "&",
+        children: [{
+          leaf: {
+            field: 'lx',
+            comparator: '=',
+            value: lx,
+          }
+        }]
+      },
+      limit: 999,
+      offset: 0
+    }
+  })
+}
+
+// 删除答辩文档
+export const delDocs = (id: number) => {
+  return dashApi.unlink({
+    vars: {
+      model: "Dbfj",
+      id
+    }
+  })
+}
 
 // 测试取出所有院系
 export const getAllYanXi = ({ offset, limit, searchValue }) => {

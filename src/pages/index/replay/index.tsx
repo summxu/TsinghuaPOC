@@ -1,19 +1,21 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-10 16:46:40
- * @LastEditTime: 2023-01-12 17:44:46
+ * @LastEditTime: 2023-01-31 14:52:48
  * @Msg: Nothing
  */
 import { UserInfoCard } from '@/components/user-info-card'
 import { Tabs } from '@taroify/core'
 import { View, Image, Text } from '@tarojs/components'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { IndexDetail } from './detail'
 import { IndexDocuments } from './documents'
 
 import './index.scss'
 
 const Replay: FC = () => {
+
+  const [key, setKey] = useState(0)
 
   return (
     <View className='replay-page'>
@@ -34,10 +36,10 @@ const Replay: FC = () => {
         </View>
       </View>
 
-      <Tabs className='tabs-custom'>
+      <Tabs lazyRender onChange={(value) => setKey(value)} className='tabs-custom'>
         <Tabs.TabPane title="详情"><IndexDetail /></Tabs.TabPane>
-        <Tabs.TabPane title="相关文档"><IndexDocuments /></Tabs.TabPane>
-        <Tabs.TabPane title="答辩表"><IndexDocuments /></Tabs.TabPane>
+        <Tabs.TabPane title="相关文档"><IndexDocuments lx={'1'} /></Tabs.TabPane>
+        <Tabs.TabPane title="答辩表"><IndexDocuments lx={'2'} /></Tabs.TabPane>
       </Tabs>
 
     </View>

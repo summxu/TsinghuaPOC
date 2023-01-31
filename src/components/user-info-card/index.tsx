@@ -1,10 +1,10 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 15:36:09
- * @LastEditTime: 2023-01-30 16:04:56
+ * @LastEditTime: 2023-01-30 16:40:29
  * @Msg: Nothing
  */
-import { stdentInfo } from "@/apis/index";
+import { getStudentInfo } from "@/apis/index";
 import { useUserReduce } from "@/src/provider/user-provider";
 import { View, Image, Text } from "@tarojs/components";
 import { FC, useEffect, useState } from "react";
@@ -15,10 +15,10 @@ export const UserInfoCard: FC = () => {
   const { state: userInfo } = useUserReduce({ isRefresh: true })
   const [studentInfo, setStudentInfo] = useState<any>({})
 
-  const getStdentInfo = async () => {
+  const getStudentInfoHandle = async () => {
     try {
       if (userInfo.stuid) {
-        const { result } = await stdentInfo(userInfo.stuid)
+        const { result } = await getStudentInfo(userInfo.stuid)
         setStudentInfo(result.data)
       }
     } catch (error) {
@@ -27,7 +27,7 @@ export const UserInfoCard: FC = () => {
   }
 
   useEffect(() => {
-    getStdentInfo()
+    getStudentInfoHandle()
   }, [userInfo])
 
   return (
