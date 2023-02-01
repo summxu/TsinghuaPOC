@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-01-31 17:07:32
+ * @LastEditTime: 2023-02-01 10:29:36
  * @Msg: Nothing
  */
 import { UserState } from "../provider/user-provider";
@@ -80,7 +80,6 @@ export const getStudentInfo = (stuid: number) => {
 };
 
 // 修改学生表的预约为1
-// 获取学生表的数据
 export const setYYY = (stuid: number) => {
   return dashApi.save({
     vars: {
@@ -179,6 +178,33 @@ export const delDocs = (id: number) => {
     vars: {
       model: "Dbfj",
       id
+    }
+  })
+}
+
+// 获取学习进度
+export const getXxjd = (stuid: number) => {
+  return dashApi.search<{
+    wcsj: string
+    xuhao: string
+    name: string
+    wczt: string
+  }>({
+    vars: {
+      model: 'Xxjd',
+      fields: ['wcsj', 'wczt', 'xuhao', 'name'],
+      condition: {
+        logic_operator: "&",
+        children: [{
+          leaf: {
+            field: 'student_id',
+            comparator: '=',
+            value: stuid,
+          }
+        }]
+      },
+      limit: 999,
+      offset: 0
     }
   })
 }
