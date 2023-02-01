@@ -1,10 +1,10 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-13 10:23:17
- * @LastEditTime: 2023-01-13 13:16:56
+ * @LastEditTime: 2023-02-01 15:29:58
  * @Msg: Nothing
  */
-import { getAllYanXi } from '@/apis/index'
+import { getStuByTec } from '@/apis/index'
 import { DataList, useDataList } from '@/components/data-list'
 import SafeArea from '@/components/safearea'
 import { Search } from '@/components/search'
@@ -22,7 +22,7 @@ interface DataListBoxProps {
 
 const DataListBox: FC<DataListBoxProps> = ({ params = {}, type }) => {
 
-  const { status, dataList, dispatch } = useDataList({ request: getAllYanXi, params })
+  const { status, dataList, dispatch } = useDataList({ request: getStuByTec, params })
   // const 
 
   return (

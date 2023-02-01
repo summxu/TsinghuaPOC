@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 13:24:44
- * @LastEditTime: 2023-01-30 11:32:01
+ * @LastEditTime: 2023-02-01 17:31:26
  * @Msg: Nothing
  */
 
@@ -19,6 +19,8 @@ interface TimeLineProps {
 }
 
 export const TimeLine: FC<TimeLineProps> = ({ data, active }) => {
+
+  active = active - 1
 
   const colorHandle = (index: number, isDot: boolean) => {
     let colorStr: CSSProperties = { background: "#DCDEE0" }

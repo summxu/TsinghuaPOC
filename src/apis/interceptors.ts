@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 10:43:58
- * @LastEditTime: 2023-01-31 09:41:49
+ * @LastEditTime: 2023-02-01 16:22:25
  * @Msg: Nothing
  */
 import Taro, { Chain } from "@tarojs/taro"
@@ -18,6 +18,7 @@ export interface CommonErrorResponse<T = unknown> extends Promise<T> {
   status: 'ok' | 'error'
   errorKind: string
   errorMsg: string
+  error_msg: string
   errorSubKind: string
 }
 
@@ -57,7 +58,10 @@ const customInterceptor = (chain: Chain) => {
         Taro.setStorageSync("Authorization", "")
         // pageToLogin()
         return Promise.reject('需要鉴权')
-
+      } else if (res.statusCode === HTTP_STATUS.CLIENT_ERROR) {
+        if (res.data.status === 'error') {
+          return Promise.reject(res.data.error_msg)
+        }
       } else if (res.statusCode === HTTP_STATUS.SUCCESS) {
         if (res.data.status === 'error') {
           return Promise.reject(res.data.errorMsg)

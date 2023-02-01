@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-02-01 13:36:27
+ * @LastEditTime: 2023-02-01 17:38:09
  * @Msg: Nothing
  */
 import { UserState } from "../provider/user-provider";
@@ -72,7 +72,7 @@ export const getStudentInfo = (stuid: number) => {
   return dashApi.getByRawID({
     vars: {
       model: 'Student',
-      fields: ['id', 'yuanxi_id.name', 'dsxx_id.name', 'dbsj', 'dbwy_id', 'gyxxjd', 'sfyyhy', 'sfzh','pycc','code'],
+      fields: ['id', 'yuanxi_id.name', 'dsxx_id.name', 'name', 'dbsj', 'dbwy_id', 'gyxxjd', 'sfyyhy', 'sfzh', 'pycc', 'code'],
       id: stuid,
       match_record_tags: []
     }
@@ -149,6 +149,14 @@ export const booking = (data: any) => {
   });
 };
 
+// 发送邮件
+export const sendEmail = (data: any) => {
+  return request({
+    url: '/email_api/send_email',
+    method: 'POST',
+    data
+  });
+};
 
 // 获取答辩文档
 export const getDocs = (lx: '1' | '2') => {
@@ -209,21 +217,37 @@ export const getXxjd = (stuid: number) => {
   })
 }
 
-// 测试取出所有院系
-export const getAllYanXi = ({ offset, limit, searchValue }) => {
+// 获取导师的学生
+export const getStuByTec = ({ offset, limit, searchValue, tecid, gyxxjd }) => {
+  const conditionArr = [{
+    leaf: {
+      field: 'name',
+      comparator: 'like',
+      value: searchValue,
+    }
+  }, {
+    leaf: {
+      field: 'dsxx_id.id',
+      comparator: '=',
+      value: tecid,
+    }
+  }]
+  if (gyxxjd) {
+    conditionArr.push({
+      leaf: {
+        field: 'gyxxjd',
+        comparator: '=',
+        value: gyxxjd,
+      }
+    })
+  }
   return dashApi.search({
     vars: {
-      model: 'student',
-      fields: ['code', 'name'],
+      model: 'Student',
+      fields: ['id', 'code', 'name', 'email', 'gyxxjd'],
       condition: {
         logic_operator: "&",
-        children: [{
-          leaf: {
-            field: 'name',
-            comparator: 'like',
-            value: searchValue,
-          }
-        }]
+        children: conditionArr
       },
       limit,
       offset

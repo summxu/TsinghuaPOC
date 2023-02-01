@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 13:30:27
- * @LastEditTime: 2023-02-01 13:47:57
+ * @LastEditTime: 2023-02-01 17:26:16
  * @Msg: Nothing
  */
 import { pageToIndex, pageToLogin, pageToReplay } from "@/utils/pages";
@@ -37,6 +37,7 @@ export interface UserState {
     gyxxjd: string
     sfyyhy: string
     sfzh: string
+    name: string
   }
   teacherInfo: {
     sfzh: string
@@ -134,20 +135,31 @@ export const useUserReduce = ({ isRefresh = false }: UserReduce = {}) => {
       })
       flushUserInfoDetail(data['teacher_id.id'] || data['student_id.id'], type)
     }
+    return data
   }
 
   // 统一登录后的操作
   const loginInitHandle = async (token: string) => {
     Taro.setStorageSync('Authorization', token)
     tt.showTabBar()
-    if (state.role === 'teacher') {
-      pageToIndex()
-      tt.removeTabBarItem({ tag: 'pages/progress/index' })
-    } else {
-      pageToReplay()
-      tt.removeTabBarItem({ tag: 'pages/students/index' })
-      tt.removeTabBarItem({ tag: 'pages/index/index' })
+
+    // 再次同步请求一遍 userInfo
+    const { data } = await userInfo()
+    const userInfoData = await flushUserInfoDetailBefore(data.uid)
+    if (userInfoData) {
+      const role = userInfoData['teacher_id.id'] ? 'teacher' : 'student'
+      console.log(role)
+      if (role === 'teacher') {
+        pageToIndex()
+        tt.removeTabBarItem({ tag: 'pages/progress/index' })
+        tt.removeTabBarItem({ tag: 'pages/index/replay/index' })
+      } else {
+        pageToReplay()
+        tt.removeTabBarItem({ tag: 'pages/students/index' })
+        tt.removeTabBarItem({ tag: 'pages/index/index' })
+      }
     }
+
   }
 
   const InitLogin = () => {

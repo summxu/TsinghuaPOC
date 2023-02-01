@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 15:36:09
- * @LastEditTime: 2023-02-01 13:13:50
+ * @LastEditTime: 2023-02-01 17:26:07
  * @Msg: Nothing
  */
 import { useUserReduce } from "@/src/provider/user-provider";
@@ -17,7 +17,7 @@ export const UserInfoCard: FC = () => {
     <View className="user-info-card">
       <View className="user-info-top flex-row items-center">
         <Image className='avatar-com' src={userInfo.avatar || require('@/static/avatar.png')}></Image>
-        <Text className="name">{userInfo.name}</Text>
+        {userInfo.studentInfo && <Text className="name">{userInfo.studentInfo.name}</Text>}
         {userInfo.studentInfo && <View className="tag">{userInfo.studentInfo.pycc === '02' ? '博士' : '硕士'}</View>}
       </View>
       <View className="user-info-bottom flex-row items-center justify-between">
