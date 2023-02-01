@@ -1,11 +1,11 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-30 13:15:46
+ * @LastEditTime: 2023-02-01 13:28:19
  * @Msg: Nothing
  */
 import { useUserReduce } from '@/src/provider/user-provider'
-import { View, Image, Text, Button } from '@tarojs/components'
+import { Button, Image, Text, View } from '@tarojs/components'
 import { FC } from 'react'
 
 import './index.scss'
@@ -34,9 +34,15 @@ const Mine: FC = () => {
           <Text className='item-value'>{userInfo.user_name}</Text>
         </View>
         {
-          userInfo.sfzh && <View className='item-box'>
+          userInfo.teacherInfo && userInfo.role === 'teacher' && <View className='item-box'>
             <View className='item-label'>身份证号</View>
-            <Text className='item-value'>{userInfo.sfzh}</Text>
+            <Text className='item-value'>{userInfo.teacherInfo.sfzh}</Text>
+          </View>
+        }
+        {
+          userInfo.studentInfo && userInfo.role === 'student' && <View className='item-box'>
+            <View className='item-label'>身份证号</View>
+            <Text className='item-value'>{userInfo.studentInfo.sfzh}</Text>
           </View>
         }
 

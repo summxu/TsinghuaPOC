@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 17:30:24
- * @LastEditTime: 2023-01-31 15:46:04
+ * @LastEditTime: 2023-02-01 13:29:51
  * @Msg: Nothing
  */
 import { delDocs, getDocs, saveDocument } from "@/apis/index";
@@ -35,7 +35,7 @@ export const IndexDocuments: FC<{ lx: '1' | '2' }> = ({ lx }) => {
       const uploadQueue: Promise<any>[] = []
       datas.forEach(item => {
         uploadQueue.push(saveDocument({
-          student_id: userInfo.stuid!,
+          student_id: userInfo.studentInfo?.id!,
           lx,
           uploaded_file_ids: [item.id]
         }))

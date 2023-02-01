@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-02-01 10:39:53
+ * @LastEditTime: 2023-02-01 13:29:14
  * @Msg: Nothing
  */
 import { getXxjd } from '@/apis/index'
@@ -46,8 +46,10 @@ const Progress: FC = () => {
 
   const getXxjdHandle = async () => {
     try {
-      const { result } = await getXxjd(userInfo.stuid!)
-      setTimeLineData(result.items.sort((a, b) => Number(a.data.xuhao) - Number(b.data.xuhao)))
+      if (userInfo.studentInfo) {
+        const { result } = await getXxjd(userInfo.studentInfo?.id)
+        setTimeLineData(result.items.sort((a, b) => Number(a.data.xuhao) - Number(b.data.xuhao)))
+      }
     } catch (error) {
       console.log(error)
     }

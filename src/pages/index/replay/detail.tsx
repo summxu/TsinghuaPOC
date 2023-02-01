@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 16:24:10
- * @LastEditTime: 2023-01-31 17:10:15
+ * @LastEditTime: 2023-02-01 14:00:32
  * @Msg: Nothing
  */
 
@@ -22,8 +22,7 @@ const SF_TYPE = {
 
 export const IndexDetail: FC = () => {
 
-  const { state: userInfo } = useUserReduce()
-  const [studentInfo, setStudentInfo] = useState<any>({})
+  const { state: userInfo, flushUserInfoDetail } = useUserReduce()
   const [wyhList, setWyhList] = useState<{
     data: any;
     allow_record_tags: string[];
@@ -32,21 +31,10 @@ export const IndexDetail: FC = () => {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState<Date[]>([])
 
-  const getReplayInfo = async () => {
-    try {
-      if (userInfo.stuid) {
-        const { result } = await getStudentInfo(userInfo.stuid)
-        setStudentInfo(result.data)
-      }
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   const getWyhcyListHandle = async () => {
     try {
-      if (userInfo.stuid) {
-        const { result } = await getWyhcyList(userInfo.stuid)
+      if (userInfo.studentInfo) {
+        const { result } = await getWyhcyList(userInfo.studentInfo.id)
         setWyhList(result.items)
       }
     } catch (error) {
@@ -55,7 +43,6 @@ export const IndexDetail: FC = () => {
   }
 
   useEffect(() => {
-    getReplayInfo()
     getWyhcyListHandle()
   }, [userInfo])
 
@@ -66,11 +53,11 @@ export const IndexDetail: FC = () => {
         startTime: moment(timeRange[0]).format('YYYY-MM-DD HH:mm:ss'),
         endTime: moment(timeRange[1]).format('YYYY-MM-DD HH:mm:ss'),
         open_id: userInfo.fsopen_id,
-        xh: String(userInfo.code)
+        xh: String(userInfo.studentInfo?.code)
       })
       Taro.showToast({ icon: 'success', title: '预约成功' })
       // await setYYY(userInfo.stuid!)
-      getReplayInfo()
+      flushUserInfoDetail(userInfo.studentInfo?.id!, 'studentInfo')
     } catch (error) {
       console.log(error)
     }
@@ -98,11 +85,11 @@ export const IndexDetail: FC = () => {
 
       <View className="title">答辩时间</View>
       <View className="minicard flex-row justify-between items-center">
-        <Text className="mini-left">答辩时间：{studentInfo.dbsj}</Text>
+        {userInfo.studentInfo && <Text className="mini-left">答辩时间：{userInfo.studentInfo.dbsj}</Text>}
         {
-          studentInfo.sfyyhy === '0' ?
+          userInfo.studentInfo && userInfo.studentInfo.sfyyhy === '0' ?
             <Text onClick={() => setOpen(true)} className="mini-right">预约会议</Text> :
-            <Text className="mini-right mini-right-over">已预约</Text>
+            <Text className="mini-right ">已预约</Text>
         }
       </View>
       <View className="title">委员会成员</View>

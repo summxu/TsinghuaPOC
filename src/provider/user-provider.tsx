@@ -1,13 +1,13 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 13:30:27
- * @LastEditTime: 2023-02-01 13:11:59
+ * @LastEditTime: 2023-02-01 13:47:57
  * @Msg: Nothing
  */
 import { pageToIndex, pageToLogin, pageToReplay } from "@/utils/pages";
-import Taro, { useRouter } from "@tarojs/taro";
+import Taro from "@tarojs/taro";
 import { createContext, Dispatch, FC, PropsWithChildren, useContext, useEffect, useReducer } from "react";
-import { feishuOpenIDLogin, getStudentInfo, userInfo, userInfoDetail } from "../apis";
+import { feishuOpenIDLogin, getStudentInfo, getTeacherInfo, userInfo, userInfoDetail } from "../apis";
 
 export interface UserState {
   uid: number
@@ -26,15 +26,23 @@ export interface UserState {
   user_name: string
   role: 'student' | 'teacher'
   fsopen_id: string
-  sfzh: string
   studentInfo: {
     id: number
     pycc: '01' | '02'
     code: number
+    'yuanxi_id.name': string
+    'dsxx_id.name': string
+    dbsj: string
+    dbwy_id: string
+    gyxxjd: string
+    sfyyhy: string
+    sfzh: string
   }
   teacherInfo: {
+    sfzh: string
     id: number
-  } | {}
+    'yuanxi_id.name': string
+  }
 }
 
 interface UserDispatch {
@@ -94,44 +102,38 @@ export const useUserReduce = ({ isRefresh = false }: UserReduce = {}) => {
     try {
       const { data } = await userInfo()
       dispatch({ type: 'INIT', payload: data })
-      flushUserInfoDetail(data.uid)
+      flushUserInfoDetailBefore(data.uid)
     } catch (error) {
       console.log(error)
     }
   }
 
-  const flushUserInfoDetail = async (uid: number, type?: 'studentInfo' | 'teacherInfo') => {
+  const flushUserInfoDetail = async (stuidortecid: number, type?: 'studentInfo' | 'teacherInfo') => {
+    if (type === 'studentInfo') {
+      const { result: studentData } = await getStudentInfo(stuidortecid)
+      dispatch({ type: 'INIT', payload: { [type]: studentData.data as any } })
+    }
+
+    if (type === 'teacherInfo') {
+      const { result: teacherData } = await getTeacherInfo(stuidortecid)
+      dispatch({ type: 'INIT', payload: { [type]: teacherData.data as any } })
+    }
+  }
+
+  const flushUserInfoDetailBefore = async (uid: number) => {
     const { result } = await userInfoDetail(uid)
     const data = result.data
     if (data) {
       const role = data['teacher_id.id'] ? 'teacher' : 'student'
-      if (!type) {
-        type = role + 'Info' as 'studentInfo' | 'teacherInfo'
-      }
+      const type = role + 'Info' as 'studentInfo' | 'teacherInfo'
       dispatch({
         type: 'INIT', payload: {
           role,
-          fsopen_id: data.fsopen_id,
-          sfzh: data.sfzh,
-          [type]: type === 'studentInfo' ? {
-            id: data['student_id.id'],
-            code: data['student_id.code'],
-            pycc: data['student_id.pycc'] as '01' | '02',
-          } : {
-            id: data['teacher_id.id'],
-          }
+          fsopen_id: data.fsopen_id
         }
       })
-
-      if (type === 'studentInfo') {
-        const { result: studentData } = await getStudentInfo(data['student_id.id'])
-        dispatch({ type: 'INIT', payload: { [type]: studentData.data as any } })
-      }
+      flushUserInfoDetail(data['teacher_id.id'] || data['student_id.id'], type)
     }
-
-    setTimeout(() => {
-      console.log(state)
-    }, 10000);
   }
 
   // 统一登录后的操作

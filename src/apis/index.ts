@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-02-01 13:14:10
+ * @LastEditTime: 2023-02-01 13:36:27
  * @Msg: Nothing
  */
 import { UserState } from "../provider/user-provider";
@@ -60,7 +60,7 @@ export const userInfoDetail = (uid: number) => {
   return dashApi.getByRawID({
     vars: {
       model: 'User',
-      fields: ['nickname', 'email', 'student_id.sfzh', 'student_id.pycc', 'teacher_id.id', 'student_id.id', 'student_id.code', 'fsopen_id'],
+      fields: ['teacher_id.id', 'student_id.id', 'fsopen_id'],
       id: uid,
       match_record_tags: []
     }
@@ -72,7 +72,7 @@ export const getStudentInfo = (stuid: number) => {
   return dashApi.getByRawID({
     vars: {
       model: 'Student',
-      fields: ['id', 'yuanxi_id.name', 'dsxx_id.name', 'dbsj', 'dbwy_id', 'gyxxjd', 'sfyyhy'],
+      fields: ['id', 'yuanxi_id.name', 'dsxx_id.name', 'dbsj', 'dbwy_id', 'gyxxjd', 'sfyyhy', 'sfzh','pycc','code'],
       id: stuid,
       match_record_tags: []
     }
@@ -97,7 +97,7 @@ export const getTeacherInfo = (tecid: number) => {
   return dashApi.getByRawID({
     vars: {
       model: 'Teacher',
-      fields: ['id', 'yuanxi_id.name'],
+      fields: ['id', 'yuanxi_id.name', 'sfzh'],
       id: tecid,
       match_record_tags: []
     }
