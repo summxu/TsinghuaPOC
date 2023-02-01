@@ -1,18 +1,16 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 13:30:27
- * @LastEditTime: 2023-01-31 17:01:27
+ * @LastEditTime: 2023-02-01 13:11:59
  * @Msg: Nothing
  */
 import { pageToIndex, pageToLogin, pageToReplay } from "@/utils/pages";
 import Taro, { useRouter } from "@tarojs/taro";
 import { createContext, Dispatch, FC, PropsWithChildren, useContext, useEffect, useReducer } from "react";
-import { feishuOpenIDLogin, userInfo, userInfoDetail } from "../apis";
+import { feishuOpenIDLogin, getStudentInfo, userInfo, userInfoDetail } from "../apis";
 
 export interface UserState {
-  uid: number | undefined
-  stuid: number | undefined
-  tecid: number | undefined
+  uid: number
   email: string
   name: string
   is_dev: boolean
@@ -27,10 +25,16 @@ export interface UserState {
   reset_password: { need: boolean, reason: string }
   user_name: string
   role: 'student' | 'teacher'
-  sfzh: string
-  pycc: '01' | '02'
   fsopen_id: string
-  code: number
+  sfzh: string
+  studentInfo: {
+    id: number
+    pycc: '01' | '02'
+    code: number
+  }
+  teacherInfo: {
+    id: number
+  } | {}
 }
 
 interface UserDispatch {
@@ -61,14 +65,14 @@ export const UserProvider: FC<PropsWithChildren> = (props) => {
 
   const reducer = (preState: UserState, action: {
     type: keyof UserDispatch;
-    payload?: Partial<UserState>;
+    payload: Partial<UserState>;
   }) => {
     const { type, payload } = action;
     switch (type) {
       default:
         return preState;
       case 'INIT':
-        return payload as Partial<UserState> // 断言 init 的情况下一定会传 payload
+        return { ...preState, ...payload }
       case 'CLEAR':
         return {};
     }
@@ -89,24 +93,45 @@ export const useUserReduce = ({ isRefresh = false }: UserReduce = {}) => {
   const flushUserInfo = async () => {
     try {
       const { data } = await userInfo()
-      const { result } = await userInfoDetail(data.uid!)
-      dispatch({
-        type: 'INIT', payload: {
-          ...data,
-          email: result.data!.email,
-          stuid: result.data!['student_id.id'] as unknown as number | undefined,
-          tecid: result.data!['teacher_id.id'] as unknown as number | undefined,
-          role: result.data!['teacher_id.id'] ? 'teacher' : 'student',
-          sfzh: result.data!['student_id.sfzh'],
-          code: result.data!['student_id.code'],
-          pycc: result.data!['student_id.pycc'] as '01' | '02',
-          fsopen_id: result.data!.fsopen_id,
-        }
-      })
-      return data
+      dispatch({ type: 'INIT', payload: data })
+      flushUserInfoDetail(data.uid)
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const flushUserInfoDetail = async (uid: number, type?: 'studentInfo' | 'teacherInfo') => {
+    const { result } = await userInfoDetail(uid)
+    const data = result.data
+    if (data) {
+      const role = data['teacher_id.id'] ? 'teacher' : 'student'
+      if (!type) {
+        type = role + 'Info' as 'studentInfo' | 'teacherInfo'
+      }
+      dispatch({
+        type: 'INIT', payload: {
+          role,
+          fsopen_id: data.fsopen_id,
+          sfzh: data.sfzh,
+          [type]: type === 'studentInfo' ? {
+            id: data['student_id.id'],
+            code: data['student_id.code'],
+            pycc: data['student_id.pycc'] as '01' | '02',
+          } : {
+            id: data['teacher_id.id'],
+          }
+        }
+      })
+
+      if (type === 'studentInfo') {
+        const { result: studentData } = await getStudentInfo(data['student_id.id'])
+        dispatch({ type: 'INIT', payload: { [type]: studentData.data as any } })
+      }
+    }
+
+    setTimeout(() => {
+      console.log(state)
+    }, 10000);
   }
 
   // 统一登录后的操作
@@ -156,5 +181,5 @@ export const useUserReduce = ({ isRefresh = false }: UserReduce = {}) => {
     useEffect(() => { flushUserInfo() }, [])
   }
 
-  return { state, dispatch, logoutHandle, InitLogin, loginInitHandle }
+  return { state, dispatch, logoutHandle, InitLogin, loginInitHandle, flushUserInfoDetail }
 };
