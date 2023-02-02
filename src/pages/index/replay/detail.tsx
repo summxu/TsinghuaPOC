@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 16:24:10
- * @LastEditTime: 2023-02-01 14:00:32
+ * @LastEditTime: 2023-02-02 09:18:33
  * @Msg: Nothing
  */
 
@@ -87,9 +87,9 @@ export const IndexDetail: FC = () => {
       <View className="minicard flex-row justify-between items-center">
         {userInfo.studentInfo && <Text className="mini-left">答辩时间：{userInfo.studentInfo.dbsj}</Text>}
         {
-          userInfo.studentInfo && userInfo.studentInfo.sfyyhy === '0' ?
+          userInfo.studentInfo && (userInfo.studentInfo.sfyyhy === '0' ?
             <Text onClick={() => setOpen(true)} className="mini-right">预约会议</Text> :
-            <Text className="mini-right ">已预约</Text>
+            <Text className="mini-right ">已预约</Text>)
         }
       </View>
       <View className="title">委员会成员</View>

@@ -3,7 +3,7 @@ import Taro from "@tarojs/taro"
 /*
  * @Author: Chenxu
  * @Date: 2023-01-13 13:10:01
- * @LastEditTime: 2023-01-13 13:12:58
+ * @LastEditTime: 2023-02-02 09:53:43
  * @Msg: Nothing
  */
 import { FC, useLayoutEffect, useState } from "react"
@@ -13,7 +13,6 @@ const SafeArea: FC = () => {
   useLayoutEffect(() => {
     Taro.getSystemInfo().then(({ safeArea, screenHeight }) => {
       const { bottom } = safeArea!
-      console.log(bottom, screenHeight)
       setSafeHeight(screenHeight - bottom)
     })
   }, [])

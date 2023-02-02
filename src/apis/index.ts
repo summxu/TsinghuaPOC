@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-02-01 17:38:09
+ * @LastEditTime: 2023-02-02 10:40:14
  * @Msg: Nothing
  */
 import { UserState } from "../provider/user-provider";
@@ -225,12 +225,6 @@ export const getStuByTec = ({ offset, limit, searchValue, tecid, gyxxjd }) => {
       comparator: 'like',
       value: searchValue,
     }
-  }, {
-    leaf: {
-      field: 'dsxx_id.id',
-      comparator: '=',
-      value: tecid,
-    }
   }]
   if (gyxxjd) {
     conditionArr.push({
@@ -241,10 +235,19 @@ export const getStuByTec = ({ offset, limit, searchValue, tecid, gyxxjd }) => {
       }
     })
   }
+  if (tecid) {
+    conditionArr.push({
+      leaf: {
+        field: 'dsxx_id.id',
+        comparator: '=',
+        value: tecid,
+      }
+    })
+  }
   return dashApi.search({
     vars: {
       model: 'Student',
-      fields: ['id', 'code', 'name', 'email', 'gyxxjd'],
+      fields: ['id', 'code', 'name', 'email', 'gyxxjd', 'yuanxi_id.name', 'user_id.fsopen_id'],
       condition: {
         logic_operator: "&",
         children: conditionArr
@@ -254,3 +257,34 @@ export const getStuByTec = ({ offset, limit, searchValue, tecid, gyxxjd }) => {
     }
   })
 }
+
+// 获取所有导师列表
+export const getTecList = ({ offset, limit, searchValue }) => {
+  return dashApi.search({
+    vars: {
+      model: 'Teacher',
+      fields: ['id', 'name', 'zhicheng', 'yuanxi_id.name', 'user_id.fsopen_id'],
+      condition: {
+        logic_operator: "&",
+        children: [{
+          leaf: {
+            field: 'name',
+            comparator: 'like',
+            value: searchValue,
+          }
+        }]
+      },
+      limit,
+      offset
+    }
+  })
+}
+
+// 建群
+export const createGroup = (data: any) => {
+  return request({
+    url: '/feishu/create_chat',
+    method: 'POST',
+    data
+  });
+};
