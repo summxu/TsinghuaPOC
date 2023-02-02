@@ -68,7 +68,7 @@ const StudentsGroup: FC = () => {
   const params = useMemo(() => ({
     searchValue,
     tecid: userInfo.teacherInfo ? userInfo.teacherInfo.id : undefined
-  }), [searchValue, userInfo])
+  }), [searchValue])
 
   interface selectListType {
     tecOpenIDList: string[]

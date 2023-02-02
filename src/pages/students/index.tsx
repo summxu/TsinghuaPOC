@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-10 15:41:54
- * @LastEditTime: 2023-02-01 17:30:12
+ * @LastEditTime: 2023-02-02 11:30:25
  * @Msg: Nothing
  */
 import { getStuByTec } from '@/apis/index'
@@ -99,7 +99,7 @@ const Students: FC = () => {
     searchValue,
     gyxxjd: tabsType,
     tecid: userInfo.teacherInfo ? userInfo.teacherInfo.id : undefined
-  }), [searchValue, tabsType, userInfo])
+  }), [searchValue, tabsType])
 
   return (
     <View className='students-page'>

@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-02-01 17:24:58
+ * @LastEditTime: 2023-02-02 11:29:19
  * @Msg: Nothing
  */
 import { getStuByTec } from '@/apis/index'
@@ -27,10 +27,9 @@ const Index: FC = () => {
       searchValue,
       tecid: userInfo.teacherInfo ? userInfo.teacherInfo.id : undefined
     }
-  }, [searchValue, userInfo])
+  }, [searchValue])
 
   const { status, dataList, dispatch } = useDataList({ request: getStuByTec, params, isInit: true })
-
 
   return (
     <View className='index-page'>
