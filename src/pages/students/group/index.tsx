@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-13 10:23:17
- * @LastEditTime: 2023-02-02 11:20:58
+ * @LastEditTime: 2023-02-02 15:29:12
  * @Msg: Nothing
  */
 import { createGroup, getStuByTec, getTecList } from '@/apis/index'
@@ -12,6 +12,7 @@ import { useUserReduce } from '@/src/provider/user-provider'
 import { Tabs } from '@taroify/core'
 import { Clear } from '@taroify/icons'
 import { Button, Checkbox, CheckboxGroup, Text, View } from '@tarojs/components'
+import { navigateBack } from '@tarojs/router'
 import Taro from '@tarojs/taro'
 import moment from 'moment'
 import { FC, useMemo, useReducer, useState } from 'react'
@@ -108,6 +109,7 @@ const StudentsGroup: FC = () => {
         userIdList
       })
       Taro.showToast({ icon: 'success', title: '建群成功' })
+      navigateBack()
     } catch (error) {
       Taro.showToast({ icon: 'error', title: '建群失败' })
       console.log(error)

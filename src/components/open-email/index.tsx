@@ -1,13 +1,14 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 13:24:44
- * @LastEditTime: 2023-02-01 17:02:39
+ * @LastEditTime: 2023-02-02 15:28:12
  * @Msg: Nothing
  */
 
 import { sendEmail } from "@/apis/index";
 import { Cell, Form, Navbar, Popup, Textarea } from '@taroify/core';
 import { BaseEventOrig, Button, FormProps, Input } from "@tarojs/components";
+import Taro from "@tarojs/taro";
 import { FC, useEffect, useState } from "react";
 import "./index.scss";
 
@@ -32,13 +33,11 @@ export const OpenEmail: FC<OpenEmailProps> = ({ openEmail, onClose }) => {
         ...event.detail.value,
         MailToList: [openEmail]
       })
+      Taro.showToast({ icon: 'success', title: '发送成功' })
       setOpen(false)
     } catch (error) {
       console.log(error)
     }
-
-    setOpen(false)
-
   }
 
   return (
