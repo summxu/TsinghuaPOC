@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 17:30:24
- * @LastEditTime: 2023-02-01 13:29:51
+ * @LastEditTime: 2023-02-02 14:44:06
  * @Msg: Nothing
  */
 import { delDocs, getDocs, saveDocument } from "@/apis/index";
@@ -73,9 +73,11 @@ export const IndexDocuments: FC<{ lx: '1' | '2' }> = ({ lx }) => {
   }
 
   const openDocument = (url: string) => {
+    Taro.showLoading({ title: '正在打开文档...', mask: true })
     Taro.downloadFile({
       url: baseApiUrl[envVersion] + url,
       success: function (res) {
+        Taro.hideLoading()
         var filePath = res.tempFilePath
         Taro.openDocument({
           filePath: filePath,
@@ -120,14 +122,17 @@ export const IndexDocuments: FC<{ lx: '1' | '2' }> = ({ lx }) => {
       {
         dataList.length ?
           dataList.map(item => (
-            <SwipeCell onClick={() => openDocument(item.data['uploaded_file_ids.download_url'][0])} key={item.data.id}>
+            <SwipeCell catchMove={false} onClick={() => openDocument(item.data['uploaded_file_ids.download_url'][0])} key={item.data.id}>
               <View className="mumber-items">
                 <View className="doc-tag">{getFileNameExt(item.data['uploaded_file_ids.origin_filename'][0])}</View>
                 <View className="doc-name">{getSubFileName(item.data['uploaded_file_ids.origin_filename'][0])}</View>
               </View>
-              <SwipeCell.Actions side="right">
-                <Button onClick={() => delDocsHandle(item.data.id)} style={{ height: '100%' }} variant="contained" shape="square" color="danger">删除</Button>
-              </SwipeCell.Actions>
+              {
+                userInfo.role === 'teacher' &&
+                <SwipeCell.Actions side="right">
+                  <Button onClick={() => delDocsHandle(item.data.id)} style={{ height: '100%' }} variant="contained" shape="square" color="danger">删除</Button>
+                </SwipeCell.Actions>
+              }
             </SwipeCell>
           )) :
           <Empty >
@@ -136,7 +141,7 @@ export const IndexDocuments: FC<{ lx: '1' | '2' }> = ({ lx }) => {
           </Empty>
       }
 
-      <Image onClick={chooseFileHandle} className="fab-btn" src={require('@/static/fab.png')}></Image>
+      {userInfo.role === 'teacher' && <Image onClick={chooseFileHandle} className="fab-btn" src={require('@/static/fab.png')}></Image>}
 
     </View>
   )

@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-02-01 13:28:19
+ * @LastEditTime: 2023-02-02 15:00:23
  * @Msg: Nothing
  */
 import { useUserReduce } from '@/src/provider/user-provider'
@@ -35,8 +35,8 @@ const Mine: FC = () => {
         </View>
         {
           userInfo.teacherInfo && userInfo.role === 'teacher' && <View className='item-box'>
-            <View className='item-label'>身份证号</View>
-            <Text className='item-value'>{userInfo.teacherInfo.sfzh}</Text>
+            <View className='item-label'>电子邮箱</View>
+            <Text className='item-value'>{userInfo.email}</Text>
           </View>
         }
         {

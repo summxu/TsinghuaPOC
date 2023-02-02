@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-02-02 11:22:59
+ * @LastEditTime: 2023-02-02 11:32:50
  * @Msg: Nothing
  */
 import { useLaunch } from '@tarojs/taro'
@@ -17,7 +17,7 @@ const App: FC<PropsWithChildren> = (props) => {
     console.log('app on launch')
     setTimeout(() => {
       InitLogin()
-    }, 1000);
+    }, 0);
   })
 
   return <UserProvider>
