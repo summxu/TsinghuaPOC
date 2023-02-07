@@ -1,14 +1,14 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 16:24:10
- * @LastEditTime: 2023-02-02 09:18:33
+ * @LastEditTime: 2023-02-07 14:01:01
  * @Msg: Nothing
  */
 
-import { booking, getStudentInfo, getWyhcyList, setYYY } from "@/apis/index";
+import { booking, getWyhcyList } from "@/apis/index";
 import { useUserReduce } from "@/src/provider/user-provider";
-import { Calendar, Empty, Popup } from "@taroify/core";
-import { View, Text } from "@tarojs/components";
+import { DatetimePicker, Empty, Popup } from "@taroify/core";
+import { Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import moment from "moment";
 import { FC, useEffect, useState } from "react";
@@ -28,8 +28,9 @@ export const IndexDetail: FC = () => {
     allow_record_tags: string[];
   }[]>([])
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState<boolean[]>([false, false])
   const [value, setValue] = useState<Date[]>([])
+  const newDateTime = new Date()
 
   const getWyhcyListHandle = async () => {
     try {
@@ -46,7 +47,9 @@ export const IndexDetail: FC = () => {
     getWyhcyListHandle()
   }, [userInfo])
 
-  const bookingHandle = async (timeRange) => {
+  const bookingHandle = async () => {
+    Taro.showLoading({ title: '正在预约..', mask: true })
+    const timeRange = value
     try {
       await booking({
         topic: `预约会议${moment(timeRange[0]).format('MM-DD')}-${moment(timeRange[1]).format('MM-DD')}`,
@@ -59,6 +62,7 @@ export const IndexDetail: FC = () => {
       // await setYYY(userInfo.stuid!)
       flushUserInfoDetail(userInfo.studentInfo?.id!, 'studentInfo')
     } catch (error) {
+      Taro.showToast({ icon: 'success', title: '预约失败' })
       console.log(error)
     }
   }
@@ -66,21 +70,43 @@ export const IndexDetail: FC = () => {
   return (
     <View className="index-detail">
 
-      <Popup style={{ height: "80%" }} open={open} rounded placement="bottom" onClose={setOpen}>
-        <Calendar
-          style={{ "--calendar-active-color": "#2039D4" }}
-          type="range"
-          value={value}
-          onChange={setValue}
-          onConfirm={(newValue) => {
-            bookingHandle(newValue)
-            setOpen(false)
-          }}
+      {/* 开始时间弹窗 */}
+      <Popup open={open[0]} rounded placement="bottom" onClose={() => setOpen([false, false])}>
+        <DatetimePicker
+          type="datetime"
+          defaultValue={newDateTime}
+          value={value[0]}
+          onChange={e => setValue([e])}
         >
-          <Calendar.Footer>
-            <Calendar.Button type="confirm">确定</Calendar.Button>
-          </Calendar.Footer>
-        </Calendar>
+          <DatetimePicker.Toolbar>
+            <DatetimePicker.Button onClick={() => setOpen([false, false])}>取消</DatetimePicker.Button>
+            <DatetimePicker.Title>选择开始时间</DatetimePicker.Title>
+            <DatetimePicker.Button onClick={() => {
+              if (!value[0]) { setValue([newDateTime]) }
+              setOpen([false, true])
+            }}>确认</DatetimePicker.Button>
+          </DatetimePicker.Toolbar>
+        </DatetimePicker>
+      </Popup>
+
+      {/* 结束时间弹窗 */}
+      <Popup open={open[1]} rounded placement="bottom" onClose={() => setOpen([false, false])}>
+        {value[0] && <DatetimePicker
+          type="datetime"
+          defaultValue={value[0]}
+          value={value[1]}
+          min={value[0]}
+          onChange={e => setValue([...value, e])}
+        >
+          <DatetimePicker.Toolbar>
+            <DatetimePicker.Button onClick={() => setOpen([false, false])}>取消</DatetimePicker.Button>
+            <DatetimePicker.Title>选择结束时间</DatetimePicker.Title>
+            <DatetimePicker.Button onClick={() => {
+              bookingHandle()
+              setOpen([false, false])
+            }}>确认</DatetimePicker.Button>
+          </DatetimePicker.Toolbar>
+        </DatetimePicker>}
       </Popup>
 
       <View className="title">答辩时间</View>
@@ -88,7 +114,7 @@ export const IndexDetail: FC = () => {
         {userInfo.studentInfo && <Text className="mini-left">答辩时间：{userInfo.studentInfo.dbsj}</Text>}
         {
           userInfo.studentInfo && (userInfo.studentInfo.sfyyhy === '0' ?
-            <Text onClick={() => setOpen(true)} className="mini-right">预约会议</Text> :
+            <Text onClick={() => setOpen([true, false])} className="mini-right">预约会议</Text> :
             <Text className="mini-right ">已预约</Text>)
         }
       </View>

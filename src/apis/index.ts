@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-02-07 13:14:21
+ * @LastEditTime: 2023-02-07 14:30:33
  * @Msg: Nothing
  */
 import { UserState } from "../provider/user-provider";
@@ -145,6 +145,15 @@ export const saveDocument = (values: {
 export const booking = (data: any) => {
   return request({
     url: '/feishu/create_meeting',
+    method: 'POST',
+    data
+  });
+};
+
+// 论文查重
+export const lwcc = (data: { xh: number }) => {
+  return request({
+    url: '/feishu/lwcc',
     method: 'POST',
     data
   });
