@@ -77,7 +77,7 @@ const Progress: FC = () => {
 
           {TimeLineData.map((item, index) => (
             <Timeline.Item>
-              <Timeline.Content className='timeline-left' align="start">
+              <Timeline.Content className='timeline-left-1' align="start">
                 {item.data.wcsj && <View className='date'>{moment(item.data.wcsj).format('MM-DD')}</View>}
                 {item.data.wcsj && <View className='year'>{moment(item.data.wcsj).format('YYYY')}</View>}
               </Timeline.Content>
