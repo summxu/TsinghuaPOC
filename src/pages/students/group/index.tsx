@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-13 10:23:17
- * @LastEditTime: 2023-02-02 15:29:12
+ * @LastEditTime: 2023-02-07 13:10:10
  * @Msg: Nothing
  */
 import { createGroup, getStuByTec, getTecList } from '@/apis/index'
@@ -45,7 +45,7 @@ const DataListBox: FC<DataListBoxProps> = ({ params = {}, type, selectList, onSe
             <View className="item flex-row">
               <Text className="item-left">{data.name}</Text>
               <View className="item-center flex-col">
-                <View className='item-tag'>{data.zhicheng || data.code}</View>
+                <View className='item-tag'>{data.zhicheng || data.pycc === '02' ? '博士' : '硕士'}</View>
                 <Text className='item-desc'>{data['yuanxi_id.name']}</Text>
               </View>
               <Checkbox
@@ -66,10 +66,23 @@ const StudentsGroup: FC = () => {
 
   const [searchValue, setSearchValue] = useState('')
   const { state: userInfo } = useUserReduce()
-  const params = useMemo(() => ({
-    searchValue,
-    tecid: userInfo.teacherInfo ? userInfo.teacherInfo.id : undefined
-  }), [searchValue])
+  const params = useMemo(() => {
+    const tecid = () => {
+      if (userInfo.teacherInfo?.zhicheng !== '教秘' && userInfo.teacherInfo?.zhicheng !== '超管') {
+        return userInfo.teacherInfo?.id
+      }
+    }
+    const yuanxiidName = () => {
+      if (userInfo.teacherInfo?.zhicheng === '教秘') {
+        return userInfo.teacherInfo?.['yuanxi_id.name']
+      }
+    }
+    return {
+      searchValue,
+      tecid: tecid(),
+      yuanxiidName: yuanxiidName()
+    }
+  }, [searchValue])
 
   interface selectListType {
     tecOpenIDList: string[]
@@ -97,6 +110,7 @@ const StudentsGroup: FC = () => {
   })
 
   const createGroupHandle = async () => {
+    Taro.showLoading({ title: '建群中..', mask: true })
     const userIdList = [...selectList.stuOpenIDList, ...selectList.tecOpenIDList]
     if (userIdList.length < 2) {
       Taro.showToast({ icon: 'error', title: '请至少选择两位群成员' })

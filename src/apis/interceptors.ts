@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 10:43:58
- * @LastEditTime: 2023-02-01 16:22:25
+ * @LastEditTime: 2023-02-07 11:22:53
  * @Msg: Nothing
  */
 import Taro, { Chain } from "@tarojs/taro"
@@ -44,16 +44,15 @@ const customInterceptor = (chain: Chain) => {
       // 只要请求成功，不管返回什么状态码，都走这个回调
       if (res.statusCode === HTTP_STATUS.NOT_FOUND) {
         return Promise.reject('请求资源不存在')
-
+      } else if (res.statusCode === HTTP_STATUS.SERVER_ERROR) {
+        return Promise.reject('服务端错误')
       } else if (res.statusCode === HTTP_STATUS.BAD_GATEWAY) {
-        return Promise.reject('服务端出现了问题')
-
+        return Promise.reject('网关错误')
       } else if (res.statusCode === HTTP_STATUS.FORBIDDEN) {
         // TODO 根据自身业务修改
         Taro.setStorageSync("Authorization", "")
         // pageToLogin()
         return Promise.reject('没有权限访问');
-
       } else if (res.statusCode === HTTP_STATUS.AUTHENTICATE) {
         Taro.setStorageSync("Authorization", "")
         // pageToLogin()
@@ -64,7 +63,12 @@ const customInterceptor = (chain: Chain) => {
         }
       } else if (res.statusCode === HTTP_STATUS.SUCCESS) {
         if (res.data.status === 'error') {
-          return Promise.reject(res.data.errorMsg)
+          try {
+            const sbErrorMsg = JSON.parse(res.data.errorMsg)
+            return Promise.reject(sbErrorMsg.items[0].message)
+          } catch (error) {
+            return Promise.reject(res.data.errorMsg)
+          }
         }
         // 成功后
         return res.data

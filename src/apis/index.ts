@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-02-02 10:40:14
+ * @LastEditTime: 2023-02-07 13:14:21
  * @Msg: Nothing
  */
 import { UserState } from "../provider/user-provider";
@@ -97,7 +97,7 @@ export const getTeacherInfo = (tecid: number) => {
   return dashApi.getByRawID({
     vars: {
       model: 'Teacher',
-      fields: ['id', 'yuanxi_id.name', 'sfzh'],
+      fields: ['id', 'yuanxi_id.name', 'sfzh', 'zhicheng'],
       id: tecid,
       match_record_tags: []
     }
@@ -110,6 +110,7 @@ export const getWyhcyList = (stuid: number) => {
     vars: {
       model: 'Dbwy',
       fields: ['sf', 'teacher_id.name', 'teacher_id.yuanxi_id.name', 'teacher_id.zhicheng'],
+      sort: [{ field: 'sf', order: 'asc' }],
       condition: {
         logic_operator: "&",
         children: [{
@@ -218,7 +219,7 @@ export const getXxjd = (stuid: number) => {
 }
 
 // 获取导师的学生
-export const getStuByTec = ({ offset, limit, searchValue, tecid, gyxxjd }) => {
+export const getStuByTec = ({ offset, limit, searchValue, tecid, gyxxjd, yuanxiidName }) => {
   const conditionArr = [{
     leaf: {
       field: 'name',
@@ -244,10 +245,19 @@ export const getStuByTec = ({ offset, limit, searchValue, tecid, gyxxjd }) => {
       }
     })
   }
+  if (yuanxiidName) {
+    conditionArr.push({
+      leaf: {
+        field: 'yuanxi_id.name',
+        comparator: '=',
+        value: yuanxiidName,
+      }
+    })
+  }
   return dashApi.search({
     vars: {
       model: 'Student',
-      fields: ['id', 'code', 'name', 'email', 'gyxxjd', 'yuanxi_id.name', 'user_id.fsopen_id'],
+      fields: ['id', 'code', 'name', 'email', 'gyxxjd', 'pycc', 'yuanxi_id.name', 'user_id.fsopen_id'],
       condition: {
         logic_operator: "&",
         children: conditionArr

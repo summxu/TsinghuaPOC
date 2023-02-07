@@ -57,14 +57,14 @@
 .tabs-custom {
   .taroify-tabs__wrap {
     position: fixed;
-    top: calc(216px + 376px);
+    top: calc(216px + 370px);
     width: 100%;
     z-index: 1;
     background-color: #fff;
   }
 
   .taroify-tabs__content {
-    padding-top: calc(216px + 376px + 88px);
+    padding-top: calc(216px + 370px + 88px);
   }
 
   .taroify-tabs__tab {

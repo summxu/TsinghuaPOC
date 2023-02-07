@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-10 15:41:54
- * @LastEditTime: 2023-02-02 11:30:25
+ * @LastEditTime: 2023-02-07 11:13:38
  * @Msg: Nothing
  */
 import { getStuByTec } from '@/apis/index'
@@ -45,16 +45,19 @@ const TimeLineData = [{
 const ListTabPane: FC<ListTabPanePorps> = ({ params }) => {
   const { status, dataList, dispatch } = useDataList({ request: getStuByTec, params })
   const [openEmail, setOpenEmail] = useState('')
+  const { flushUserInfoDetail } = useUserReduce({ isRefresh: true })
   const goToPage = (tabsType) => {
-    if (tabsType === 1) {
-      Taro.navigateTo({ url: '/pages/progress/entrance/index' })
-    }
-    if (tabsType === 2) {
-      Taro.navigateTo({ url: '/pages/progress/plan/index' })
-    }
-    if (tabsType === 3) {
-      Taro.navigateTo({ url: '/pages/progress/planover/index' })
-    }
+    // if (tabsType === 1) {
+    //   Taro.navigateTo({ url: '/pages/progress/entrance/index' })
+    // }
+    // if (tabsType === 2) {
+    //   Taro.navigateTo({ url: '/pages/progress/plan/index' })
+    // }
+    // if (tabsType === 3) {
+    //   Taro.navigateTo({ url: '/pages/progress/planover/index' })
+    // }
+
+    Taro.navigateTo({ url: '/pages/progress/index' })
   }
   return (
     <View className="datalist-box">
@@ -63,7 +66,10 @@ const ListTabPane: FC<ListTabPanePorps> = ({ params }) => {
 
       <DataList status={status} dispatch={dispatch}>
         {dataList.map(({ data }) => (
-          <View onClick={() => goToPage(Number(data.gyxxjd))} className="item">
+          <View onClick={() => {
+            flushUserInfoDetail(data.id, 'studentInfo')
+            goToPage(Number(data.gyxxjd))
+          }} className="item">
             <View className='flex-row justify-between items-center'>
               <View className='item-left flex-row '>
                 <Image className='item-avatar' src={require('@/static/avatar.png')}></Image>
@@ -95,11 +101,24 @@ const Students: FC = () => {
   const [tabsType, setTabsType] = useState(0)
   const { state: userInfo } = useUserReduce({ isRefresh: true })
 
-  const params = useMemo(() => ({
-    searchValue,
-    gyxxjd: tabsType,
-    tecid: userInfo.teacherInfo ? userInfo.teacherInfo.id : undefined
-  }), [searchValue, tabsType])
+  const params = useMemo(() => {
+    const tecid = () => {
+      if (userInfo.teacherInfo?.zhicheng !== '教秘' && userInfo.teacherInfo?.zhicheng !== '超管') {
+        return userInfo.teacherInfo?.id
+      }
+    }
+    const yuanxiidName = () => {
+      if (userInfo.teacherInfo?.zhicheng === '教秘') {
+        return userInfo.teacherInfo?.['yuanxi_id.name']
+      }
+    }
+    return {
+      searchValue,
+      gyxxjd: tabsType,
+      tecid: tecid(),
+      yuanxiidName: yuanxiidName()
+    }
+  }, [searchValue, tabsType])
 
   return (
     <View className='students-page'>

@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-13 15:18:43
+ * @LastEditTime: 2023-02-07 10:14:04
  * @Msg: Nothing
  */
 import { TimeLine } from '@/components/time-line'
@@ -56,8 +56,8 @@ const Plan: FC = () => {
               <Text className='item-bottom-sorc'>2</Text>
             </View>
             <View style={{ minWidth: '84px' }}>
-              <Text className='item-bottom-text'>学分：</Text>
-              <Text className='item-bottom-sorc'>2</Text>
+              <Text className='item-bottom-text'>学时：</Text>
+              <Text className='item-bottom-sorc'>32</Text>
             </View>
             <View>
               <Text className='item-bottom-text'>学期：秋季学期</Text>

@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-02-02 11:29:19
+ * @LastEditTime: 2023-02-07 13:07:24
  * @Msg: Nothing
  */
 import { getStuByTec } from '@/apis/index'
@@ -23,11 +23,23 @@ const Index: FC = () => {
   const [openEmail, setOpenEmail] = useState('')
 
   const params = useMemo(() => {
+    const tecid = () => {
+      if (userInfo.teacherInfo?.zhicheng !== '教秘' && userInfo.teacherInfo?.zhicheng !== '超管') {
+        return userInfo.teacherInfo?.id
+      }
+    }
+    const yuanxiidName = () => {
+      if (userInfo.teacherInfo?.zhicheng === '教秘') {
+        return userInfo.teacherInfo?.['yuanxi_id.name']
+      }
+    }
     return {
       searchValue,
-      tecid: userInfo.teacherInfo ? userInfo.teacherInfo.id : undefined
+      tecid: tecid(),
+      yuanxiidName: yuanxiidName(),
+      gyxxjd: 7
     }
-  }, [searchValue])
+  }, [searchValue, userInfo.teacherInfo])
 
   const { status, dataList, dispatch } = useDataList({ request: getStuByTec, params, isInit: true })
 

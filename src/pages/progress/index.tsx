@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-02-01 13:29:14
+ * @LastEditTime: 2023-02-07 11:16:32
  * @Msg: Nothing
  */
 import { getXxjd } from '@/apis/index'
@@ -57,7 +57,7 @@ const Progress: FC = () => {
 
   useEffect(() => {
     getXxjdHandle()
-  }, [])
+  }, [userInfo.studentInfo])
 
 
   return (
@@ -78,8 +78,8 @@ const Progress: FC = () => {
           {TimeLineData.map((item, index) => (
             <Timeline.Item>
               <Timeline.Content className='timeline-left' align="start">
-                <View className='date'>{moment(item.data.wcsj).format('MM-DD')}</View>
-                <View className='year'>{moment(item.data.wcsj).format('YYYY')}</View>
+                {item.data.wcsj && <View className='date'>{moment(item.data.wcsj).format('MM-DD')}</View>}
+                {item.data.wcsj && <View className='year'>{moment(item.data.wcsj).format('YYYY')}</View>}
               </Timeline.Content>
               <Timeline.Content className='timeline-right' direction="column" align="start">
                 <View className="timeline-title">{item.data.name}</View>

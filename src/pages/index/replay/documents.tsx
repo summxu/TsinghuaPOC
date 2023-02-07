@@ -100,7 +100,7 @@ export const IndexDocuments: FC<{ lx: '1' | '2' }> = ({ lx }) => {
         res.list.forEach(item => {
           uploadQueue.push(uploadHandle(item.path))
         })
-        Taro.showLoading({ title: '上传中...' })
+        Taro.showLoading({ title: '上传中...' ,mask: true})
         try {
           const fileRes = await Promise.all(uploadQueue)
           await saveDocumentsHandle(fileRes)

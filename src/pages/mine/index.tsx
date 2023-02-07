@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-02-02 15:00:23
+ * @LastEditTime: 2023-02-07 11:26:05
  * @Msg: Nothing
  */
 import { useUserReduce } from '@/src/provider/user-provider'
@@ -24,7 +24,8 @@ const Mine: FC = () => {
         <View className='top-text flex-row items-center'>
           <Text className="name-mine">{userInfo.name}</Text>
           <View className='shu'></View>
-          <Text className="role-label">{userInfo.role === 'student' ? '学生' : '导师'}</Text>
+          {userInfo.role === 'student' && <Text className="role-label">{userInfo.studentInfo?.pycc === '02' ? '博士' : '硕士'}</Text>}
+          {userInfo.role === 'teacher' && <Text className="role-label">{userInfo.teacherInfo?.zhicheng}</Text>}
         </View>
       </View>
 
