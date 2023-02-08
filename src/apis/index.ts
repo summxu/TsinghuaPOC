@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-02-07 14:30:33
+ * @LastEditTime: 2023-02-08 10:40:29
  * @Msg: Nothing
  */
 import { UserState } from "../provider/user-provider";
@@ -131,7 +131,9 @@ export const getWyhcyList = (stuid: number) => {
 export const saveDocument = (values: {
   student_id: number
   lx: '1' | '2',
-  uploaded_file_ids: number[]
+  uploaded_file_public_id: number,
+  code: string,
+  name: string
 }) => {
   return dashApi.save({
     vars: {
@@ -169,11 +171,11 @@ export const sendEmail = (data: any) => {
 };
 
 // 获取答辩文档
-export const getDocs = (lx: '1' | '2') => {
+export const getDocs = (lx: '1' | '2', studentId: number) => {
   return dashApi.search({
     vars: {
       model: 'Dbfj',
-      fields: ['id', 'uploaded_file_ids.origin_filename', 'uploaded_file_ids.download_url'],
+      fields: ['id', 'uploaded_file_public_id.origin_filename', 'uploaded_file_public_id.download_url'],
       condition: {
         logic_operator: "&",
         children: [{
@@ -181,6 +183,12 @@ export const getDocs = (lx: '1' | '2') => {
             field: 'lx',
             comparator: '=',
             value: lx,
+          }
+        }, {
+          leaf: {
+            field: 'student_id',
+            comparator: '=',
+            value: studentId,
           }
         }]
       },

@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 17:30:24
- * @LastEditTime: 2023-02-02 14:44:06
+ * @LastEditTime: 2023-02-08 10:46:14
  * @Msg: Nothing
  */
 import { delDocs, getDocs, saveDocument } from "@/apis/index";
@@ -37,7 +37,9 @@ export const IndexDocuments: FC<{ lx: '1' | '2' }> = ({ lx }) => {
         uploadQueue.push(saveDocument({
           student_id: userInfo.studentInfo?.id!,
           lx,
-          uploaded_file_ids: [item.id]
+          code: String(item.id),
+          name: getSubFileName(item.name) + '.' + getFileNameExt(item.name),
+          uploaded_file_public_id: item.id
         }))
       })
       return Promise.all(uploadQueue)
@@ -48,7 +50,7 @@ export const IndexDocuments: FC<{ lx: '1' | '2' }> = ({ lx }) => {
 
   const getDocsHandle = async () => {
     try {
-      const { result } = await getDocs(lx)
+      const { result } = await getDocs(lx, userInfo.studentInfo?.id!)
       setDataList(result.items)
     } catch (error) {
       console.log(error)
@@ -57,7 +59,7 @@ export const IndexDocuments: FC<{ lx: '1' | '2' }> = ({ lx }) => {
 
   useEffect(() => {
     getDocsHandle()
-  }, [])
+  }, [userInfo.studentInfo])
 
   const delDocsHandle = (id: number) => {
     Taro.showModal({
@@ -100,7 +102,7 @@ export const IndexDocuments: FC<{ lx: '1' | '2' }> = ({ lx }) => {
         res.list.forEach(item => {
           uploadQueue.push(uploadHandle(item.path))
         })
-        Taro.showLoading({ title: '上传中...' ,mask: true})
+        Taro.showLoading({ title: '上传中...', mask: true })
         try {
           const fileRes = await Promise.all(uploadQueue)
           await saveDocumentsHandle(fileRes)
@@ -122,10 +124,10 @@ export const IndexDocuments: FC<{ lx: '1' | '2' }> = ({ lx }) => {
       {
         dataList.length ?
           dataList.map(item => (
-            <SwipeCell catchMove={false} onClick={() => openDocument(item.data['uploaded_file_ids.download_url'][0])} key={item.data.id}>
+            <SwipeCell catchMove={false} onClick={() => openDocument(item.data['uploaded_file_public_id.download_url'])} key={item.data.id}>
               <View className="mumber-items">
-                <View className="doc-tag">{getFileNameExt(item.data['uploaded_file_ids.origin_filename'][0])}</View>
-                <View className="doc-name">{getSubFileName(item.data['uploaded_file_ids.origin_filename'][0])}</View>
+                <View className="doc-tag">{getFileNameExt(item.data['uploaded_file_public_id.origin_filename'])}</View>
+                <View className="doc-name">{getSubFileName(item.data['uploaded_file_public_id.origin_filename'])}</View>
               </View>
               {
                 userInfo.role === 'teacher' &&
