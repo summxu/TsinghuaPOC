@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-02-09 09:51:56
- * @LastEditTime: 2023-02-09 10:55:41
+ * @LastEditTime: 2023-02-09 11:10:36
  * @Msg: Nothing
  */
 
@@ -38,6 +38,26 @@ const Result: FC = () => {
     })
   }
 
+   const downLoadHandle = (url: string) => {
+    Taro.showLoading({ title: '正在下载...', mask: true })
+    Taro.downloadFile({
+      url:  url,
+      success: function (res) {
+        Taro.hideLoading()
+        var filePath = res.tempFilePath
+        Taro.openDocument({
+          filePath: filePath,
+          fail(res) {
+            Taro.showToast({ icon: 'error', title: '不支持的文件格式' })
+          },
+        })
+      },
+      fail(res) {
+        Taro.showToast({ icon: 'error', title: '不支持的文件格式' })
+      },
+    })
+  }
+
   const toWebViewHandle = (url) => {
     Taro.navigateTo({
       url: '/pages/webview/index?url=' + url,
@@ -48,7 +68,7 @@ const Result: FC = () => {
     <View className="result">
       <Cell onClick={() => clipboardHandle(data.duplicatepercentage)} title="复写率">{data.duplicatepercentage}</Cell>
       <Cell title="报告下载地址">
-        <Text onClick={() => toWebViewHandle(data.paperdownurl)} className="link-down">{data.paperdownurl}</Text>
+        <Text onClick={() => downLoadHandle(data.paperdownurl)} className="link-down">{data.paperdownurl}</Text>
       </Cell>
       <Cell onClick={() => clipboardHandle(data.paperword)} title="论文字数">{data.paperword}</Cell>
       <Cell onClick={() => clipboardHandle(data.paichupercentage)} title="他引率">{data.paichupercentage}</Cell>
