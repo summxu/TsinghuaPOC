@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-02-08 10:40:29
+ * @LastEditTime: 2023-02-09 10:04:33
  * @Msg: Nothing
  */
 import { UserState } from "../provider/user-provider";
@@ -72,7 +72,19 @@ export const getStudentInfo = (stuid: number) => {
   return dashApi.getByRawID({
     vars: {
       model: 'Student',
-      fields: ['id', 'yuanxi_id.name', 'dsxx_id.name', 'name', 'dbsj', 'dbwy_id', 'gyxxjd', 'sfyyhy', 'sfzh', 'pycc', 'code'],
+      fields: ['id', 'yuanxi_id.name', 'dsxx_id.name', 'name', 'dbsj', 'dbwy_id', 'gyxxjd', 'sfyyhy', 'sfzh', 'pycc', 'code', 'filestateid'],
+      id: stuid,
+      match_record_tags: []
+    }
+  })
+};
+
+// 获取论文查重数据
+export const getLwchachong = (stuid: number) => {
+  return dashApi.getByRawID({
+    vars: {
+      model: 'Student',
+      fields: ['id', 'duplicatepercentage', 'paperdownurl', 'paperword', 'paichupercentage', 'paperviewurl', 'ownpercentage', 'percentage', 'paperguid', 'quotepercentage', 'selfyypercentage', 'authorpercentage'],
       id: stuid,
       match_record_tags: []
     }

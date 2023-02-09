@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 13:30:27
- * @LastEditTime: 2023-02-06 11:12:56
+ * @LastEditTime: 2023-02-09 09:45:14
  * @Msg: Nothing
  */
 import { pageToIndex, pageToLogin, pageToReplay } from "@/utils/pages";
@@ -38,6 +38,7 @@ export interface UserState {
     sfyyhy: string
     sfzh: string
     name: string
+    filestateid: string
   }
   teacherInfo: {
     sfzh: string

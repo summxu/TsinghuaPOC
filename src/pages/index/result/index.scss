@@ -1,0 +1,13 @@
+.result {
+  .link-down {
+    color: $color-link;
+  }
+
+  .taroify-cell__title {
+    min-width: 200px;
+  }
+
+  .taroify-cell__value {
+    overflow: hidden;
+  }
+}
