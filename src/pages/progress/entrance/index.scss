@@ -44,13 +44,14 @@
   background-color: #fff;
 }
 
-.timeline-left {
+.timeline-left-1 {
   flex: none !important;
   padding-left: 0px !important;
   display: flex;
   flex-direction: column !important;
   justify-content: flex-start !important;
   align-items: center !important;
+  min-width: 110px;
 }
 
 .timeline-right {
@@ -81,5 +82,26 @@
 .info-bottom {
   font-size: 24px;
   font-weight: 400;
+  color: #8F959F;
+}
+
+.date {
+  font-size: 24px;
+  color: #51565D;
+  margin-bottom: 20px;
+}
+
+.year {
+  background: #EFF0F1;
+  border-radius: 10px;
+  padding: 4px 12px;
+
+  font-size: 20px;
+  color: #8F959F;
+}
+
+
+.more {
+  font-size: 24px;
   color: #8F959F;
 }

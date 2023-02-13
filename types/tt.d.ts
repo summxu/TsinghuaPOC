@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 16:36:38
- * @LastEditTime: 2023-01-31 10:46:55
+ * @LastEditTime: 2023-02-10 14:57:23
  * @Msg: Nothing
  */
 /// <reference types="@tarojs/taro" />
@@ -44,6 +44,7 @@ type ttAPI = {
   checkSession(option?: CommonInput<any>): void
   getUserInfo(option?: getUserInfo): void
   removeTabBarItem(option?: { tag: string } | CommonInput<any>): void
+  addTabBarItem(option?: any | CommonInput<any>): void
   showTabBar(option?: { animation: boolean } | CommonInput<any>): void
   hideTabBar(option?: { animation: boolean } | CommonInput<any>): void
   filePicker(option: filePicker): void

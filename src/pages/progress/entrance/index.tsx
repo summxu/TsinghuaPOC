@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-01-13 13:57:49
+ * @LastEditTime: 2023-02-13 09:37:34
  * @Msg: Nothing
  */
 import { UserInfoCard } from '@/components/user-info-card'
@@ -61,7 +61,7 @@ const Entrance: FC = () => {
 
           {TimeLineData.map((item, index) => (
             <Timeline.Item>
-              <Timeline.Content className='timeline-left' align="start">
+              <Timeline.Content className='timeline-left-1' align="start">
                 <View className='date'>03-02</View>
                 <View className='year'>2012</View>
               </Timeline.Content>

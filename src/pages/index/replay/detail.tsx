@@ -1,14 +1,14 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 16:24:10
- * @LastEditTime: 2023-02-07 14:01:01
+ * @LastEditTime: 2023-02-13 10:32:20
  * @Msg: Nothing
  */
 
 import { booking, getWyhcyList } from "@/apis/index";
 import { useUserReduce } from "@/src/provider/user-provider";
 import { DatetimePicker, Empty, Popup } from "@taroify/core";
-import { Text, View } from "@tarojs/components";
+import { Button, Text, View } from "@tarojs/components";
 import Taro from "@tarojs/taro";
 import moment from "moment";
 import { FC, useEffect, useState } from "react";
@@ -111,11 +111,12 @@ export const IndexDetail: FC = () => {
 
       <View className="title">答辩时间</View>
       <View className="minicard flex-row justify-between items-center">
-        {userInfo.studentInfo && <Text className="mini-left">答辩时间：{userInfo.studentInfo.dbsj}</Text>}
+        {<Text className="mini-left">答辩时间：{userInfo.studentInfo?.dbsj}</Text>}
         {
-          userInfo.studentInfo && (userInfo.studentInfo.sfyyhy === '0' ?
-            <Text onClick={() => setOpen([true, false])} className="mini-right">预约会议</Text> :
-            <Text className="mini-right ">已预约</Text>)
+          userInfo.studentInfo?.sfyyhy === '0' ?
+            (userInfo.role === 'teacher' ? <Button onClick={() => setOpen([true, false])} className="mini-right">预约会议</Button> :
+            <Text style={{color:'#7F7F7F'}} className="mini-right ">未预约</Text>) :
+            <Text className="mini-right ">已预约</Text>
         }
       </View>
       <View className="title">委员会成员</View>
