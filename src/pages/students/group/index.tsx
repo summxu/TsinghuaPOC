@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-13 10:23:17
- * @LastEditTime: 2023-02-13 09:25:51
+ * @LastEditTime: 2023-02-14 09:03:31
  * @Msg: Nothing
  */
 import { createGroup, getStuByTec, getTecList } from '@/apis/index'
@@ -33,6 +33,19 @@ const DataListBox: FC<DataListBoxProps> = ({ params = {}, type, selectList, onSe
     params
   })
 
+  const showTag = (data: any) => {
+    if(data.zhicheng) {
+      return data.zhicheng
+    }
+    if(data.pycc === '02') {
+      return '博士'
+    }
+    if(data.pycc === '01') {
+      return '硕士'
+    }
+    return false
+  }
+
   return (
     <View className="datalist-box">
       <DataList status={status} dispatch={dispatch}>
@@ -41,7 +54,7 @@ const DataListBox: FC<DataListBoxProps> = ({ params = {}, type, selectList, onSe
             <View className="item flex-row">
               <Text className="item-left">{data.name}</Text>
               <View className="item-center flex-col">
-                <View className='item-tag'>{data.zhicheng || (data.pycc === '02' ? '博士' : '硕士')}</View>
+                {showTag(data) && <View className='item-tag'>{showTag(data)}</View>}
                 <Text className='item-desc'>{data['yuanxi_id.name']}</Text>
               </View>
               <Checkbox
