@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-10 15:41:54
- * @LastEditTime: 2023-02-07 11:13:38
+ * @LastEditTime: 2023-02-14 15:52:40
  * @Msg: Nothing
  */
 import { getStuByTec } from '@/apis/index'
@@ -57,7 +57,7 @@ const ListTabPane: FC<ListTabPanePorps> = ({ params }) => {
     //   Taro.navigateTo({ url: '/pages/progress/planover/index' })
     // }
 
-    Taro.navigateTo({ url: '/pages/progress/index' })
+    Taro.navigateTo({ url: '/pages/progress/progress-hack-by-android/index' })
   }
   return (
     <View className="datalist-box">

@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-02-07 13:07:24
+ * @LastEditTime: 2023-02-14 15:51:37
  * @Msg: Nothing
  */
 import { getStuByTec } from '@/apis/index'
@@ -61,7 +61,7 @@ const Index: FC = () => {
             <View onClick={() => {
               // 请求学生的info
               flushUserInfoDetail(data.id, 'studentInfo')
-              Taro.navigateTo({ url: '/pages/index/replay/index' })
+              Taro.navigateTo({ url: '/pages/index/replay/replay-hack-by-android/index' })
             }} className='item flex-row justify-between items-center'>
               <View className='item-left flex-row '>
                 <Image className='item-avatar' src={require('@/static/avatar.png')}></Image>

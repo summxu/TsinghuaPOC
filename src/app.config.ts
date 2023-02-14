@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 13:26:25
- * @LastEditTime: 2023-02-09 10:25:50
+ * @LastEditTime: 2023-02-14 15:49:35
  * @Msg: Nothing
  */
 export default defineAppConfig({
@@ -17,7 +17,9 @@ export default defineAppConfig({
     'pages/progress/entrance/index',
     'pages/progress/index',
     'pages/index/replay/index',
-    'pages/mine/index'
+    'pages/mine/index',
+    'pages/progress/progress-hack-by-android/index',
+    'pages/index/replay/replay-hack-by-android/index',
   ],
   window: {
     backgroundTextStyle: 'dark',
