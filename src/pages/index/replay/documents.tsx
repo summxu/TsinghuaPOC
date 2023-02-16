@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 17:30:24
- * @LastEditTime: 2023-02-08 10:46:14
+ * @LastEditTime: 2023-02-16 15:12:25
  * @Msg: Nothing
  */
 import { delDocs, getDocs, saveDocument } from "@/apis/index";
@@ -97,6 +97,7 @@ export const IndexDocuments: FC<{ lx: '1' | '2' }> = ({ lx }) => {
   const chooseFileHandle = () => {
     tt.filePicker({
       maxNum: 1,
+      isSystem: true,
       async success(res) {
         const uploadQueue: Promise<any>[] = []
         res.list.forEach(item => {
