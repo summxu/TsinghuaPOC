@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 16:24:10
- * @LastEditTime: 2023-02-16 13:57:33
+ * @LastEditTime: 2023-02-16 14:30:04
  * @Msg: Nothing
  */
 
@@ -62,7 +62,7 @@ export const IndexDetail: FC = () => {
       // await setYYY(userInfo.stuid!)
       flushUserInfoDetail(userInfo.studentInfo?.id!, 'studentInfo')
     } catch (error) {
-      Taro.showToast({ icon: 'success', title: '预约失败' })
+      Taro.showToast({ icon: 'error', title: '预约失败' })
       console.log(error)
     }
   }
