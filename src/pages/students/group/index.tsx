@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-13 10:23:17
- * @LastEditTime: 2023-02-14 09:03:31
+ * @LastEditTime: 2023-02-16 14:17:10
  * @Msg: Nothing
  */
 import { createGroup, getStuByTec, getTecList } from '@/apis/index'
@@ -121,7 +121,7 @@ const StudentsGroup: FC = () => {
     Taro.showLoading({ title: '建群中..', mask: true })
     const userIdList = [...selectList.stuOpenIDList, ...selectList.tecOpenIDList]
     if (userIdList.length < 2) {
-      Taro.showToast({ icon: 'error', title: '请至少选择两位群成员' })
+      Taro.showToast({ icon: 'none', title: '请至少选择两位群成员' })
       return
     }
     try {

@@ -31,7 +31,7 @@ const Replay: FC = () => {
     } catch (error) {
       console.log(error)
     }
-    Taro.showToast({ title: '查重结束，需要等待一段时间返回查重结果' })
+    Taro.showToast({icon: 'none', title: '查重结束，需要等待一段时间返回查重结果' })
   }
 
   return (

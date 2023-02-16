@@ -34,7 +34,7 @@ export const OpenEmail: FC<OpenEmailProps> = ({ openEmail, onClose }) => {
       return dataValue[item]
     })
     if (!hasOneKeyValue) {
-      Taro.showToast({ icon: 'error', title: '邮件主题或内容至少输入一个！' })
+      Taro.showToast({ icon: 'none', title: '邮件主题或内容至少输入一个！' })
       return
     }
     Taro.showLoading({ title: '发送中..',mask: true })

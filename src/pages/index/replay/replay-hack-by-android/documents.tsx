@@ -84,12 +84,12 @@ export const IndexDocuments: FC<{ lx: '1' | '2' }> = ({ lx }) => {
         Taro.openDocument({
           filePath: filePath,
           fail(res) {
-            Taro.showToast({ icon: 'error', title: '不支持的文件格式' })
+            Taro.showToast({ icon: 'none', title: '不支持的文件格式' })
           },
         })
       },
       fail(res) {
-        Taro.showToast({ icon: 'error', title: '不支持的文件格式' })
+        Taro.showToast({ icon: 'none', title: '不支持的文件格式' })
       },
     })
   }

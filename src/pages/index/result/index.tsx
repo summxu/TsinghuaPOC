@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-02-09 09:51:56
- * @LastEditTime: 2023-02-09 11:10:36
+ * @LastEditTime: 2023-02-16 14:17:13
  * @Msg: Nothing
  */
 
@@ -33,7 +33,7 @@ const Result: FC = () => {
     Taro.setClipboardData({
       data,
       success: () => {
-        Taro.showToast({ title: '内容已复制到剪切板' })
+        Taro.showToast({ icon: 'none',title: '内容已复制到剪切板' })
       }
     })
   }
@@ -48,12 +48,12 @@ const Result: FC = () => {
         Taro.openDocument({
           filePath: filePath,
           fail(res) {
-            Taro.showToast({ icon: 'error', title: '不支持的文件格式' })
+            Taro.showToast({ icon: 'none', title: '不支持的文件格式' })
           },
         })
       },
       fail(res) {
-        Taro.showToast({ icon: 'error', title: '不支持的文件格式' })
+        Taro.showToast({ icon: 'none', title: '不支持的文件格式' })
       },
     })
   }
