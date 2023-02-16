@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 17:30:24
- * @LastEditTime: 2023-02-16 15:12:25
+ * @LastEditTime: 2023-02-16 15:38:06
  * @Msg: Nothing
  */
 import { delDocs, getDocs, saveDocument } from "@/apis/index";
@@ -113,7 +113,6 @@ export const IndexDocuments: FC<{ lx: '1' | '2' }> = ({ lx }) => {
           Taro.showToast({ icon: 'error', title: '上传失败' })
           console.log(error)
         }
-        // Taro.hideLoading()
       }
     })
   }

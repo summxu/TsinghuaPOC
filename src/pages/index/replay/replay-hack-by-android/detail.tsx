@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 16:24:10
- * @LastEditTime: 2023-02-16 14:30:04
+ * @LastEditTime: 2023-02-16 15:43:41
  * @Msg: Nothing
  */
 
@@ -52,7 +52,7 @@ export const IndexDetail: FC = () => {
     const timeRange = value
     try {
       await booking({
-        topic: `预约会议${moment(timeRange[0]).format('MM-DD')}-${moment(timeRange[1]).format('MM-DD')}`,
+        topic: `答辩会议`,
         startTime: moment(timeRange[0]).format('YYYY-MM-DD HH:mm:ss'),
         endTime: moment(timeRange[1]).format('YYYY-MM-DD HH:mm:ss'),
         open_id: userInfo.fsopen_id,

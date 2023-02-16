@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 11:22:42
- * @LastEditTime: 2023-02-09 10:04:33
+ * @LastEditTime: 2023-02-16 15:32:53
  * @Msg: Nothing
  */
 import { UserState } from "../provider/user-provider";
@@ -63,6 +63,19 @@ export const userInfoDetail = (uid: number) => {
       fields: ['teacher_id.id', 'student_id.id', 'fsopen_id'],
       id: uid,
       match_record_tags: []
+    }
+  })
+};
+
+// 退出登录，解绑opid
+export const logOut = (uid: number) => {
+  return dashApi.save({
+    vars: {
+      model: 'User',
+      values: {
+        id: uid,
+        fsopen_id: ''
+      }
     }
   })
 };

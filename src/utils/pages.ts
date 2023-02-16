@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 10:44:32
- * @LastEditTime: 2023-01-30 16:11:27
+ * @LastEditTime: 2023-02-16 15:39:10
  * @Msg: Nothing
  */
 import Taro from "@tarojs/taro";
@@ -18,7 +18,7 @@ export const getCurrentPageUrl = () => {
 export const pageToLogin = () => {
   let path = getCurrentPageUrl() as string
   if (!path.includes('login')) {
-    Taro.navigateTo({
+    Taro.reLaunch({
       url: "/pages/login/index"
     });
   }

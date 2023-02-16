@@ -1,13 +1,13 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-29 13:30:27
- * @LastEditTime: 2023-02-09 09:45:14
+ * @LastEditTime: 2023-02-16 15:39:00
  * @Msg: Nothing
  */
 import { pageToIndex, pageToLogin, pageToReplay } from "@/utils/pages";
 import Taro from "@tarojs/taro";
 import { createContext, Dispatch, FC, PropsWithChildren, useContext, useEffect, useReducer } from "react";
-import { feishuOpenIDLogin, getStudentInfo, getTeacherInfo, userInfo, userInfoDetail } from "../apis";
+import { feishuOpenIDLogin, getStudentInfo, getTeacherInfo, logOut, userInfo, userInfoDetail } from "../apis";
 
 export interface UserState {
   uid: number
@@ -186,7 +186,8 @@ export const useUserReduce = ({ isRefresh = false }: UserReduce = {}) => {
     });
   }
 
-  const logoutHandle = () => {
+  const logoutHandle = async () => {
+    await logOut(state.uid!)
     tt.hideTabBar()
     dispatch({ type: 'CLEAR' })
     Taro.removeStorageSync('Authorization')

@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-13 10:23:17
- * @LastEditTime: 2023-02-16 14:17:10
+ * @LastEditTime: 2023-02-16 15:43:19
  * @Msg: Nothing
  */
 import { createGroup, getStuByTec, getTecList } from '@/apis/index'
@@ -126,7 +126,7 @@ const StudentsGroup: FC = () => {
     }
     try {
       await createGroup({
-        topic: moment().format('MM-DD') + "创建的群聊",
+        topic: '答辩沟通群',
         open_id: userInfo.fsopen_id,
         userIdList
       })
