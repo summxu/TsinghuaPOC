@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 16:24:10
- * @LastEditTime: 2023-02-13 10:32:20
+ * @LastEditTime: 2023-02-16 13:57:33
  * @Msg: Nothing
  */
 
@@ -67,6 +67,18 @@ export const IndexDetail: FC = () => {
     }
   }
 
+  const yyDom = () => {
+    if (userInfo.studentInfo?.sfyyhy === '0') {
+      if (userInfo.teacherInfo?.zhicheng === '教秘' || userInfo.teacherInfo?.zhicheng === '超管') {
+        return <Button onClick={() => setOpen([true, false])} className="mini-right">预约会议</Button>
+      } else {
+        return <Text style={{ color: '#7F7F7F' }} className="mini-right ">未预约</Text>
+      }
+    } else {
+      return <Text className="mini-right ">已预约</Text>
+    }
+  }
+
   return (
     <View className="index-detail">
 
@@ -112,12 +124,7 @@ export const IndexDetail: FC = () => {
       <View className="title">答辩时间</View>
       <View className="minicard flex-row justify-between items-center">
         {<Text className="mini-left">答辩时间：{userInfo.studentInfo?.dbsj}</Text>}
-        {
-          userInfo.studentInfo?.sfyyhy === '0' ?
-            (userInfo.role === 'teacher' ? <Button onClick={() => setOpen([true, false])} className="mini-right">预约会议</Button> :
-            <Text style={{color:'#7F7F7F'}} className="mini-right ">未预约</Text>) :
-            <Text className="mini-right ">已预约</Text>
-        }
+        {yyDom()}
       </View>
       <View className="title">委员会成员</View>
 

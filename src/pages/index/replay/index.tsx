@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-10 16:46:40
- * @LastEditTime: 2023-02-09 10:43:20
+ * @LastEditTime: 2023-02-16 13:52:55
  * @Msg: Nothing
  */
 import { lwcc, userInfo } from '@/apis/index'
@@ -31,7 +31,7 @@ const Replay: FC = () => {
     } catch (error) {
       console.log(error)
     }
-    Taro.showLoading({ title: '查重结束，需要等待一段时间返回查重结果' })
+    Taro.showToast({ title: '查重结束，需要等待一段时间返回查重结果' })
   }
 
   return (
