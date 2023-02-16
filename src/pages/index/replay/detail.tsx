@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 16:24:10
- * @LastEditTime: 2023-02-16 15:43:36
+ * @LastEditTime: 2023-02-16 15:59:03
  * @Msg: Nothing
  */
 
@@ -79,6 +79,28 @@ export const IndexDetail: FC = () => {
     }
   }
 
+  const formatterHandle = (type, val) => {
+    if (type === "year") {
+      return `${val}年`
+    }
+    if (type === "month") {
+      return `${val}月`
+    }
+    if (type === 'day') {
+      return `${val}日`
+    }
+    if (type === 'hour') {
+      return `${val}时`
+    }
+    if (type === 'minute') {
+      return `${val}分`
+    }
+    if (type === 'second') {
+      return `${val}秒`
+    }
+    return val
+  }
+
   return (
     <View className="index-detail">
 
@@ -89,6 +111,7 @@ export const IndexDetail: FC = () => {
           defaultValue={newDateTime}
           value={value[0]}
           onChange={e => setValue([e])}
+          formatter={formatterHandle}
         >
           <DatetimePicker.Toolbar>
             <DatetimePicker.Button onClick={() => setOpen([false, false])}>取消</DatetimePicker.Button>
@@ -108,6 +131,7 @@ export const IndexDetail: FC = () => {
           defaultValue={value[0]}
           value={value[1]}
           min={value[0]}
+          formatter={formatterHandle}
           onChange={e => setValue([...value, e])}
         >
           <DatetimePicker.Toolbar>
