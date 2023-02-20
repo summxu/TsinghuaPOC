@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2023-01-12 17:30:24
- * @LastEditTime: 2023-02-20 13:44:44
+ * @LastEditTime: 2023-02-20 16:50:31
  * @Msg: Nothing
  */
 import { delDocs, getDocs, saveDocument } from "@/apis/index";
@@ -19,12 +19,15 @@ export const IndexDocuments: FC<{ lx: '1' | '2' }> = ({ lx }) => {
   const { state: userInfo } = useUserReduce()
   const [dataList, setDataList] = useState<{ data: any }[]>([])
 
-  const uploadHandle = async (path) => {
+  const uploadHandle = async ({ path, name }) => {
     return Taro.uploadFile({
       url: `${baseApiUrl[envVersion]}/blobs/fileupload`,
       filePath: path,
       name: 'file',
-      formData: { public: 'true' },
+      formData: {
+        public: 'true',
+        file_name: name
+      },
     });
   }
 
@@ -102,7 +105,10 @@ export const IndexDocuments: FC<{ lx: '1' | '2' }> = ({ lx }) => {
       async success(res) {
         const uploadQueue: Promise<any>[] = []
         res.list.forEach(item => {
-          uploadQueue.push(uploadHandle(item.path))
+          uploadQueue.push(uploadHandle({
+            path: item.path,
+            name: item.name
+          }))
         })
         Taro.showLoading({ title: '上传中...', mask: true })
         try {
