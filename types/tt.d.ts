@@ -1,7 +1,7 @@
 /*
  * @Author: Chenxu
  * @Date: 2022-12-28 16:36:38
- * @LastEditTime: 2023-02-10 14:57:23
+ * @LastEditTime: 2023-02-20 13:28:26
  * @Msg: Nothing
  */
 /// <reference types="@tarojs/taro" />
@@ -48,6 +48,7 @@ type ttAPI = {
   showTabBar(option?: { animation: boolean } | CommonInput<any>): void
   hideTabBar(option?: { animation: boolean } | CommonInput<any>): void
   filePicker(option: filePicker): void
+  getSystemInfoSync(option?: CommonInput<any>): any
 }
 
 declare const tt: ttAPI
